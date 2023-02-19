@@ -146,8 +146,10 @@ app.post(`/signup`, async (req, res) => {
     res.json(posts)
   })
 
-app.listen(3000, () =>
+const port = process.env.PORT || 3001;
+
+app.listen(port, () =>
   console.log(`
-🚀 Server ready at: http://localhost:3000
+🚀 Server running on port ${port} !!
 ⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`),
 )
