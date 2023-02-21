@@ -18,3 +18,29 @@ model Users {
 
   @@map("users")
 }
+
+model Managers {
+  manager_id      Int     @id @default(autoincrement())
+  user_id         Int     
+  
+  @@map("manager")
+}
+
+model Patients {
+  patient_id          Int         @id @default(autoincrement())
+  date_of_birth       DateTime    @default(now()) @db.Date
+  health_condition    String      @db.VarChar
+  user_id             Int
+
+  @@map("patients")
+}
+
+model MedicalStaffs {
+  medical_staff_id     Int         @id @default(autoincrement())
+  license_number       BigInt      
+  active               Boolean     
+  type                 Int
+  user_id              Int
+
+  @@map("medical_staff")
+}

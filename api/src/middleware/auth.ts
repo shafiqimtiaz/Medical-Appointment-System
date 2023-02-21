@@ -15,7 +15,6 @@ export function isAuthenticated(req: Request, res: Response, next: NextFunction)
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
-
     if(payload){
       (req as CustomRequest).token = payload;
     }
