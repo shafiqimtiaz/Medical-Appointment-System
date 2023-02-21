@@ -1,7 +1,5 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
 import dotenv from 'dotenv';
-import * as userService from './service/users.service';
 import {isAuthenticated} from './middleware/auth';
 import authRouter from './controller/auth/auth.controller';
 import userRouter from './controller/user/user.controller';
