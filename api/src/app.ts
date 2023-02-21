@@ -1,153 +1,66 @@
 import express from 'express';
-import { Prisma, PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@prisma/client';
+import dotenv from 'dotenv';
+import * as userService from './service/users.service';
+import {isAuthenticated} from './middleware/auth';
 
-const prisma = new PrismaClient()
+
+dotenv.config()
 const app = express();
+app.use(express.json());
 
-app.use(express.json())
 
-app.post(`/signup`, async (req, res) => {
-    const {email, hashed_pass, name, dob, address, phone_nbr, role } = req.body
-  
-    const result = await prisma.users.create({
-      data: {
-        email,
-        hashed_pass,
-        name,
-        dob,
-        address,
-        phone_nbr,
-        role,
-      },
-    })
-    res.json(result)
-  })
-  
-  // app.post(`/post`, async (req, res) => {
-  //   const { title, content, authorEmail } = req.body
-  //   const result = await prisma.post.create({
-  //     data: {
-  //       title,
-  //       content,
-  //       author: { connect: { email: authorEmail } },
-  //     },
-  //   })
-  //   res.json(result)
-  // })
-  
-  // app.put('/post/:id/views', async (req, res) => {
-  //   const { id } = req.params
-  
-  //   try {
-  //     const post = await prisma.post.update({
-  //       where: { id: Number(id) },
-  //       data: {
-  //         viewCount: {
-  //           increment: 1,
-  //         },
-  //       },
-  //     })
-  
-  //     res.json(post)
-  //   } catch (error) {
-  //     res.json({ error: `Post with ID ${id} does not exist in the database` })
-  //   }
-  // })
-  
-  // // UPDATE
-  // app.put('/publish/:id', async (req, res) => {
-  //   const { id } = req.params
-  
-  //   try {
-  //     const postData = await prisma.post.findUnique({
-  //       where: { id: Number(id) },
-  //       select: {
-  //         published: true,
-  //       },
-  //     })
-  
-  //     const updatedPost = await prisma.post.update({
-  //       where: { id: Number(id) || undefined },
-  //       data: { published: !postData?.published },
-  //     })
-  //     res.json(updatedPost)
-  //   } catch (error) {
-  //     res.json({ error: `Post with ID ${id} does not exist in the database` })
-  //   }
-  // })
-  
-  // app.delete(`/post/:id`, async (req, res) => {
-  //   const { id } = req.params
-  //   const post = await prisma.post.delete({
-  //     where: {
-  //       id: Number(id),
-  //     },
-  //   })
-  //   res.json(post)
-  // })
-  
-  app.get('/users', async (req, res) => {
-    const users = await prisma.users.findMany()
-    res.json(users)
-  })
-  
-  // app.get('/user/:id/drafts', async (req, res) => {
-  //   const { id } = req.params
-  
-  //   const drafts = await prisma.user
-  //     .findUnique({
-  //       where: {
-  //         id: Number(id),
-  //       },
-  //     })
-  //     .posts({
-  //       where: { published: false },
-  //     })
-  
-  //   res.json(drafts)
-  // })
-  
-  // app.get(`/post/:id`, async (req, res) => {
-  //   const { id }: { id?: string } = req.params
-  
-  //   const post = await prisma.post.findUnique({
-  //     where: { id: Number(id) },
-  //   })
-  //   res.json(post)
-  // })
-  
-  // app.get('/feed', async (req, res) => {
-  //   const { searchString, skip, take, orderBy } = req.query
-  
-  //   const or: Prisma.PostWhereInput = searchString
-  //     ? {
-  //         OR: [
-  //           { title: { contains: searchString as string } },
-  //           { content: { contains: searchString as string } },
-  //         ],
-  //       }
-  //     : {}
-  
-  //   const posts = await prisma.post.findMany({
-  //     where: {
-  //       published: true,
-  //       ...or,
-  //     },
-  //     include: { author: true },
-  //     take: Number(take) || undefined,
-  //     skip: Number(skip) || undefined,
-  //     orderBy: {
-  //       updatedAt: orderBy as Prisma.SortOrder,
-  //     },
-  //   })
-  
-  //   res.json(posts)
-  // })
+app.get('/', async(req, res) => {
+    res.json('welcome!!');
+});
+
+app.post('/auth/registration', async (req, res) => {
+    try{
+      const existingUser = await userService.findUserByEmail(req.body.email);
+
+      if(!existingUser){
+        const newUser = await userService.createUser(req.body);
+        res.json(newUser);
+      }else{
+        res.status(409);
+        res.json("User Already Exist");
+      }
+    }catch(err){
+        res.status(500).send('Something went wrong');
+    }
+});
+
+app.post('/auth/login', async (req, res) => {
+    try{
+      const existingUser = await userService.login(req.body);
+
+      if (!existingUser) {
+          res.status(403);
+          res.json('Invalid credentials.');
+      }else{
+          res.json(existingUser);
+      }
+    }catch(err){
+        res.status(500).send('Something went wrong');
+    }
+});
+
+app.use(isAuthenticated);
+
+app.get('/user/:id', async (req, res) => {
+    try{
+        const user = await userService.findUserById(+req.params.id);
+        console.log(user);
+        res.json(user);
+    }catch(err){
+        console.error(err);
+        res.status(500).send('Something went wrong');
+    }
+});
+
 
 const port = process.env.PORT || 3001;
 
 app.listen(port, () =>
-  console.log(`
-🚀 Server running on port ${port} !!
-⭐️ See sample requests: http://pris.ly/e/ts/rest-express#3-using-the-rest-api`),
+  console.log(`Server running on port ${port} !!`),
 )

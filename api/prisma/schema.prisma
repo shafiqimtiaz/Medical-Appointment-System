@@ -7,86 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Appointments {
-  appointment_id Int       @id(map: "appointments_pk") @default(autoincrement())
-  staff_id       Int
-  patient_id     Int
-  time           DateTime  @db.Timestamp(6)
-  med_staff      Med_staff @relation(fields: [staff_id], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_med_staff_null_fk")
-  patients       Patients  @relation(fields: [patient_id], references: [patient_id], onDelete: NoAction, onUpdate: NoAction, map: "appointments_patients_null_fk")
-
-  @@index([patient_id], map: "appointments_patient_id_index")
-  @@index([staff_id], map: "appointments_staff_id_index")
-  @@map("appointments")
-}
-
-model Assessments {
-  assessment_id      Int        @id(map: "assessments_pk") @default(autoincrement())
-  patient_id         Int
-  assigned_staff     Int?
-  needs_counseling   Boolean    @default(true)
-  time_of_assessment DateTime   @default(now()) @db.Timestamp(6)
-  is_active          Boolean    @default(true)
-  answer             String     @db.VarChar
-  answer2            String     @db.VarChar
-  answer3            String     @db.VarChar
-  answer4            String     @db.VarChar
-  answer5            String     @db.VarChar
-  answer6            String     @db.VarChar
-  answer7            String     @db.VarChar
-  answer8            String     @db.VarChar
-  answer9            String     @db.VarChar
-  med_staff          Med_staff? @relation(fields: [assigned_staff], references: [staff_id], onDelete: NoAction, onUpdate: NoAction, map: "assessments_med_staff_null_fk")
-  patients           Patients   @relation(fields: [patient_id], references: [patient_id], onDelete: NoAction, onUpdate: NoAction, map: "assessments_patients_null_fk")
-
-  @@index([needs_counseling(sort: Desc)], map: "assessments_needs_counseling_index")
-  @@map("assessments")
-}
-
-model Managers {
-  manager_id Int   @id(map: "managers_pk") @default(autoincrement())
-  user_id    Int   @unique(map: "unique_user")
-  users      Users @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "managers_users_null_fk")
-
-  @@map("managers")
-}
-
-model Med_staff {
-  staff_id     Int            @id(map: "med_staff_pk") @default(autoincrement())
-  user_id      Int
-  license_nbr  String         @db.VarChar
-  is_approved  Boolean        @default(false)
-  role         String         @db.VarChar
-  appointments Appointments[]
-  assessments  Assessments[]
-  users        Users          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "med_staff_users_null_fk")
-
-  @@map("med_staff")
-}
-
-model Patients {
-  patient_id   Int            @id(map: "patients_pk") @default(autoincrement())
-  user_id      Int?
-  appointments Appointments[]
-  assessments  Assessments[]
-  users        Users?         @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "patients_users_null_fk")
-
-  @@map("patients")
-}
-
 model Users {
-  user_id     Int         @id(map: "users_pk") @default(autoincrement())
-  email       String      @db.VarChar
-  hashed_pass String      @db.VarChar
+  user_id     Int         @id @default(autoincrement())
+  email       String      @unique @db.VarChar
+  password    String      @db.VarChar
   name        String      @db.VarChar
-  dob         DateTime    @db.Date
   address     String      @db.VarChar
-  phone_nbr   String      @db.VarChar
   role        String      @db.VarChar
-  managers    Managers?
-  med_staff   Med_staff[]
-  patients    Patients[]
+  created_at  DateTime    @default(now()) @db.Timestamp(6)
 
-  @@index([email], map: "users_email_index")
   @@map("users")
 }
