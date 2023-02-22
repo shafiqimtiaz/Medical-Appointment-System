@@ -4,16 +4,17 @@ SET search_path TO project;
 CREATE TABLE Users
 (
   user_id SERIAL NOT NULL,
-  name VARCHAR(100) NOT NULL,
-  address VARCHAR(255) NOT NULL,
-  email VARCHAR(100) NOT NULL,
+  name VARCHAR(50) NOT NULL,
+  address VARCHAR(200) NOT NULL,
+  email VARCHAR(50) NOT NULL UNIQUE,
   password VARCHAR(100) NOT NULL,
-  role VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP NOT NULL,
+  role VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
   PRIMARY KEY (user_id)
 );
 
-CREATE TABLE Patients
+CREATE TABLE Patients 
 (
   patient_id INT NOT NULL,
   date_of_birth DATE NOT NULL,
@@ -45,14 +46,14 @@ CREATE TABLE Appointments
   details VARCHAR(1000) NOT NULL,
   appointment_date TIMESTAMP NOT NULL,
   active BOOL NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  created_by VARCHAR(100) NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
-  updated_by VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  created_by VARCHAR(50) NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_by VARCHAR(50) NOT NULL,
   medical_staff_id INT NOT NULL,
   patient_id INT NOT NULL,
   PRIMARY KEY (appointment_id),
-  FOREIGN KEY (medical_staff_id) REFERENCES Medical_staff(medical_staff_id),  -- corrected column name
+  FOREIGN KEY (medical_staff_id) REFERENCES Medical_staff(medical_staff_id),
   FOREIGN KEY (patient_id) REFERENCES Patients(patient_id)
 );
 
@@ -61,10 +62,10 @@ CREATE TABLE Assessments
   assessment_id SERIAL NOT NULL,
   details VARCHAR(1000) NOT NULL,
   active BOOL NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  created_by VARCHAR(100) NOT NULL,
-  updated_at TIMESTAMP NOT NULL,
-  updated_by VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  created_by VARCHAR(50) NOT NULL,
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_by VARCHAR(50) NOT NULL,
   patient_id INT NOT NULL,
   medical_staff_id INT,
   PRIMARY KEY (assessment_id),
