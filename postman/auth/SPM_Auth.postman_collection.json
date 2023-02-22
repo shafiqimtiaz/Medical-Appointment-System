@@ -1,0 +1,213 @@
+{
+	"info": {
+		"_postman_id": "d26a3137-22bc-4d25-bd02-113c5485205e",
+		"name": "SPM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4848308"
+	},
+	"item": [
+		{
+			"name": "UserLogin",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"example@spm.com\",\r\n    \"password\": \"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserRegistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "//Payload to register all types of user. change roles and appropiate required field of the user to see the changes.\r\n\r\n{\r\n    \"email\": \"example@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"name\": \"example\",\r\n    \"address\": \"Montreal\",\r\n    \"role\": \"medical_staff\", //manager, patient, medical_staff\r\n    \"date_of_birth\": \"2023-02-20 19:36:12.928\",\r\n    \"health_condition\": \"N/A\",\r\n    \"license_number\": 9007199254740991, //medical staff number\r\n    \"type\": 1 //medical staff type\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:4000/api/v1/auth/registration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiZW1haWwiOiJleGFtcGxlQHNwbS5jb20iLCJyb2xlIjoibWVkaWNhbF9zdGFmZiIsImlhdCI6MTY3Njk3NDk5MywiZXhwIjoxNjc3MDYxMzkzfQ.NwIUm_Upn4YihObRYL08LVbErwoeVAu9bGY5-Y9iQjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiaWF0IjoxNjc2OTM5MDAwLCJleHAiOjE2NzcwMjU0MDB9.mjqk5LsOqKcoeloT0alsvnwdKSqTuZSZwpfX2xDBYf8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/27",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"27"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetManagerById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiZW1haWwiOiJleGFtcGxlQHNwbS5jb20iLCJyb2xlIjoibWVkaWNhbF9zdGFmZiIsImlhdCI6MTY3Njk3NDk5MywiZXhwIjoxNjc3MDYxMzkzfQ.NwIUm_Upn4YihObRYL08LVbErwoeVAu9bGY5-Y9iQjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/manager/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"manager",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStaffById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiZW1haWwiOiJleGFtcGxlQHNwbS5jb20iLCJyb2xlIjoibWVkaWNhbF9zdGFmZiIsImlhdCI6MTY3Njk3NDk5MywiZXhwIjoxNjc3MDYxMzkzfQ.NwIUm_Upn4YihObRYL08LVbErwoeVAu9bGY5-Y9iQjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/staff/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"staff",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPatientById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyOCwiZW1haWwiOiJleGFtcGxlQHNwbS5jb20iLCJyb2xlIjoibWVkaWNhbF9zdGFmZiIsImlhdCI6MTY3Njk3NDk5MywiZXhwIjoxNjc3MDYxMzkzfQ.NwIUm_Upn4YihObRYL08LVbErwoeVAu9bGY5-Y9iQjQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/api/v1/user/patient/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"patient",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
