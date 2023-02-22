@@ -27,8 +27,8 @@ CREATE TABLE Medical_staff
 (
   medical_staff_id INT NOT NULL,
   license_number BIGINT NOT NULL,
-  active BOOL NOT NULL,
-  type INT NOT NULL,
+  active BOOL NOT NULL DEFAULT FALSE,
+  type CHAR NOT NULL,
   PRIMARY KEY (medical_staff_id),
   FOREIGN KEY (medical_staff_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -45,7 +45,7 @@ CREATE TABLE Appointments
   appointment_id SERIAL NOT NULL,
   details VARCHAR(1000) NOT NULL,
   appointment_date TIMESTAMP NOT NULL,
-  active BOOL NOT NULL,
+  active BOOL NOT NULL DEFAULT FALSE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   created_by VARCHAR(50) NOT NULL,
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
@@ -61,7 +61,7 @@ CREATE TABLE Assessments
 (
   assessment_id SERIAL NOT NULL,
   details VARCHAR(1000) NOT NULL,
-  active BOOL NOT NULL,
+  active BOOL NOT NULL DEFAULT FALSE,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   created_by VARCHAR(50) NOT NULL,
   updated_at TIMESTAMP NOT NULL DEFAULT NOW(),
