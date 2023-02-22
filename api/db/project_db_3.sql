@@ -15,31 +15,28 @@ CREATE TABLE Users
 
 CREATE TABLE Patients
 (
-  patient_id SERIAL NOT NULL,
+  patient_id INT NOT NULL,
   date_of_birth DATE NOT NULL,
   health_condition VARCHAR(1000) NOT NULL,
-  user_id INT NOT NULL,
   PRIMARY KEY (patient_id),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (patient_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Medical_staff
 (
-  medical_staff_id SERIAL NOT NULL,
+  medical_staff_id INT NOT NULL,
   license_number BIGINT NOT NULL,
   active BOOL NOT NULL,
   type INT NOT NULL,
-  user_id INT NOT NULL,
   PRIMARY KEY (medical_staff_id),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (medical_staff_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Manager
 (
-  manager_id SERIAL NOT NULL,
-  user_id INT NOT NULL,
+  manager_id INT NOT NULL,
   PRIMARY KEY (manager_id),
-  FOREIGN KEY (user_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY (manager_id) REFERENCES Users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE Appointments
