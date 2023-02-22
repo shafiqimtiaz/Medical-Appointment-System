@@ -8,10 +8,10 @@ async function createUser(user: any) {
 
   return await db.users.create({
     data: {
-      email: user.email,
-      password: user.password,
       name: user.name,
       address: user.address,
+      email: user.email,
+      password: user.password,
       role: user.role,
     },
   });
@@ -60,7 +60,7 @@ async function findStaffById(id: any) {
 async function createManager(user_id: any) {
   return await db.managers.create({
     data: {
-      user_id: user_id,
+      manager_id: user_id,
     },
   });
 }
@@ -68,7 +68,7 @@ async function createManager(user_id: any) {
 async function createPatients(user_id: any, patient: any) {
   return await db.patients.create({
     data: {
-      user_id: user_id,
+      patient_id: user_id,
       date_of_birth: new Date(patient.date_of_birth),
       health_condition: patient.health_condition,
     },
@@ -78,7 +78,7 @@ async function createPatients(user_id: any, patient: any) {
 async function createMedicalStaff(user_id: any, staff: any) {
   return await db.MedicalStaffs.create({
     data: {
-      user_id: user_id,
+      medical_staff_id: user_id,
       license_number: staff.license_number,
       active: false,
       type: staff.type,

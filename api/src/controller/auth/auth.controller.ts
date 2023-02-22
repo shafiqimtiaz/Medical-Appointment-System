@@ -4,7 +4,6 @@ const authRouter = express.Router();
 
 authRouter.post("/registration", async (req, res) => {
   try {
-    console.log(req.body);
     const existingUser = await userService.findUserByEmail(req.body.email);
 
     if (!existingUser) {
