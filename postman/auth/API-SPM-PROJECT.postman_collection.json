@@ -1,0 +1,309 @@
+{
+	"info": {
+		"_postman_id": "eab26688-30ba-4b6d-be5d-351ee71e967b",
+		"name": "API-SPM-PROJECT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19239159"
+	},
+	"item": [
+		{
+			"name": "PatientRegsistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@gmail.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/registration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ManagerRegsistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3001/api/v1/auth/registration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DoctorRegsistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"doctor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"doctor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"d\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/registration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CounselorRegsistration",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"counselor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"counselor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"c\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/registration",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"registration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UserLogin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"manager@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MDg3NTEwLCJleHAiOjE2NzcxNzM5MTB9._F8pxeO0Kw94qt1BOXabMsamG2p6hLP4Hat_z2Ib3AU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiaWF0IjoxNjc2OTM5MDAwLCJleHAiOjE2NzcwMjU0MDB9.mjqk5LsOqKcoeloT0alsvnwdKSqTuZSZwpfX2xDBYf8",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetManagerById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MDg3NTEwLCJleHAiOjE2NzcxNzM5MTB9._F8pxeO0Kw94qt1BOXabMsamG2p6hLP4Hat_z2Ib3AU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/user/manager/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"manager",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetStaffById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MDg3NTEwLCJleHAiOjE2NzcxNzM5MTB9._F8pxeO0Kw94qt1BOXabMsamG2p6hLP4Hat_z2Ib3AU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"staff",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetPatientById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MDg3NTEwLCJleHAiOjE2NzcxNzM5MTB9._F8pxeO0Kw94qt1BOXabMsamG2p6hLP4Hat_z2Ib3AU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"patient",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "PORT",
+			"value": "3001"
+		}
+	]
+}

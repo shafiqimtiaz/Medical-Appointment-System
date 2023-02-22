@@ -17,48 +17,8 @@ async function createUser(user: any) {
   });
 }
 
-async function findUserByEmail(email: any) {
-  return await db.users.findUnique({
-    where: {
-      email: email,
-    },
-  });
-}
-
-async function findUserById(id: any) {
-  return await db.users.findUnique({
-    where: {
-      user_id: id,
-    },
-  });
-}
-
-async function findManagerById(id: any) {
-  return await db.managers.findUnique({
-    where: {
-      manager_id: id,
-    },
-  });
-}
-
-async function findPatientById(id: any) {
-  return await db.patients.findUnique({
-    where: {
-      patient_id: id,
-    },
-  });
-}
-
-async function findStaffById(id: any) {
-  return await db.MedicalStaffs.findUnique({
-    where: {
-      medical_staff_id: id,
-    },
-  });
-}
-
 async function createManager(user_id: any) {
-  return await db.managers.create({
+  return await db.manager.create({
     data: {
       manager_id: user_id,
     },
@@ -76,12 +36,52 @@ async function createPatients(user_id: any, patient: any) {
 }
 
 async function createMedicalStaff(user_id: any, staff: any) {
-  return await db.MedicalStaffs.create({
+  return await db.medical_staff.create({
     data: {
       medical_staff_id: user_id,
       license_number: staff.license_number,
       active: false,
       type: staff.type,
+    },
+  });
+}
+
+async function findUserByEmail(email: any) {
+  return await db.users.findUnique({
+    where: {
+      email: email,
+    },
+  });
+}
+
+async function findUserById(id: any) {
+  return await db.users.findUnique({
+    where: {
+      user_id: id,
+    },
+  });
+}
+
+async function findManagerById(id: any) {
+  return await db.manager.findUnique({
+    where: {
+      manager_id: id,
+    },
+  });
+}
+
+async function findPatientById(id: any) {
+  return await db.patients.findUnique({
+    where: {
+      patient_id: id,
+    },
+  });
+}
+
+async function findStaffById(id: any) {
+  return await db.medical_staff.findUnique({
+    where: {
+      medical_staff_id: id,
     },
   });
 }
@@ -112,14 +112,14 @@ async function login(user: any) {
 
 export {
   createUser,
+  createManager,
+  createPatients,
+  createMedicalStaff,
   findUserByEmail,
   login,
   findUserById,
   getAllUser,
   findManagerById,
-  createManager,
-  createPatients,
-  createMedicalStaff,
   findPatientById,
   findStaffById,
 };
