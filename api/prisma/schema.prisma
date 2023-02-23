@@ -70,6 +70,7 @@ model Users {
 
 model Answers {
   answer_id     Int         @id @default(autoincrement())
+  question      Int
   answer        String      @db.VarChar(1000)
   assessment_id Int
   assessments   Assessments @relation(fields: [assessment_id], references: [assessment_id])

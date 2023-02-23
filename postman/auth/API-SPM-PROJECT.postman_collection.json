@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@gmail.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
+					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -52,12 +52,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/v1/auth/registration",
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/registration",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -133,11 +133,21 @@
 		{
 			"name": "UserLogin",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s\"",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"manager@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -249,7 +259,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -260,7 +270,7 @@
 						"v1",
 						"user",
 						"staff",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -282,7 +292,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -293,7 +303,49 @@
 						"v1",
 						"user",
 						"patient",
-						"1"
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"patient\": {\r\n    \"patient_id\": 2\r\n  },\r\n  \"details\": \"Assessment details\",\r\n  \"answers\": [\r\n    { \"question\": 1, \"answer\": \"Answer 1\" },\r\n    { \"question\": 2, \"answer\": \"Answer 2\" },\r\n    { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/assessment/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						""
 					]
 				}
 			},

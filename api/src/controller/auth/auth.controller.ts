@@ -36,7 +36,7 @@ authRouter.post("/registration", async (req, res) => {
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Registration Failed");
   }
 });
 
@@ -51,7 +51,7 @@ authRouter.post("/login", async (req, res) => {
       res.json(accesstoken);
     }
   } catch (err) {
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Login Failed");
   }
 });
 
