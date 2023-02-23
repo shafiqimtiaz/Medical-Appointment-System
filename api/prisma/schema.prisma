@@ -21,6 +21,7 @@ model Appointments {
   medical_staff    Medical_staff @relation(fields: [medical_staff_id], references: [medical_staff_id])
   patients         Patients      @relation(fields: [patient_id], references: [patient_id], map: "appointments_patients_fk")
 
+  @@unique([medical_staff_id, patient_id])
   @@map("appointments")
 }
 

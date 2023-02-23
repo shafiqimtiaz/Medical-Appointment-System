@@ -1,19 +1,19 @@
 {
 	"info": {
-		"_postman_id": "eab26688-30ba-4b6d-be5d-351ee71e967b",
+		"_postman_id": "ac744988-8391-4cda-954b-6824822dc294",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "19239159"
 	},
 	"item": [
 		{
-			"name": "PatientRegsistration",
+			"name": "ManagerRegsistration",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
+					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -38,13 +38,13 @@
 			"response": []
 		},
 		{
-			"name": "ManagerRegsistration",
+			"name": "PatientRegsistration",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
+					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -350,12 +350,135 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "CreateAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTI5MjQ1LCJleHAiOjE2NzcyMTU2NDV9.zMp-Dq7kre8G4EAkcTr3vOV9ZpHoQzoBvoezM6lDN-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"medicalStaffId\": 9,\r\n  \"patientId\": 2,\r\n  \"details\": \"Regular checkup\",\r\n  \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTMwNTM2LCJleHAiOjE2NzcyMTY5MzZ9.VT39JMywP1NQkTW-NfKbcIVdY1dxTLFIOjk9IUsS1TY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/6/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"appointment",
+						"6",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTMwNTM2LCJleHAiOjE2NzcyMTY5MzZ9.VT39JMywP1NQkTW-NfKbcIVdY1dxTLFIOjk9IUsS1TY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/6/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"appointment",
+						"6",
+						"cancel"
+					]
+				}
+			},
+			"response": []
 		}
 	],
-	"variable": [
+	"event": [
 		{
-			"key": "PORT",
-			"value": "3001"
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
