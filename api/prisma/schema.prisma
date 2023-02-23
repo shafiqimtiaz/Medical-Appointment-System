@@ -87,7 +87,7 @@ model Manager {
 
 model Medical_staff {
   medical_staff_id Int            @id
-  license_number   BigInt
+  license_number   String         @db.VarChar(50)
   active           Boolean        @default(false)
   type             String         @db.Char(1)
   appointments     Appointments[]

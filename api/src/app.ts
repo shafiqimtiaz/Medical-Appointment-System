@@ -4,6 +4,7 @@ import { isAuthenticated } from "./middleware/auth";
 import authRouter from "./controller/auth/auth.controller";
 import userRouter from "./controller/user/user.controller";
 import patientRouter from "./controller/patient/patient.controller";
+import counselorRouter from "./controller/counselor/counselor.controller";
 
 dotenv.config();
 const app = express();
@@ -16,6 +17,7 @@ app.use("/api/v1/auth", authRouter);
 app.use(isAuthenticated);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/patient", patientRouter);
+app.use("/api/v1/counselor", counselorRouter);
 
 const port = process.env.PORT || 3001;
 

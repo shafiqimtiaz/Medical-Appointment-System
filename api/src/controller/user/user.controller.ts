@@ -1,5 +1,5 @@
 import express from "express";
-import * as userService from "../../service/users.service";
+import * as userService from "../../service/user.service";
 const userRouter = express.Router();
 
 userRouter.get("/:id", async (req, res) => {

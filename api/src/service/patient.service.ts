@@ -31,9 +31,9 @@ async function createPatientAssessment(
 }
 
 async function acceptAppointmentByPatient(appointment_id: any) {
-  return await db.appointments.update({
+  return await await db.appointments.update({
     where: {
-      appointment_id: appointment_id,
+      appointment_id: parseInt(appointment_id),
     },
     data: {
       active: true,
@@ -44,7 +44,7 @@ async function acceptAppointmentByPatient(appointment_id: any) {
 async function cancelAppointmentByPatient(appointment_id: any) {
   return await db.appointments.update({
     where: {
-      appointment_id: appointment_id,
+      appointment_id: parseInt(appointment_id),
     },
     data: {
       active: false,
