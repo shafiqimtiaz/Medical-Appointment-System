@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import {isAuthenticated} from './middleware/auth';
 import authRouter from './controller/auth/auth.controller';
 import userRouter from './controller/user/user.controller';
+import managerRouter from './controller/manager/manager.controller';
 
 
 dotenv.config()
@@ -14,6 +15,7 @@ app.get('/', async(req, res) => {res.json('welcome!!')});
 app.use("/api/v1/auth", authRouter);
 app.use(isAuthenticated);
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/manager", managerRouter);
 
 
 const port = process.env.PORT || 3001;
