@@ -1,11 +1,165 @@
 {
 	"info": {
-		"_postman_id": "eab26688-30ba-4b6d-be5d-351ee71e967b",
+		"_postman_id": "809e6796-be8c-4fe9-be78-7d98da1d8fff",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19239159"
+		"_exporter_id": "16570401"
 	},
 	"item": [
+		{
+			"name": "Manager Endpoints",
+			"item": [
+				{
+					"name": "Get Unapproved Staff",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"newRegistrations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Registration for ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"approveRegistration",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deny Registration for ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"denyRegistration",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Patient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"deletePatient",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "PatientRegsistration",
 			"request": {
