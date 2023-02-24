@@ -57,7 +57,7 @@ const shapeStyle = {
   left: '0',
   zIndex: '6',
   clipPath: 'polygon(51.3% 55.8%, 100% 100%, 0% 100%)',
-  backgroundColor: '#98CCFD'
+  backgroundColor: '#112a45'
 };
 const mContentStyle={
   display: 'flex',

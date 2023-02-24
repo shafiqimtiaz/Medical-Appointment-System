@@ -32,7 +32,7 @@ const shapeStyle = {
   left: '0',
   zIndex: '-1',
   clipPath: ' polygon(0% 0%, 33% 0%, 55% 100%, 0% 100%)',
-  backgroundColor: '#98CCFD'
+  backgroundColor: '#112a45'
 };
 const wrapperStyle = {
   display: 'flex',
