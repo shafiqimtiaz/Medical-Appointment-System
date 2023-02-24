@@ -1,173 +1,19 @@
 {
 	"info": {
-		"_postman_id": "809e6796-be8c-4fe9-be78-7d98da1d8fff",
+		"_postman_id": "ac744988-8391-4cda-954b-6824822dc294",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16570401"
+		"_exporter_id": "19239159"
 	},
 	"item": [
 		{
-			"name": "Manager Endpoints",
-			"item": [
-				{
-					"name": "Get Unapproved Staff",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"v1",
-								"manager",
-								"newRegistrations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Approve Registration for ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"v1",
-								"manager",
-								"approveRegistration",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "4"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Deny Registration for ID",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"v1",
-								"manager",
-								"denyRegistration",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "4"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Patient",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3MTg3Njk1LCJleHAiOjE2NzcyNzQwOTV9.YHD9Ui8Nq2LLAx_I1593Joh-BZt05UfDIVfQmEYBPz4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"v1",
-								"manager",
-								"deletePatient",
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "PatientRegsistration",
+			"name": "ManagerRegsistration",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@gmail.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
+					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -192,13 +38,13 @@
 			"response": []
 		},
 		{
-			"name": "ManagerRegsistration",
+			"name": "PatientRegsistration",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
+					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -206,12 +52,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/v1/auth/registration",
+					"raw": "http://localhost:{{PORT}}/api/v1/auth/registration",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "3001",
+					"port": "{{PORT}}",
 					"path": [
 						"api",
 						"v1",
@@ -229,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"doctor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"doctor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"d\"\r\n}",
+					"raw": "{\r\n    \"name\": \"doctor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"doctor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": \"9007199254740991\",\r\n    \"type\": \"d\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -260,7 +106,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"counselor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"counselor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"c\"\r\n}",
+					"raw": "{\r\n    \"name\": \"counselor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"counselor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": \"9007199254740991\",\r\n    \"type\": \"c\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -287,11 +133,21 @@
 		{
 			"name": "UserLogin",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s\"",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"manager@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -403,7 +259,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -414,7 +270,7 @@
 						"v1",
 						"user",
 						"staff",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -436,7 +292,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -447,17 +303,414 @@
 						"v1",
 						"user",
 						"patient",
-						"1"
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTI5MjQ1LCJleHAiOjE2NzcyMTU2NDV9.zMp-Dq7kre8G4EAkcTr3vOV9ZpHoQzoBvoezM6lDN-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"medicalStaff_Id\": 8,\r\n  \"patient_Id\": 2,\r\n  \"details\": \"doctor checkup\",\r\n  \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTMwNTM2LCJleHAiOjE2NzcyMTY5MzZ9.VT39JMywP1NQkTW-NfKbcIVdY1dxTLFIOjk9IUsS1TY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/1/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"appointment",
+						"1",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTMwNTM2LCJleHAiOjE2NzcyMTY5MzZ9.VT39JMywP1NQkTW-NfKbcIVdY1dxTLFIOjk9IUsS1TY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/1/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"appointment",
+						"1",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"details\": \"Assessment details\",\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/assessment/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjAwMTQ5LCJleHAiOjE2NzcyODY1NDl9.2Sn2XS4256LRDhPkjgsFk9kK9LrwvK425HQOj0Ud44Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/patient/assessment/3/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						"3",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjAwMTQ5LCJleHAiOjE2NzcyODY1NDl9.2Sn2XS4256LRDhPkjgsFk9kK9LrwvK425HQOj0Ud44Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/patient/assessment/3/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						"3",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTI5MjQ1LCJleHAiOjE2NzcyMTU2NDV9.zMp-Dq7kre8G4EAkcTr3vOV9ZpHoQzoBvoezM6lDN-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"appointment",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRegistrations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjEzODgzLCJleHAiOjE2NzczMDAyODN9.r2MQwDuZrZl7EzSdFW9HPAmjNY67ijlSy4_UCyvOlk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"newRegistrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ApproveRegistration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"approveRegistration",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DenyRegistration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"denyRegistration",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePatient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"deletePatient",
+						"14"
 					]
 				}
 			},
 			"response": []
 		}
 	],
-	"variable": [
+	"event": [
 		{
-			"key": "PORT",
-			"value": "3001"
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
 		}
 	]
 }
