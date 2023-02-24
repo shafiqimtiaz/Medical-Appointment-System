@@ -310,48 +310,6 @@
 			"response": []
 		},
 		{
-			"name": "CreateAssessment",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"patient\": {\r\n    \"patient_id\": 2\r\n  },\r\n  \"details\": \"Assessment details\",\r\n  \"answers\": [\r\n    { \"question\": 1, \"answer\": \"Answer 1\" },\r\n    { \"question\": 2, \"answer\": \"Answer 2\" },\r\n    { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/assessment/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"patient",
-						"assessment",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "CreateAppointment",
 			"request": {
 				"auth": {
@@ -368,7 +326,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"medicalStaffId\": 9,\r\n  \"patientId\": 2,\r\n  \"details\": \"Regular checkup\",\r\n  \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"raw": "{\r\n  \"medicalStaff_Id\": 8,\r\n  \"patient_Id\": 2,\r\n  \"details\": \"doctor checkup\",\r\n  \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -408,7 +366,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/6/accept",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/1/accept",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -419,7 +377,7 @@
 						"v1",
 						"patient",
 						"appointment",
-						"6",
+						"1",
 						"accept"
 					]
 				}
@@ -442,7 +400,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/6/cancel",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/1/cancel",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -453,8 +411,150 @@
 						"v1",
 						"patient",
 						"appointment",
-						"6",
+						"1",
 						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTIwMTM1LCJleHAiOjE2NzcyMDY1MzV9.urWsaEaZUMk6hQbSoj9zPq8BZOXhP9B7QWjYgLPOQ3s",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"details\": \"Assessment details\",\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/assessment/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AcceptAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjAwMTQ5LCJleHAiOjE2NzcyODY1NDl9.2Sn2XS4256LRDhPkjgsFk9kK9LrwvK425HQOj0Ud44Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/patient/assessment/3/accept",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						"3",
+						"accept"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CancelAssessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjAwMTQ5LCJleHAiOjE2NzcyODY1NDl9.2Sn2XS4256LRDhPkjgsFk9kK9LrwvK425HQOj0Ud44Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3001/api/v1/patient/assessment/3/cancel",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3001",
+					"path": [
+						"api",
+						"v1",
+						"patient",
+						"assessment",
+						"3",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAppointment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTI5MjQ1LCJleHAiOjE2NzcyMTU2NDV9.zMp-Dq7kre8G4EAkcTr3vOV9ZpHoQzoBvoezM6lDN-o",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment"
 					]
 				}
 			},
