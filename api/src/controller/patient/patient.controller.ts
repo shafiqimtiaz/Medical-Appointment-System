@@ -5,15 +5,15 @@ const patientRouter = express.Router();
 
 patientRouter.post("/assessment", async (req, res) => {
   try {
-    const { patient, details, answers } = req.body;
+    const { patient_id, details, answers } = req.body;
 
-    const user = await userService.findPatientById(patient.patient_id);
+    const user = await userService.findUserById(patient_id);
     if (!user) {
       return res.status(404).send("User record not found");
     }
 
     const assessment = await patientService.createPatientAssessment(
-      patient,
+      patient_id,
       user,
       details,
       answers
@@ -22,35 +22,77 @@ patientRouter.post("/assessment", async (req, res) => {
     res.status(201).json({ assessment });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Failed to create assessment" });
+    res.status(500).send("Failed to create assessment");
   }
 });
 
-patientRouter.put("/appointment/:appointmentId/accept", async (req, res) => {
-  const { appointmentId } = req.params;
+patientRouter.put("/assessment/:assessment_Id/accept", async (req, res) => {
+  const { assessment_Id } = req.params;
+
+  try {
+    const assessment = await patientService.acceptAssessmentByPatient(
+      assessment_Id
+    );
+    res.status(200).json(assessment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to cancel assessment");
+  }
+});
+
+patientRouter.put("/assessment/:assessment_Id/cancel", async (req, res) => {
+  const { assessment_Id } = req.params;
+
+  try {
+    const assessment = await patientService.cancelAssessmentByPatient(
+      assessment_Id
+    );
+    res.status(200).json(assessment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to cancel assessment");
+  }
+});
+
+patientRouter.get("/appointment/:patient_id", async (req, res) => {
+  const { patient_id } = req.params;
+
+  try {
+    const appointment = await patientService.findAppointmentByPatient(
+      patient_id
+    );
+    res.status(200).json(appointment);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to fetch appointment");
+  }
+});
+
+patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
+  const { appointment_Id } = req.params;
 
   try {
     const appointment = await patientService.acceptAppointmentByPatient(
-      appointmentId
+      appointment_Id
     );
     res.status(200).json(appointment);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Unable to accept appointment" });
+    res.status(500).send("Unable to accept appointment");
   }
 });
 
-patientRouter.put("/appointment/:appointmentId/cancel", async (req, res) => {
-  const { appointmentId } = req.params;
+patientRouter.put("/appointment/:appointment_Id/cancel", async (req, res) => {
+  const { appointment_Id } = req.params;
 
   try {
     const appointment = await patientService.cancelAppointmentByPatient(
-      appointmentId
+      appointment_Id
     );
     res.status(200).json(appointment);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Unable to cancel appointment" });
+    res.status(500).send("Unable to cancel appointment");
   }
 });
 

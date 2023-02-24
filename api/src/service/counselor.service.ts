@@ -1,22 +1,22 @@
 import { db } from "../util/database";
 
 async function createAppointment(
-  medicalStaffId: number,
-  patientId: number,
+  medicalStaff_Id: number,
+  patient_Id: number,
   details: string,
   appointmentDate: Date,
-  createdBy: string
+  user: any
 ) {
   try {
     const appointment = await db.appointments.create({
       data: {
         details: details,
         appointment_date: new Date(appointmentDate),
-        active: true,
-        created_by: createdBy,
-        updated_by: createdBy,
-        medical_staff: { connect: { medical_staff_id: medicalStaffId } },
-        patients: { connect: { patient_id: patientId } },
+        active: false,
+        created_by: user.name,
+        updated_by: user.name,
+        medical_staff: { connect: { medical_staff_id: medicalStaff_Id } },
+        patients: { connect: { patient_id: patient_Id } },
       },
       include: {
         medical_staff: true,

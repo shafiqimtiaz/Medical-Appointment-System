@@ -4,23 +4,25 @@ import * as userService from "../../service/user.service";
 const counselorRouter = express.Router();
 
 counselorRouter.post("/appointment", async (req, res) => {
-  const { medicalStaffId, patientId, details, appointmentDate } = req.body;
-  const medicalStaff = await userService.findStaffById(medicalStaffId);
-  if (!medicalStaff) {
-    return res.status(404).send("Medical_staff record not found");
+  const { medicalStaff_Id, patient_Id, details, appointmentDate } = req.body;
+
+  const user = await userService.findUserById(medicalStaff_Id);
+  if (!user) {
+    return res.status(404).send("User record not found");
   }
+
   try {
     const appointment = await counselorService.createAppointment(
-      medicalStaffId,
-      patientId,
+      medicalStaff_Id,
+      patient_Id,
       details,
       appointmentDate,
-      "counselor"
+      user
     );
-    res.status(201).json(appointment);
+    res.status(201).json({ appointment });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Unable to create appointment" });
+    res.status(500).send("Unable to create appointment");
   }
 });
 
