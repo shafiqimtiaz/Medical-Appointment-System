@@ -27,12 +27,9 @@ model Appointments {
 
 model Assessments {
   assessment_id    Int            @id @default(autoincrement())
-  details          String         @db.VarChar(1000)
-  active           Boolean        @default(false)
+  active           Boolean        @default(true)
   created_at       DateTime       @default(now()) @db.Timestamp(6)
-  created_by       String         @db.VarChar(50)
   updated_at       DateTime       @updatedAt @db.Timestamp(6)
-  updated_by       String         @db.VarChar(50)
   patient_id       Int            @unique
   medical_staff_id Int?
   answers          Answers[]

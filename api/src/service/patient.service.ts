@@ -10,10 +10,6 @@ async function createPatientAssessment(
     return await db.assessments.create({
       data: {
         patient_id: patient_id,
-        details: assessmentDetails,
-        active: false,
-        created_by: user.name,
-        updated_by: user.name,
         answers: {
           create: answers.map((answer) => {
             return {
