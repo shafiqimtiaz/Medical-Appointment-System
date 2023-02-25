@@ -8,12 +8,12 @@ type UserCreateType = {
   email: string;
   password: string;
   role: string;
-}
+};
 
 type PatientCreateType = {
   date_of_birth: string;
   health_condition: string;
-}
+};
 
 async function createUser(user: UserCreateType) {
   user.password = bcrypt.hashSync(user.password, 10);

@@ -536,7 +536,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MTI5MjQ1LCJleHAiOjE2NzcyMTU2NDV9.zMp-Dq7kre8G4EAkcTr3vOV9ZpHoQzoBvoezM6lDN-o",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MzAzNDAwLCJleHAiOjE2NzczODk4MDB9.BLW6J6V7fd3InRBO4vz7tjqNN9nD9X_ybuNL0xCYnco",
 							"type": "string"
 						}
 					]
@@ -544,7 +544,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -553,8 +553,140 @@
 					"path": [
 						"api",
 						"v1",
-						"counselor",
-						"appointment"
+						"patient",
+						"appointment",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRegistrations",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6InBhdGllbnRAc3BtLmNvbSIsInJvbGUiOiJwYXRpZW50IiwiaWF0IjoxNjc3MjEzODgzLCJleHAiOjE2NzczMDAyODN9.r2MQwDuZrZl7EzSdFW9HPAmjNY67ijlSy4_UCyvOlk8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"newRegistrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ApproveRegistration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/9",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"approveRegistration",
+						"9"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DenyRegistration",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"denyRegistration",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeletePatient",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxMCwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzIxMjU0MywiZXhwIjoxNjc3Mjk4OTQzfQ.ftkCC69THq-omY2jJ8pmbTjrZ3NR-lth7e3l2VxfmME",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/14",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"deletePatient",
+						"14"
 					]
 				}
 			},

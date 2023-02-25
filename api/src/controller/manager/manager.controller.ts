@@ -1,18 +1,18 @@
 import express from "express";
 import {
-  approveRegistration, deletePatient,
+  approveRegistration,
+  deletePatient,
   getUnapprovedRegistrations,
-  rejectRegistration
+  rejectRegistration,
 } from "../../service/managers.service";
 const managerRouter = express.Router();
 
 const checkAuthorization = (req: any) => {
   // TODO: check if user is a manager
-  if (req.token)
-    return true;
+  if (req.token) return true;
 
   return false;
-}
+};
 
 managerRouter.get("/newRegistrations", async (req, res) => {
   if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
@@ -23,7 +23,7 @@ managerRouter.get("/newRegistrations", async (req, res) => {
     console.error(err);
     res.status(500).send("Something went wrong");
   }
-})
+});
 
 managerRouter.get("/approveRegistration/:id", async (req, res) => {
   if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
