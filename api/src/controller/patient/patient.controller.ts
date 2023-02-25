@@ -19,35 +19,20 @@ patientRouter.post("/assessment", async (req, res) => {
       answers
     );
 
-    res.status(201).json({ assessment });
+    res.status(201).json(assessment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Failed to create assessment");
   }
 });
 
-patientRouter.put("/assessment/:assessment_Id/accept", async (req, res) => {
-  const { assessment_Id } = req.params;
-
+patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
   try {
-    const assessment = await patientService.acceptAssessmentByPatient(
-      assessment_Id
-    );
-    res.status(200).json(assessment);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Unable to cancel assessment");
-  }
-});
-
-patientRouter.put("/assessment/:assessment_Id/cancel", async (req, res) => {
-  const { assessment_Id } = req.params;
-
-  try {
+    const { assessment_Id } = req.params;
     const assessment = await patientService.cancelAssessmentByPatient(
       assessment_Id
     );
-    res.status(200).json(assessment);
+    res.status(204).json(assessment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to cancel assessment");
@@ -55,9 +40,8 @@ patientRouter.put("/assessment/:assessment_Id/cancel", async (req, res) => {
 });
 
 patientRouter.get("/appointment/:patient_id", async (req, res) => {
-  const { patient_id } = req.params;
-
   try {
+    const { patient_id } = req.params;
     const appointment = await patientService.findAppointmentByPatient(
       patient_id
     );
@@ -69,31 +53,32 @@ patientRouter.get("/appointment/:patient_id", async (req, res) => {
 });
 
 patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
-  const { appointment_Id } = req.params;
-
   try {
+    const { appointment_Id } = req.params;
     const appointment = await patientService.acceptAppointmentByPatient(
       appointment_Id
     );
-    res.status(200).json(appointment);
+    res.status(204).json(appointment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to accept appointment");
   }
 });
 
-patientRouter.put("/appointment/:appointment_Id/cancel", async (req, res) => {
-  const { appointment_Id } = req.params;
-
-  try {
-    const appointment = await patientService.cancelAppointmentByPatient(
-      appointment_Id
-    );
-    res.status(200).json(appointment);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send("Unable to cancel appointment");
+patientRouter.delete(
+  "/appointment/:appointment_Id/cancel",
+  async (req, res) => {
+    try {
+      const { appointment_Id } = req.params;
+      const appointment = await patientService.cancelAppointmentByPatient(
+        appointment_Id
+      );
+      res.status(204).json(appointment);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to cancel appointment");
+    }
   }
-});
+);
 
 export default patientRouter;

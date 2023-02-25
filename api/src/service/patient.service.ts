@@ -7,7 +7,7 @@ async function createPatientAssessment(
   answers: any[]
 ) {
   try {
-    const assessment = await db.assessments.create({
+    return await db.assessments.create({
       data: {
         patient_id: patient_id,
         details: assessmentDetails,
@@ -27,38 +27,17 @@ async function createPatientAssessment(
         answers: true,
       },
     });
-
-    return assessment;
   } catch (error) {
     console.error(error);
     throw new Error("Unable to create assessment");
   }
 }
 
-async function acceptAssessmentByPatient(assessment_id: any) {
-  try {
-    return await await db.assessments.update({
-      where: {
-        assessment_id: parseInt(assessment_id),
-      },
-      data: {
-        active: true,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    throw new Error("Unable to accept assessment");
-  }
-}
-
 async function cancelAssessmentByPatient(assessment_id: any) {
   try {
-    return await db.assessments.update({
+    return await db.assessments.delete({
       where: {
         assessment_id: parseInt(assessment_id),
-      },
-      data: {
-        active: false,
       },
     });
   } catch (error) {
@@ -85,12 +64,9 @@ async function acceptAppointmentByPatient(appointment_id: any) {
 
 async function cancelAppointmentByPatient(appointment_id: any) {
   try {
-    return await db.appointments.update({
+    return await db.appointments.delete({
       where: {
         appointment_id: parseInt(appointment_id),
-      },
-      data: {
-        active: false,
       },
     });
   } catch (error) {
@@ -133,7 +109,6 @@ async function findAppointmentById(appointment_id: any) {
 
 export {
   createPatientAssessment,
-  acceptAssessmentByPatient,
   cancelAssessmentByPatient,
   acceptAppointmentByPatient,
   cancelAppointmentByPatient,
