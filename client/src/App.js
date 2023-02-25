@@ -1,5 +1,11 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from "./pages/Home";
+import Register from "./pages/Register";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
 import Manager from './Pages/ManagerPanel/Manager';
 import {
   createBrowserRouter,
@@ -12,13 +18,16 @@ import {
 
 function App() {
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-            <Route path="/Admin" element={ <Manager/> }> </Route>
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <BrowserRouter>
+    <Routes>
+    <Route path="/">
+      <Route index element={<Home/>}/>
+      <Route path="register" element={<Register/>}/>
+      <Route path="dashboard" element={<Dashboard/>}/>
+      <Route path="/Admin" element={ <Manager/> }> </Route>
+    </Route>
+    </Routes>
+    </BrowserRouter>
   );
 }
 
