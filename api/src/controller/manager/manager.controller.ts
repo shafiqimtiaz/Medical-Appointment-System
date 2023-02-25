@@ -11,6 +11,7 @@ managerRouter.get("/newRegistrations", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("Failed to fetch new registrations");
+  }
 });
 
 managerRouter.get("/approveRegistration/:id", async (req, res) => {
