@@ -4,6 +4,7 @@ import Assessment from './Assessment';
 import Appointement from './Appointement';
 const { Content, Sider } = Layout;
 
+
 const menuStyle= {
   height: '100vh',
   marginTop: '20px',
@@ -22,21 +23,22 @@ const patientItems = [
 
 export default function Mainmenu() {
   const [content, setContent] = useState("");
+  const [value,setValue] = useState(false);
 
-  useEffect(()=>{
-
-  },[content])
-    return (
+  return (
         <Layout>
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
+            collapsed={value}
+            onClick={()=>setValue(!value)}
           >
             <div className="logo" />
             <Menu
             selectable
             onSelect={({ key }) => {
               setContent(patientItems[key -1].label)
+              setValue(true)
             }}
               style={menuStyle}
               theme="dark"
