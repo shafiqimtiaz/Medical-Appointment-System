@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 import * as JWT from "../util/jwt";
-const { PrismaClient } = require("@prisma/client");
-const db = new PrismaClient();
+import { db } from "../util/database";
 
 type UserCreateType = {
   name: string;

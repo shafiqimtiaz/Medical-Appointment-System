@@ -1,5 +1,5 @@
 import express from "express";
-import * as userService from "../../service/users.service";
+import * as userService from "../../service/user.service";
 const userRouter = express.Router();
 
 userRouter.get("/:id", async (req, res) => {
@@ -9,7 +9,7 @@ userRouter.get("/:id", async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to fetch user");
   }
 });
 
@@ -23,7 +23,7 @@ userRouter.get("/manager/:id", async (req, res) => {
     res.json(manager);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to fetch manager");
   }
 });
 
@@ -37,7 +37,7 @@ userRouter.get("/patient/:id", async (req, res) => {
     res.json(patient);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to fetch patient");
   }
 });
 
@@ -52,7 +52,7 @@ userRouter.get("/staff/:id", async (req, res) => {
     res.json(staff);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to fetch medical staff");
   }
 });
 
