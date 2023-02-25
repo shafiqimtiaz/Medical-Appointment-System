@@ -1,7 +1,7 @@
 import React from 'react'
 import {Layout, Typography} from 'antd'
 import SingleAppointement from './SingleAppointement';
-import BookApointement from './BookApointement';
+import OperateAppointements from './OperateAppointement';
 
 const  {Content} = Layout;
 const {Title} = Typography;
@@ -21,8 +21,8 @@ export default function Appointement() {
     <Content style={contentStyle}>
         <Title level={4} style={titleStyle}> Booked Appointements</Title> 
         <SingleAppointement/>
-        <Title level={4} style={titleStyle}> Book New Appointement</Title> 
-        <BookApointement/>
+        <Title level={4} style={titleStyle}> Accept / Reject Appointements</Title> 
+        <OperateAppointements/>
     </Content>
   )
 }

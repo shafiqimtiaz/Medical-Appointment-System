@@ -1,6 +1,5 @@
-import React from 'react'
+import { Table, Space, Button} from 'antd';
 
-import { Table} from 'antd';
 const columns = [
   {
     title: 'Doctor',
@@ -16,6 +15,16 @@ const columns = [
     title: 'Time',
     dataIndex: 'time',
     key: 'time',
+  },
+  {
+    title: 'Action',
+    key: 'action',
+    render: (_, record) => (
+      <Space size="middle">
+        <Button type='primary' style={{backgroundColor:'green'}}>Accept</Button>
+        <Button type='primary' danger>Reject</Button>
+      </Space>
+    ),
   },
 ];
 const data = [
@@ -39,8 +48,8 @@ const data = [
     time: '12:00 PM',
   },
 ];
-export default function SingleAppointement() {
-  return(
-  <Table columns={columns} dataSource={data} pagination={false}/>  
-  )
-}
+
+export default function BookApointement() {
+    return (
+      <Table columns={columns} dataSource={data} pagination={false}/>  
+  );}
