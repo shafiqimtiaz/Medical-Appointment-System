@@ -8,6 +8,7 @@ const contentStyle = {
     marginTop: '10px',
     flexDirection: 'column',
     marginLeft: '20px',
+    marginRight: '20px',
     paddingBottom: '20px'
   };
   const textStyle = {
