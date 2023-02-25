@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useState } from 'react'
 import { Layout, Menu } from 'antd';
 import Assessment from './Assessment';
 import Appointement from './Appointement';
@@ -23,22 +23,18 @@ const patientItems = [
 
 export default function Mainmenu() {
   const [content, setContent] = useState("");
-  const [value,setValue] = useState(false);
 
-  return (
+    return (
         <Layout>
           <Sider
             breakpoint="lg"
             collapsedWidth="0"
-            collapsed={value}
-            onClick={()=>setValue(!value)}
           >
             <div className="logo" />
             <Menu
             selectable
             onSelect={({ key }) => {
               setContent(patientItems[key -1].label)
-              setValue(true)
             }}
               style={menuStyle}
               theme="dark"
