@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { UploadOutlined, UserOutlined, VideoCameraOutlined } from '@ant-design/icons';
 import { Layout, Menu } from 'antd';
 import Assessment from './Assessment';
 import Appointement from './Appointement';
@@ -13,7 +12,7 @@ const menuStyle= {
 const patientItems = [
   {
     key: '1',
-    label: `Take Assestment`,
+    label: `Take Assessment`,
   },
   {
     key: '2',
@@ -46,7 +45,7 @@ export default function Mainmenu() {
             />
           </Sider>
           {
-        content === "Take Assestment" ?(
+        content === "Take Assessment" ?(
         <Content>
           <Assessment/>
         </Content>

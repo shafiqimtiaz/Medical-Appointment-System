@@ -94,7 +94,7 @@ import {
         </Form.Item>
         <Form.Item 
         name="date"
-        label="DatePicker"
+        label="Date of birth"
         rules={[
             {
                 required: true,
