@@ -1,6 +1,7 @@
 import React from 'react'
 import {Layout, Button} from 'antd'
 import SingleAssessment from './SingleAssessment';
+import AssessmentDone from './AssessmentDone';
 const  {Content, Footer} = Layout;
 
 const data = [
@@ -139,6 +140,7 @@ export default function Assessment() {
       <Footer style={footerStyle}>
       <Button type='primary' size='large'> Submit</Button>
       </Footer>
+      {/* <AssessmentDone/> */}
     </Content>
   )
 }

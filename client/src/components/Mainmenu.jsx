@@ -1,7 +1,7 @@
 import React, {useState } from 'react'
 import { Layout, Menu } from 'antd';
 import Assessment from './Assessment';
-import Appointement from './Appointement';
+import FullAppointment from './FullAppointment';
 const { Content, Sider } = Layout;
 
 
@@ -50,7 +50,7 @@ export default function Mainmenu() {
         )
         : 
         (<Content>
-          <Appointement/>
+          <FullAppointment/>
         </Content>)
           }          
         </Layout>

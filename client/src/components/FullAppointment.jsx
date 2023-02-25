@@ -16,7 +16,7 @@ const titleStyle = {
   marginTop: '15px',
 };
 
-export default function Appointement() {
+export default function FullAppointment() {
   return (
     <Content style={contentStyle}>
         <Title level={4} style={titleStyle}> Booked Appointements</Title> 

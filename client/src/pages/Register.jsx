@@ -18,8 +18,8 @@ const itemsReg = [
   },
   {
     key: '3',
-    label: `Councler`,
-    children: <SignUp user={{label : "councel"}}/>,
+    label: `Counselor`,
+    children: <SignUp user={{label : "counselor"}}/>,
   },
 ];
 

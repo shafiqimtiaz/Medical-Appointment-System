@@ -4,7 +4,10 @@ import {
     Form,
     Input,
     Select,
+    notification
   } from 'antd';
+import { useState } from 'react';
+  
   const { Option } = Select;
   const formItemLayout = {
     labelCol: {
@@ -37,10 +40,31 @@ import {
     },
   };
   export default function SignUp ({user}){
-    const [form] = Form.useForm();
-    const onFinish = (values) => {
-      console.log('Received values of form: ', values);
+
+    const [name,setName] = useState("");
+    const [address,setAddress] = useState("");
+    const [dob,setDOB] = useState("");
+    const [number,setNumber] = useState("");
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
+    const [regNumber,setRegNumber] = useState("");
+    const role = user.label;
+
+    const openNotification = () => {
+      notification.open({
+        message: 'You can successfully log in!',
+      });
     };
+
+    const handleSubmit = async(e)=>{
+      try {
+        e.preventDefault()
+      } catch (error) {
+        
+      }
+    }
+
+    const [form] = Form.useForm();
     const prefixSelector = (
       <Form.Item name="prefix" noStyle>
         <Select
@@ -57,7 +81,6 @@ import {
         {...formItemLayout}
         form={form}
         name="register"
-        onFinish={onFinish}
         initialValues={{
           prefix: '1',
         }}
@@ -77,7 +100,7 @@ import {
             },
           ]}
         >
-          <Input />
+          <Input onChange={e=> setName(e.target.value)}/>
         </Form.Item>
         <Form.Item
           name="adress"
@@ -90,7 +113,7 @@ import {
             },
           ]}
         >
-          <Input />
+          <Input onChange={e=> setAddress(e.target.value)}/>
         </Form.Item>
         <Form.Item 
         name="date"
@@ -102,7 +125,7 @@ import {
             }
         ]}
         >
-        <DatePicker />
+        <DatePicker onChange={e=> setDOB(e.target.value)}/>
       </Form.Item>
 
         <Form.Item
@@ -115,7 +138,7 @@ import {
             },
           ]}
         >
-          <Input
+          <Input onChange={e=> setNumber(e.target.value)}
             addonBefore={prefixSelector}
             style={{
               width: '100%',
@@ -136,7 +159,7 @@ import {
             },
           ]}
         >
-          <Input />
+          <Input onChange={e=> setEmail(e.target.value)}/>
         </Form.Item>
   
         <Form.Item
@@ -150,7 +173,7 @@ import {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password onChange={e=> setPassword(e.target.value)}/>
         </Form.Item>
   
         <Form.Item
@@ -175,7 +198,7 @@ import {
         >
           <Input.Password />
         </Form.Item>
-        {user.label === "councel" ?
+        {user.label === "counselor" ?
         (
         <Form.Item
           name="crn"
@@ -188,7 +211,7 @@ import {
             },
           ]}
         >
-          <Input />
+          <Input onChange={e=> setRegNumber(e.target.value)}/>
         </Form.Item>
         ) :
         user.label === "doctor" ?(
@@ -203,7 +226,7 @@ import {
               },
             ]}
           >
-            <Input />
+            <Input onChange={e=> setRegNumber(e.target.value)}/>
           </Form.Item>
         )
   : 
@@ -211,7 +234,7 @@ import {
   }
 
         <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" onClick={handleSubmit}>
             Register
           </Button>
         </Form.Item>

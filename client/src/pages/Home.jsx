@@ -19,7 +19,7 @@ const items = [
   },
   {
     key: '3',
-    label: `Councler`,
+    label: `Counselor`,
     children: <Signin/>,
   },
 ];
