@@ -5,14 +5,20 @@ import { db } from "../util/database";
 type UserCreateType = {
   name: string;
   address: string;
+  date_of_birth: string;
+  phone_number: string;
   email: string;
   password: string;
   role: string;
 };
 
 type PatientCreateType = {
-  date_of_birth: string;
   health_condition: string;
+};
+
+type MedicalStaffCreateType = {
+  license_number: string;
+  type: string;
 };
 
 async function createUser(user: UserCreateType) {
@@ -22,6 +28,8 @@ async function createUser(user: UserCreateType) {
     data: {
       name: user.name,
       address: user.address,
+      date_of_birth: new Date(user.date_of_birth),
+      phone_number: user.phone_number,
       email: user.email,
       password: user.password,
       role: user.role,
@@ -41,18 +49,16 @@ async function createPatients(user_id: any, patient: PatientCreateType) {
   return await db.patients.create({
     data: {
       patient_id: user_id,
-      date_of_birth: new Date(patient.date_of_birth),
       health_condition: patient.health_condition,
     },
   });
 }
 
-async function createMedicalStaff(user_id: any, staff: any) {
+async function createMedicalStaff(user_id: any, staff: MedicalStaffCreateType) {
   return await db.medical_staff.create({
     data: {
       medical_staff_id: user_id,
       license_number: staff.license_number,
-      active: false,
       type: staff.type,
     },
   });
