@@ -33,7 +33,7 @@ model Assessments {
   created_by       String         @db.VarChar(50)
   updated_at       DateTime       @updatedAt @db.Timestamp(6)
   updated_by       String         @db.VarChar(50)
-  patient_id       Int
+  patient_id       Int            @unique
   medical_staff_id Int?
   answers          Answers[]
   medical_staff    Medical_staff? @relation(fields: [medical_staff_id], references: [medical_staff_id])
@@ -74,7 +74,7 @@ model Answers {
   question      Int
   answer        String      @db.VarChar(1000)
   assessment_id Int
-  assessments   Assessments @relation(fields: [assessment_id], references: [assessment_id])
+  assessments   Assessments @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("answers")
 }
@@ -97,4 +97,3 @@ model Medical_staff {
 
   @@map("medical_staff")
 }
-

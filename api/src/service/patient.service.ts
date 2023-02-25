@@ -1,7 +1,7 @@
 import { db } from "../util/database";
 
 async function createPatientAssessment(
-  patient: any,
+  patient_id: any,
   user: any,
   assessmentDetails: string,
   answers: any[]
@@ -9,11 +9,11 @@ async function createPatientAssessment(
   try {
     const assessment = await db.assessments.create({
       data: {
+        patient_id: patient_id,
         details: assessmentDetails,
         active: false,
         created_by: user.name,
         updated_by: user.name,
-        patient_id: patient.patient_id,
         answers: {
           create: answers.map((answer) => {
             return {
