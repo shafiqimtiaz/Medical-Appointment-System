@@ -32,7 +32,8 @@ patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
     const assessment = await patientService.cancelAssessmentByPatient(
       assessment_Id
     );
-    res.status(204).json(assessment);
+    res.status(200).json("Assessment deleted");
+
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to cancel assessment");
