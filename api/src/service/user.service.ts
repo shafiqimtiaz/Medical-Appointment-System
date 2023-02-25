@@ -2,7 +2,20 @@ const bcrypt = require("bcrypt");
 import * as JWT from "../util/jwt";
 import { db } from "../util/database";
 
-async function createUser(user: any) {
+type UserCreateType = {
+  name: string;
+  address: string;
+  email: string;
+  password: string;
+  role: string;
+}
+
+type PatientCreateType = {
+  date_of_birth: string;
+  health_condition: string;
+}
+
+async function createUser(user: UserCreateType) {
   user.password = bcrypt.hashSync(user.password, 10);
 
   return await db.users.create({
@@ -24,7 +37,7 @@ async function createManager(user_id: any) {
   });
 }
 
-async function createPatients(user_id: any, patient: any) {
+async function createPatients(user_id: any, patient: PatientCreateType) {
   return await db.patients.create({
     data: {
       patient_id: user_id,
@@ -110,6 +123,8 @@ async function login(user: any) {
 }
 
 export {
+  UserCreateType,
+  PatientCreateType,
   createUser,
   createManager,
   createPatients,

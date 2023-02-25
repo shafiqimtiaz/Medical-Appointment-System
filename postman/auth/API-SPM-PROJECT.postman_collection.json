@@ -75,7 +75,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"doctor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"doctor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"d\"\r\n}",
+					"raw": "{\r\n    \"name\": \"doctor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"doctor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": \"9007199254740991\",\r\n    \"type\": \"d\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -106,7 +106,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"counselor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"counselor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": 9007199254740991,\r\n    \"type\": \"c\"\r\n}",
+					"raw": "{\r\n    \"name\": \"counselor\",\r\n    \"address\": \"Montreal\",\r\n    \"email\": \"counselor@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"medical_staff\",\r\n    \"license_number\": \"9007199254740991\",\r\n    \"type\": \"c\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
