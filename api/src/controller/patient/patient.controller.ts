@@ -5,17 +5,16 @@ const patientRouter = express.Router();
 
 patientRouter.post("/assessment", async (req, res) => {
   try {
-    const { patient_id, comments, answers } = req.body;
+    const { patient_id, answers } = req.body;
 
     const user = await userService.findUserById(patient_id);
     if (!user) {
-      return res.status(404).send("User record not found");
+      return res.status(404).send("Patient record not found");
     }
 
     const assessment = await patientService.createPatientAssessment(
       patient_id,
       answers,
-      comments,
       user
     );
 
@@ -52,8 +51,18 @@ patientRouter.get("/appointment/:patient_id", async (req, res) => {
 
 patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
   try {
+    const { appointment_Id } = req.params;
+
+    let app = await patientService.findAppointmentById(+appointment_Id);
+
+    const user = await userService.findUserById(app.patient_id);
+    if (!user) {
+      return res.status(404).send("Patient record not found");
+    }
+
     const appointment = await patientService.acceptAppointmentByPatient(
-      +req.params.appointment_Id
+      appointment_Id,
+      user
     );
     res.status(200).json(appointment);
   } catch (error) {

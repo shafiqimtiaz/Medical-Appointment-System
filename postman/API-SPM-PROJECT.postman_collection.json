@@ -381,7 +381,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -425,12 +425,6 @@
 						"assessment",
 						":assessment_Id",
 						"cancel"
-					],
-					"variable": [
-						{
-							"key": "assessment_Id",
-							"value": "5"
-						}
 					]
 				}
 			},

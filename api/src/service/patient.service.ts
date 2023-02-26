@@ -3,7 +3,6 @@ import { db } from "../util/database";
 async function createPatientAssessment(
   patient_id: any,
   answers: any[],
-  comments: string,
   user: any
 ) {
   try {
@@ -18,7 +17,6 @@ async function createPatientAssessment(
             };
           }),
         },
-        comments: comments,
         created_by: user.name,
       },
       include: {
@@ -44,7 +42,7 @@ async function cancelAssessmentByPatient(assessment_id: any) {
   }
 }
 
-async function acceptAppointmentByPatient(appointment_id: any) {
+async function acceptAppointmentByPatient(appointment_id: any, user: any) {
   try {
     return await await db.appointments.update({
       where: {
@@ -52,6 +50,7 @@ async function acceptAppointmentByPatient(appointment_id: any) {
       },
       data: {
         active: true,
+        updated_by: user.name,
       },
     });
   } catch (error) {
