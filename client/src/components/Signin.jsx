@@ -5,7 +5,10 @@ import { Link } from 'react-router-dom';
 const {mTap} = Typography;
 
 const linkStyle = {
-    color:'black'
+    color:'black',
+    display:'flex',
+    alignItems:'center',
+    marginLeft:'-50px'
     
 };
 
@@ -23,6 +26,7 @@ export default function Signin() {
       maxWidth: 600,
       display: 'flex',
       flexDirection: 'column',
+      alignContent: 'center'
     }}
     initialValues={{
       remember: true,
@@ -61,9 +65,11 @@ export default function Signin() {
         span: 16,
       }}
     >
+      <Form.Item style={{display:'flex', alignItems:'center'}}>
       <Button type="primary" htmlType="submit">
         Login
       </Button>
+      </Form.Item>
       <Form.Item>
       <Link to="/register">
       <mTap style={linkStyle}>
@@ -71,6 +77,6 @@ export default function Signin() {
       </mTap>
       </Link>
       </Form.Item>
-    </Form.Item>
+      </Form.Item>
   </Form>
 );}

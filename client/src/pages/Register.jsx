@@ -32,7 +32,11 @@ const shapeStyle = {
   left: '0',
   zIndex: '-1',
   clipPath: ' polygon(0% 0%, 33% 0%, 55% 100%, 0% 100%)',
-  backgroundColor: '#112a45'
+  backgroundColor: '#112a45',
+  '@media (max-width: 500px)': {
+    display: 'none'
+  }
+  
 };
 const wrapperStyle = {
   display: 'flex',
@@ -53,6 +57,10 @@ const tabsStyle = {
 }
 const titleStyle = {
   padding: '10px',
+  '@media (max-width: 500px)': {
+    fontSize: '12px'
+  }
+
 };
 
 

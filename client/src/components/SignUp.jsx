@@ -7,6 +7,7 @@ import {
     notification
   } from 'antd';
 import { useState } from 'react';
+import axios from 'axios'
   
   const { Option } = Select;
   const formItemLayout = {
@@ -43,7 +44,7 @@ import { useState } from 'react';
 
     const [name,setName] = useState("");
     const [address,setAddress] = useState("");
-    const [dob,setDOB] = useState("");
+    const [dob,setDOB] = useState(null);
     const [number,setNumber] = useState("");
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
@@ -56,11 +57,42 @@ import { useState } from 'react';
       });
     };
 
+    const handleDateChange = (date)=>{
+      setDOB(date)
+    }
     const handleSubmit = async(e)=>{
       try {
         e.preventDefault()
+        let newUser = null;
+        if(role === 'doctor' || role === '"counselor"'){
+          newUser = {
+            name: name,
+            address: address,
+            date_of_birth: dob,
+            phone_number: number,
+            email: email,
+            password: password,
+            role: role,
+            license_number: regNumber
+          }
+  
+        }
+        else{
+         newUser = {
+          name: name,
+          address: address,
+          date_of_birth: dob,
+          phone_number: number,
+          email: email,
+          password: password,
+          role: role
+        }
+      }
+        const res = await axios.post("/auth/registration",newUser)
+        console.log(res.data);
+        openNotification();
       } catch (error) {
-        
+        console.log(error)
       }
     }
 
@@ -125,7 +157,7 @@ import { useState } from 'react';
             }
         ]}
         >
-        <DatePicker onChange={e=> setDOB(e.target.value)}/>
+        <DatePicker onChange={handleDateChange} value={dob}/>
       </Form.Item>
 
         <Form.Item
