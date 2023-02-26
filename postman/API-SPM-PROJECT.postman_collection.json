@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"patient\",\r\n  \"address\": \"Montreal\",\r\n  \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n  \"phone_number\" : \"514-304-3434\",\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\",\r\n  \"role\" : \"patient\",\r\n  \"health_condition\" : \"bad condition\"\r\n}",
+					"raw": "{\r\n    \"name\": \"patient\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"patient@spm.com\",\r\n    \"password\":\"123456\",\r\n    \"role\" : \"patient\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,16 +133,6 @@
 		{
 			"name": "UserLogin",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
@@ -174,16 +164,6 @@
 		{
 			"name": "GetUserById",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [
 					{
@@ -194,7 +174,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -204,7 +184,13 @@
 						"api",
 						"v1",
 						"user",
-						"1"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -213,20 +199,10 @@
 		{
 			"name": "GetManagerById",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/manager/1",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/manager/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -237,7 +213,13 @@
 						"v1",
 						"user",
 						"manager",
-						"1"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -246,20 +228,10 @@
 		{
 			"name": "GetStaffById",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/3",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/staff/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -270,7 +242,13 @@
 						"v1",
 						"user",
 						"staff",
-						"3"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -279,20 +257,10 @@
 		{
 			"name": "GetPatientById",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/2",
+					"raw": "http://localhost:{{PORT}}/api/v1/user/patient/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -303,7 +271,13 @@
 						"v1",
 						"user",
 						"patient",
-						"2"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -312,21 +286,11 @@
 		{
 			"name": "CreateAppointment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"medicalStaff_Id\": 3,\r\n  \"patient_Id\": 2,\r\n  \"details\": \"Doctor checkup\",\r\n  \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"raw": "{\r\n    \"medicalStaff_Id\": 4,\r\n    \"patient_Id\": 2,\r\n    \"assignedStaff_Id\": 3,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -353,20 +317,10 @@
 		{
 			"name": "AcceptAppointment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/2/accept",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/:appointment_Id/accept",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -377,8 +331,14 @@
 						"v1",
 						"patient",
 						"appointment",
-						"2",
+						":appointment_Id",
 						"accept"
+					],
+					"variable": [
+						{
+							"key": "appointment_Id",
+							"value": "3"
+						}
 					]
 				}
 			},
@@ -387,20 +347,10 @@
 		{
 			"name": "CancelAppointment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/2/cancel",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/:appointment_Id/cancel",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -411,8 +361,14 @@
 						"v1",
 						"patient",
 						"appointment",
-						"2",
+						":appointment_Id",
 						"cancel"
+					],
+					"variable": [
+						{
+							"key": "appointment_Id",
+							"value": "3"
+						}
 					]
 				}
 			},
@@ -421,21 +377,11 @@
 		{
 			"name": "CreateAssessment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
+					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n    ],\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -463,20 +409,10 @@
 		{
 			"name": "CancelAssessment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3001/api/v1/patient/assessment/2/cancel",
+					"raw": "http://localhost:3001/api/v1/patient/assessment/:assessment_Id/cancel",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -487,30 +423,26 @@
 						"v1",
 						"patient",
 						"assessment",
-						"2",
+						":assessment_Id",
 						"cancel"
+					],
+					"variable": [
+						{
+							"key": "assessment_Id",
+							"value": "4"
+						}
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GetAppointment",
+			"name": "GetAppointmentByPatient",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/2",
+					"raw": "http://localhost:{{PORT}}/api/v1/patient/appointment/:patient_id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -521,7 +453,13 @@
 						"v1",
 						"patient",
 						"appointment",
-						"2"
+						":patient_id"
+					],
+					"variable": [
+						{
+							"key": "patient_id",
+							"value": "2"
+						}
 					]
 				}
 			},
@@ -530,16 +468,6 @@
 		{
 			"name": "GetRegistrations",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -562,20 +490,10 @@
 		{
 			"name": "ApproveRegistration",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/9",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -586,7 +504,13 @@
 						"v1",
 						"manager",
 						"approveRegistration",
-						"9"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
@@ -595,20 +519,10 @@
 		{
 			"name": "DenyRegistration",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/13",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -619,7 +533,13 @@
 						"v1",
 						"manager",
 						"denyRegistration",
-						"13"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "3"
+						}
 					]
 				}
 			},
@@ -641,7 +561,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/14",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -652,13 +572,29 @@
 						"v1",
 						"manager",
 						"deletePatient",
-						"14"
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "1"
+						}
 					]
 				}
 			},
 			"response": []
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
