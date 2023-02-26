@@ -1,57 +1,46 @@
 import express from "express";
-import {
-  approveRegistration,
-  deletePatient,
-  getUnapprovedRegistrations,
-  rejectRegistration,
-} from "../../service/managers.service";
+import * as managerService from "../../service/managers.service";
+import { checkAuth } from "../../middleware/auth";
 const managerRouter = express.Router();
 
-const checkAuthorization = (req: any) => {
-  // TODO: check if user is a manager
-  if (req.token) return true;
-
-  return false;
-};
-
 managerRouter.get("/newRegistrations", async (req, res) => {
-  if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
+  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
   try {
-    let newRegistrations = await getUnapprovedRegistrations();
-    res.json(newRegistrations);
+    let newRegistrations = await managerService.getUnapprovedRegistrations();
+    res.status(200).json(newRegistrations);
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to fetch new registrations");
   }
 });
 
 managerRouter.get("/approveRegistration/:id", async (req, res) => {
-  if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
+  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
   try {
-    await approveRegistration(+req.params.id);
-    res.json("Registration approved");
+    await managerService.approveRegistration(+req.params.id);
+    res.status(200).json("Registration approved");
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to approve registration");
   }
 });
 
 managerRouter.get("/denyRegistration/:id", async (req, res) => {
-  if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
+  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
   try {
-    await rejectRegistration(+req.params.id);
-    res.json("Registration denied");
+    await managerService.rejectRegistration(+req.params.id);
+    res.status(200).status(200).json("Registration denied");
   } catch (err) {
     console.error(err);
-    res.status(500).send("Something went wrong");
+    res.status(500).send("Failed to deny registrations");
   }
 });
 
 managerRouter.get("/deletePatient/:id", async (req, res) => {
-  if (!checkAuthorization(req)) return res.status(401).send("Unauthorized");
+  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
   try {
-    await deletePatient(+req.params.id);
-    res.json("Patient deleted");
+    await managerService.deletePatient(+req.params.id);
+    res.status(200).json("Patient deleted");
   } catch (e) {
     console.error(e);
     res.status(500).send("Something went wrong");

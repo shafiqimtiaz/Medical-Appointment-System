@@ -29,3 +29,8 @@ export function isAuthenticated(
 
   return next();
 }
+
+export const checkAuth = (req: any) => {
+  if (req.token) return true;
+  return false;
+};
