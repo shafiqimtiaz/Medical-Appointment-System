@@ -20,7 +20,6 @@ function App() {
       <Route index element={<Home/>}/>
       <Route path="register" element={<Register/>}/>
       <Route path="dashboard" element={<Dashboard/>}/>
-      <Route path="/Admin" element={ <Manager/> }> </Route>
     </Route>
     </Routes>
     </BrowserRouter>
