@@ -2,9 +2,9 @@ import { db } from "../util/database";
 
 async function createPatientAssessment(
   patient_id: any,
-  user: any,
-  assessmentDetails: string,
-  answers: any[]
+  answers: any[],
+  comments: string,
+  user: any
 ) {
   try {
     return await db.assessments.create({
@@ -13,11 +13,13 @@ async function createPatientAssessment(
         answers: {
           create: answers.map((answer) => {
             return {
-              answer: answer.answer,
               question: answer.question,
+              answer: answer.answer,
             };
           }),
         },
+        comments: comments,
+        created_by: user.name,
       },
       include: {
         answers: true,

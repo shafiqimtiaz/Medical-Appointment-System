@@ -19,7 +19,7 @@ counselorRouter.post("/appointment", async (req, res) => {
       appointmentDate,
       user
     );
-    res.status(201).json({ appointment });
+    res.status(201).json(appointment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to create appointment");

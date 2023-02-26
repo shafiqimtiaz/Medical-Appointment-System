@@ -7,44 +7,47 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERD.svg"
+}
+
 model Appointments {
   appointment_id   Int           @id @default(autoincrement())
-  details          String        @db.VarChar(1000)
-  appointment_date DateTime      @db.Timestamp(6)
   active           Boolean       @default(false)
+  appointment_date DateTime      @db.Timestamp(6)
+  comments         String        @db.VarChar(1000)
   created_at       DateTime      @default(now()) @db.Timestamp(6)
   created_by       String        @db.VarChar(50)
   updated_at       DateTime      @updatedAt @db.Timestamp(6)
   updated_by       String        @db.VarChar(50)
-  medical_staff_id Int
   patient_id       Int
-  medical_staff    Medical_staff @relation(fields: [medical_staff_id], references: [medical_staff_id])
+  medical_staff_id Int
   patients         Patients      @relation(fields: [patient_id], references: [patient_id], map: "appointments_patients_fk")
+  medical_staff    Medical_staff @relation(fields: [medical_staff_id], references: [medical_staff_id])
 
   @@unique([medical_staff_id, patient_id])
   @@map("appointments")
 }
 
 model Assessments {
-  assessment_id    Int            @id @default(autoincrement())
-  active           Boolean        @default(true)
-  created_at       DateTime       @default(now()) @db.Timestamp(6)
-  updated_at       DateTime       @updatedAt @db.Timestamp(6)
-  patient_id       Int            @unique
-  medical_staff_id Int?
-  answers          Answers[]
-  medical_staff    Medical_staff? @relation(fields: [medical_staff_id], references: [medical_staff_id])
-  patients         Patients       @relation(fields: [patient_id], references: [patient_id], map: "assessments_patients_fk")
+  assessment_id Int       @id @default(autoincrement())
+  active        Boolean   @default(true)
+  comments      String    @db.VarChar(1000)
+  created_at    DateTime  @default(now()) @db.Timestamp(6)
+  created_by    String    @db.VarChar(50)
+  patient_id    Int       @unique
+  answers       Answers[]
+  patients      Patients  @relation(fields: [patient_id], references: [patient_id], map: "assessments_patients_fk")
 
   @@map("assessments")
 }
 
 model Patients {
-  patient_id       Int            @id
-  health_condition String         @db.VarChar(1000)
-  appointments     Appointments[]
-  assessments      Assessments[]
-  users            Users          @relation(fields: [patient_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+  patient_id   Int            @id @unique
+  appointments Appointments[]
+  assessments  Assessments?
+  users        Users          @relation(fields: [patient_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("patients")
 }
@@ -53,11 +56,11 @@ model Users {
   user_id       Int            @id @default(autoincrement())
   name          String         @db.VarChar(50)
   address       String         @db.VarChar(200)
-  email         String         @unique @db.VarChar(50)
   date_of_birth DateTime       @db.Date
   phone_number  String         @db.VarChar(20)
-  password      String         @db.VarChar(100)
   role          String         @db.VarChar(50)
+  email         String         @unique @db.VarChar(50)
+  password      String         @db.VarChar(100)
   created_at    DateTime       @default(now()) @db.Timestamp(6)
   updated_at    DateTime       @updatedAt @db.Timestamp(6)
   manager       Manager?
@@ -78,19 +81,18 @@ model Answers {
 }
 
 model Manager {
-  manager_id Int   @id
+  manager_id Int   @id @unique
   users      Users @relation(fields: [manager_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("manager")
 }
 
 model Medical_staff {
-  medical_staff_id Int            @id
+  medical_staff_id Int            @id @unique
   license_number   String         @db.VarChar(50)
   active           Boolean        @default(false)
   type             String         @db.Char(1)
   appointments     Appointments[]
-  assessments      Assessments[]
   users            Users          @relation(fields: [medical_staff_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("medical_staff")

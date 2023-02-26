@@ -5,7 +5,7 @@ const patientRouter = express.Router();
 
 patientRouter.post("/assessment", async (req, res) => {
   try {
-    const { patient_id, details, answers } = req.body;
+    const { patient_id, comments, answers } = req.body;
 
     const user = await userService.findUserById(patient_id);
     if (!user) {
@@ -14,12 +14,12 @@ patientRouter.post("/assessment", async (req, res) => {
 
     const assessment = await patientService.createPatientAssessment(
       patient_id,
-      user,
-      details,
-      answers
+      answers,
+      comments,
+      user
     );
 
-    res.status(201).json(assessment);
+    res.status(200).json(assessment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Failed to create assessment");
@@ -33,7 +33,6 @@ patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
       assessment_Id
     );
     res.status(200).json("Assessment deleted");
-
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to cancel assessment");
@@ -59,7 +58,7 @@ patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
     const appointment = await patientService.acceptAppointmentByPatient(
       appointment_Id
     );
-    res.status(204).json(appointment);
+    res.status(200).json(appointment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to accept appointment");
@@ -74,7 +73,7 @@ patientRouter.delete(
       const appointment = await patientService.cancelAppointmentByPatient(
         appointment_Id
       );
-      res.status(204).json(appointment);
+      res.status(200).json(appointment);
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to cancel appointment");
