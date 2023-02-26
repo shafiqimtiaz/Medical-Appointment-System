@@ -47,10 +47,10 @@ async function acceptAppointmentByPatient(appointment_id: any, user: any) {
     return await await db.appointments.update({
       where: {
         appointment_id: parseInt(appointment_id),
-        updated_by: user.name,
       },
       data: {
         active: true,
+        updated_by: user.name,
       },
     });
   } catch (error) {

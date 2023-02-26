@@ -51,9 +51,11 @@ patientRouter.get("/appointment/:patient_id", async (req, res) => {
 
 patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
   try {
-    const { appointment_Id, patient_id } = req.body;
+    const { appointment_Id } = req.params;
 
-    const user = await userService.findUserById(patient_id);
+    let app = await patientService.findAppointmentById(+appointment_Id);
+
+    const user = await userService.findUserById(app.patient_id);
     if (!user) {
       return res.status(404).send("Patient record not found");
     }
