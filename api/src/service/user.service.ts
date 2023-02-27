@@ -67,7 +67,7 @@ async function createMedicalStaff(user_id: any, staff: MedicalStaffCreateType) {
 async function findUserByEmail(email: any) {
   return await db.users.findUnique({
     where: {
-      email: email,
+      email: email
     },
   });
 }
@@ -76,6 +76,15 @@ async function findUserById(id: any) {
   return await db.users.findUnique({
     where: {
       user_id: id,
+    },
+  });
+}
+
+async function findActiveStaffById(id: number) {
+  return await db.medical_staff.findFirst({
+    where: {
+      medical_staff_id: id,
+      active: true
     },
   });
 }
@@ -112,7 +121,13 @@ async function login(user: any) {
   const existingUser = await findUserByEmail(user.email);
 
   if (!existingUser) {
-    return null;
+    return {message: "user not found!"};
+  }
+
+  const medicalStaff = await findActiveStaffById(existingUser.user_id)
+
+  if(!medicalStaff){
+    return {message: "Staff not approved!"};
   }
 
   const isValidPassword = await bcrypt.compare(
@@ -122,7 +137,7 @@ async function login(user: any) {
 
   if (isValidPassword) {
     let JWTtoken = JWT.generateAccessToken(existingUser);
-    return { access_token: JWTtoken };
+    return { access_token: JWTtoken, user_id: existingUser.user_id, email: existingUser.email, role: existingUser.role };
   } else {
     return null;
   }
