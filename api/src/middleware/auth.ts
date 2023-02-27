@@ -3,6 +3,8 @@ import { jwt } from "../util/jwt";
 
 export interface CustomRequest extends Request {
   token: string;
+  role: string;
+  user_id: string;
 }
 
 export function isAuthenticated(
@@ -19,8 +21,11 @@ export function isAuthenticated(
 
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET);
+
     if (payload) {
       (req as CustomRequest).token = payload;
+      (req as CustomRequest).role = payload.role;
+      (req as CustomRequest).user_id = payload.user_id;
     }
   } catch (err) {
     res.status(401);
@@ -30,7 +35,15 @@ export function isAuthenticated(
   return next();
 }
 
-export const checkAuth = (req: any) => {
-  if (req.token) return true;
-  return false;
+export const authorizeRoles = (...authorizedRoles: string[]) => {
+
+  return (req: Request, res: Response, next: NextFunction) => {
+    if ('token' in req) {
+      const {role} = req as CustomRequest;
+      if (authorizedRoles.includes(role)) {
+        return next();
+      }
+    }
+    return res.json("Unauthorized");
+  };
 };
