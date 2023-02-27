@@ -79,6 +79,15 @@ async function findAssessmentByPatient(user_id: any) {
   });
 }
 
+async function findActiveAssessmentByPatientId(user_id: any) {
+  return await db.assessments.findFirst({
+    where: {
+      patient_id: parseInt(user_id),
+      active: true
+    },
+  });
+}
+
 async function findAppointmentByPatient(user_id: any) {
   return await db.appointments.findMany({
     where: {
@@ -112,4 +121,5 @@ export {
   findAppointmentByPatient,
   findAssessmentById,
   findAppointmentById,
+  findActiveAssessmentByPatientId
 };

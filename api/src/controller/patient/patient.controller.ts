@@ -40,6 +40,23 @@ patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
   }
 });
 
+patientRouter.get("/assessment/findbyuserid/:patient_id", async (req, res) => {
+  try {
+    const { patient_id } = req.params;
+    const activeAssessment = await patientService.findActiveAssessmentByPatientId(patient_id);
+    if(activeAssessment){
+      res.status(200).json(activeAssessment);
+    }else{
+      res.status(200).json({"message": "no active assessment found!"});
+    }
+    
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Something went wrong!");
+  }
+});
+
 patientRouter.get("/appointment/:patient_id", async (req, res) => {
   try {
     const { patient_id } = req.params;
