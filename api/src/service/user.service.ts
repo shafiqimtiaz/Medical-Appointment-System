@@ -21,6 +21,16 @@ type MedicalStaffCreateType = {
   type: string;
 };
 
+async function returnUserRole(user_id: any) {
+  const user = await db.users.findUnique({
+    where: {
+      user_id: user_id,
+    },
+  });
+
+  return user.role;
+}
+
 async function createUser(user: UserCreateType) {
   user.password = bcrypt.hashSync(user.password, 10);
 
@@ -148,6 +158,7 @@ async function login(user: any) {
 export {
   UserCreateType,
   PatientCreateType,
+  returnUserRole,
   createUser,
   createManager,
   createPatients,

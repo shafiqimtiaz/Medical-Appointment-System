@@ -2,9 +2,8 @@ import { db } from "../util/database";
 
 async function createPatientAssessment(
   patient_id: any,
-  user: any,
-  assessmentDetails: string,
-  answers: any[]
+  answers: any[],
+  user: any
 ) {
   try {
     return await db.assessments.create({
@@ -13,11 +12,12 @@ async function createPatientAssessment(
         answers: {
           create: answers.map((answer) => {
             return {
-              answer: answer.answer,
               question: answer.question,
+              answer: answer.answer,
             };
           }),
         },
+        created_by: user.name,
       },
       include: {
         answers: true,
@@ -42,7 +42,7 @@ async function cancelAssessmentByPatient(assessment_id: any) {
   }
 }
 
-async function acceptAppointmentByPatient(appointment_id: any) {
+async function acceptAppointmentByPatient(appointment_id: any, user: any) {
   try {
     return await await db.appointments.update({
       where: {
@@ -50,6 +50,7 @@ async function acceptAppointmentByPatient(appointment_id: any) {
       },
       data: {
         active: true,
+        updated_by: user.name,
       },
     });
   } catch (error) {

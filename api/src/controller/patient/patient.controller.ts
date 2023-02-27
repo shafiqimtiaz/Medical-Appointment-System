@@ -5,21 +5,20 @@ const patientRouter = express.Router();
 
 patientRouter.post("/assessment", async (req, res) => {
   try {
-    const { patient_id, details, answers } = req.body;
+    const { patient_id, answers } = req.body;
 
     const user = await userService.findUserById(patient_id);
     if (!user) {
-      return res.status(404).send("User record not found");
+      return res.status(404).send("Patient record not found");
     }
 
     const assessment = await patientService.createPatientAssessment(
       patient_id,
-      user,
-      details,
-      answers
+      answers,
+      user
     );
 
-    res.status(201).json(assessment);
+    res.status(200).json(assessment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Failed to create assessment");
@@ -28,12 +27,10 @@ patientRouter.post("/assessment", async (req, res) => {
 
 patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
   try {
-    const { assessment_Id } = req.params;
     const assessment = await patientService.cancelAssessmentByPatient(
-      assessment_Id
+      +req.params.assessment_Id
     );
-    res.status(200).json("Assessment deleted");
-
+    res.status(200).json({ Deleted: assessment });
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to cancel assessment");
@@ -59,9 +56,8 @@ patientRouter.get("/assessment/findbyuserid/:patient_id", async (req, res) => {
 
 patientRouter.get("/appointment/:patient_id", async (req, res) => {
   try {
-    const { patient_id } = req.params;
     const appointment = await patientService.findAppointmentByPatient(
-      patient_id
+      +req.params.patient_id
     );
     res.status(200).json(appointment);
   } catch (error) {
@@ -73,10 +69,19 @@ patientRouter.get("/appointment/:patient_id", async (req, res) => {
 patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
   try {
     const { appointment_Id } = req.params;
+
+    let app = await patientService.findAppointmentById(+appointment_Id);
+
+    const user = await userService.findUserById(app.patient_id);
+    if (!user) {
+      return res.status(404).send("Patient record not found");
+    }
+
     const appointment = await patientService.acceptAppointmentByPatient(
-      appointment_Id
+      appointment_Id,
+      user
     );
-    res.status(204).json(appointment);
+    res.status(200).json(appointment);
   } catch (error) {
     console.error(error);
     res.status(500).send("Unable to accept appointment");
@@ -87,11 +92,10 @@ patientRouter.delete(
   "/appointment/:appointment_Id/cancel",
   async (req, res) => {
     try {
-      const { appointment_Id } = req.params;
       const appointment = await patientService.cancelAppointmentByPatient(
-        appointment_Id
+        +req.params.appointment_Id
       );
-      res.status(204).json(appointment);
+      res.status(200).json({ Deleted: appointment });
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to cancel appointment");
