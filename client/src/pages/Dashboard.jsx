@@ -1,5 +1,5 @@
 import React from 'react'
-import Mainmenu from '../Components/Mainmenu.jsx';
+import Mainmenu from '../components/Mainmenu'
 import { Layout, Button, Typography } from 'antd';
 const { Header } = Layout;
 const {Title} = Typography;

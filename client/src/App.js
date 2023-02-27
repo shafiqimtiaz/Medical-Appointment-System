@@ -1,16 +1,11 @@
+import Home from "./pages/Home";
+import Register from "./pages/Register";
 import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
   BrowserRouter,
   Routes,
+  Route,
 } from "react-router-dom";
-import Dashboard from './Pages/Dashboard';
-import Home from './Pages/Home';
-import Register from './Pages/Register';
-import Manager from './Pages/ManagerPanel/Manager';
-
+import Dashboard from "./pages/Dashboard";
 
 function App() {
   return (
