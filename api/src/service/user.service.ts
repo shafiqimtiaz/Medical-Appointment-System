@@ -124,10 +124,12 @@ async function login(user: any) {
     return {message: "user not found!"};
   }
 
-  const medicalStaff = await findActiveStaffById(existingUser.user_id)
+  if(existingUser.role == "medical_staff"){
+    const medicalStaff = await findActiveStaffById(existingUser.user_id);
 
-  if(!medicalStaff){
-    return {message: "Staff not approved!"};
+    if(!medicalStaff){
+      return {message: "Staff not approved!"};
+    }
   }
 
   const isValidPassword = await bcrypt.compare(
@@ -137,7 +139,7 @@ async function login(user: any) {
 
   if (isValidPassword) {
     let JWTtoken = JWT.generateAccessToken(existingUser);
-    return { access_token: JWTtoken, user_id: existingUser.user_id, email: existingUser.email, role: existingUser.role };
+    return { access_token: JWTtoken, user_id: existingUser.user_id, email: existingUser.email, name: existingUser.name, role: existingUser.role };
   } else {
     return null;
   }
