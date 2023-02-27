@@ -17,7 +17,6 @@ async function createPatientAssessment(
             };
           }),
         },
-        created_by: user.name,
       },
       include: {
         answers: true,
