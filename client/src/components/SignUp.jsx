@@ -64,7 +64,7 @@ import axios from 'axios'
       try {
         e.preventDefault()
         let newUser = null;
-        if(role === 'doctor' || role === '"counselor"'){
+        if(role === 'doctor'){
           newUser = {
             name: name,
             address: address,
@@ -72,10 +72,24 @@ import axios from 'axios'
             phone_number: number,
             email: email,
             password: password,
-            role: role,
-            license_number: regNumber
+            role: "medical_staff",
+            license_number: regNumber,
+            type: 'd'
           }
   
+        }
+        else if (role === 'counselor'){
+          newUser = {
+            name: name,
+            address: address,
+            date_of_birth: dob,
+            phone_number: number,
+            email: email,
+            password: password,
+            role: "medical_staff",
+            license_number: regNumber,
+            type: 'c'
+          }
         }
         else{
          newUser = {
@@ -85,7 +99,9 @@ import axios from 'axios'
           phone_number: number,
           email: email,
           password: password,
-          role: role
+          role: role,
+          health_condition: "initial"
+
         }
       }
         const res = await axios.post("/auth/registration",newUser)

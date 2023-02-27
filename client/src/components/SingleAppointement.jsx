@@ -3,9 +3,14 @@ import React from 'react'
 import { Table} from 'antd';
 const columns = [
   {
-    title: 'Doctor/Counselor',
-    dataIndex: 'dc',
-    key: 'dc',
+    title: 'Medical Staff',
+    dataIndex: 'medical_staff',
+    key: 'medical_staff',
+},
+  {
+    title: 'Type',
+    dataIndex: 'type',
+    key: 'type',
   },
   {
     title: 'Date',
@@ -21,20 +26,23 @@ const columns = [
 const data = [
   {
     key: '1',
-    dc: 'Shafiq Imtiaz',
+    medical_staff: 'Shafiq Imtiaz',
+    type: 'D',
     date: '12th December',
     time: '12:00 PM',
 
   },
   {
     key: '2',
-    dc: 'Shafiq Imtiaz',
+    medical_staff: 'Shafiq Imtiaz',
+    type: 'D',
     date: '12th December',
     time: '12:00 PM',
   },
   {
     key: '3',
-    dc: 'Shafiq Imtiaz',
+    medical_staff: 'Shafiq Imtiaz',
+    type: 'C',
     date: '12th December',
     time: '12:00 PM',
   },
