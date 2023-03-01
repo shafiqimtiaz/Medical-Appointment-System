@@ -48,4 +48,21 @@ managerRouter.delete("/deletePatient/:id", authorizeRoles("manager"), async (req
   }
 });
 
+managerRouter.get("/getallusers", authorizeRoles("manager"), async (req, res) => {
+  try {
+    const patients = removePasssword(await managerService.getAllUsers());
+    res.status(200).json(patients);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Something went wrong");
+  }
+});
+
+function removePasssword(users: any){
+    users.forEach(user => {
+        delete user.password
+    });
+    return users;
+}
+
 export default managerRouter;

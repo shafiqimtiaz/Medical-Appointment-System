@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
+		"_postman_id": "d6ffaf6a-a73a-4a65-817d-3aac46e57e37",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19239159"
+		"_exporter_id": "4848308"
 	},
 	"item": [
 		{
@@ -482,6 +482,38 @@
 						"v1",
 						"manager",
 						"newRegistrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/getallusers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"getallusers"
 					]
 				}
 			},
