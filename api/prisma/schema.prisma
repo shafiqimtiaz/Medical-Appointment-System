@@ -24,7 +24,6 @@ model answers {
 
 model appointments {
   appointment_id   Int           @id @default(autoincrement())
-  details          String        @db.VarChar(1000)
   appointment_date DateTime      @db.Timestamp(6)
   active           Boolean       @default(false)
   created_at       DateTime      @default(now()) @db.Timestamp(6)
