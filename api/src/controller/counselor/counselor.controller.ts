@@ -4,7 +4,7 @@ import * as userService from "../../service/user.service";
 import {authorizeRoles} from "../../middleware/auth";
 const counselorRouter = express.Router();
 
-counselorRouter.post("/appointment", authorizeRoles("counselor"), async (req, res) => {
+counselorRouter.post("/appointment", authorizeRoles("medical_staff"), async (req, res) => {
   const { medicalStaff_Id, patient_Id, assignedStaff_Id, appointmentDate } =
     req.body;
 
