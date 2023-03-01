@@ -1,12 +1,11 @@
 import React from 'react';
 import { Form, Input, Button, Typography,DatePicker, notification } from "antd";
-import axios from 'axios';
 import NOTIFICATION_DETAILS from "./Constants";
 import showNotification from "./showNotification";
 import acceptPatient from './AddUserWithBackEnd';
 
 
-export const AddUser = () => {
+export const AddUser = (props) => {
     const [form] = Form.useForm();
     const { Title, Text } = Typography;
 
@@ -25,18 +24,16 @@ export const AddUser = () => {
                     password: values.password,
                     role: 'patient',
                     date_of_birth: values.dob,
-                    health_condition : "bad condition",
                     phone_number: values.number
                 };
 
                 acceptPatient(patient);
                 showNotification("success", NOTIFICATION_DETAILS.success);
                 form.resetFields();
+                props.handleSubmit();
                    
 			})
 			.catch((errorInfo) => {
-                console.log("not working");
-                window.alert('not working');
                 showNotification("error", NOTIFICATION_DETAILS.error);
             });
 	};
