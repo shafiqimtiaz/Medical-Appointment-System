@@ -1,9 +1,43 @@
 import React from 'react';
 import { Form, Input, Button, Typography,DatePicker } from "antd";
+import axios from 'axios';
 
 export const AddUser = () => {
     const [form] = Form.useForm();
     const { Title, Text } = Typography;
+
+    const acceptPatient = async(patient)=>{
+        try {
+          const res = await axios.post(`http://localhost:3001/api/v1/auth/registration`, patient);
+        } catch (error) {
+          
+        }
+      }
+
+    const handleFormSubmit = () => {
+		form.validateFields()
+			.then((values) => {
+                // console.log(`hello world`);
+                // console.log(values);
+
+                const patient = {
+                    name : values.name,
+                    address: values.address,
+                    email: values.email,
+                    password: values.password,
+                    role: 'patient',
+                    dob: values.dob,
+                    health_condition : "bad condition",
+                    phoneNumber: values.number
+                };
+
+                acceptPatient(patient);
+
+
+			})
+			.catch((errorInfo) => {});
+	};
+
     return (
         <div>
             <Title // Form's Title
@@ -135,7 +169,7 @@ export const AddUser = () => {
                 <Form.Item // Form Item (Submit Button)
                 style={{ textAlign: 'left' }}
                 >
-                    <Button type="primary">Submit</Button>
+                    <Button type="primary" onClick={handleFormSubmit}>Submit</Button>
                 </Form.Item>
             </Form>
         </div>
