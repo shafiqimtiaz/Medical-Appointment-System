@@ -1,10 +1,10 @@
 import express from "express";
 import * as managerService from "../../service/managers.service";
-import { checkAuth } from "../../middleware/auth";
+import { authorizeRoles } from "../../middleware/auth";
 const managerRouter = express.Router();
 
-managerRouter.get("/newRegistrations", async (req, res) => {
-  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
+managerRouter.get("/newRegistrations", authorizeRoles("manager"), async (req, res) => {
+
   try {
     let newRegistrations = await managerService.getUnapprovedRegistrations();
     res.status(200).json(newRegistrations);
@@ -14,8 +14,7 @@ managerRouter.get("/newRegistrations", async (req, res) => {
   }
 });
 
-managerRouter.put("/approveRegistration/:id", async (req, res) => {
-  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
+managerRouter.put("/approveRegistration/:id", authorizeRoles("manager"), async (req, res) => {
   try {
     const registration = await managerService.approveRegistration(
       +req.params.id
@@ -27,8 +26,7 @@ managerRouter.put("/approveRegistration/:id", async (req, res) => {
   }
 });
 
-managerRouter.delete("/denyRegistration/:id", async (req, res) => {
-  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
+managerRouter.delete("/denyRegistration/:id", authorizeRoles("manager"), async (req, res) => {
   try {
     const registration = await managerService.rejectRegistration(
       +req.params.id
@@ -40,8 +38,7 @@ managerRouter.delete("/denyRegistration/:id", async (req, res) => {
   }
 });
 
-managerRouter.delete("/deletePatient/:id", async (req, res) => {
-  if (!checkAuth(req)) return res.status(401).send("Unauthorized");
+managerRouter.delete("/deletePatient/:id", authorizeRoles("manager"), async (req, res) => {
   try {
     const patient = await managerService.deletePatient(+req.params.id);
     res.status(200).json({ Deleted: patient });

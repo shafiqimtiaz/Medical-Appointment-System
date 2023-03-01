@@ -1,9 +1,10 @@
 import express from "express";
 import * as patientService from "../../service/patient.service";
 import * as userService from "../../service/user.service";
+import {authorizeRoles} from "../../middleware/auth";
 const patientRouter = express.Router();
 
-patientRouter.post("/assessment", async (req, res) => {
+patientRouter.post("/assessment", authorizeRoles("patient"), async (req, res) => {
   try {
     const { patient_id, answers } = req.body;
 
@@ -25,7 +26,7 @@ patientRouter.post("/assessment", async (req, res) => {
   }
 });
 
-patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
+patientRouter.delete("/assessment/:assessment_Id/cancel", authorizeRoles("patient"), async (req, res) => {
   try {
     const assessment = await patientService.cancelAssessmentByPatient(
       +req.params.assessment_Id
@@ -37,7 +38,7 @@ patientRouter.delete("/assessment/:assessment_Id/cancel", async (req, res) => {
   }
 });
 
-patientRouter.get("/assessment/findbyuserid/:patient_id", async (req, res) => {
+patientRouter.get("/assessment/findbyuserid/:patient_id", authorizeRoles("patient"), async (req, res) => {
   try {
     const { patient_id } = req.params;
     const activeAssessment = await patientService.findActiveAssessmentByPatientId(patient_id);
@@ -54,7 +55,7 @@ patientRouter.get("/assessment/findbyuserid/:patient_id", async (req, res) => {
   }
 });
 
-patientRouter.get("/appointment/:patient_id", async (req, res) => {
+patientRouter.get("/appointment/:patient_id", authorizeRoles("patient"), async (req, res) => {
   try {
     const appointment = await patientService.findAppointmentByPatient(
       +req.params.patient_id
@@ -66,7 +67,7 @@ patientRouter.get("/appointment/:patient_id", async (req, res) => {
   }
 });
 
-patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
+patientRouter.put("/appointment/:appointment_Id/accept", authorizeRoles("patient"), async (req, res) => {
   try {
     const { appointment_Id } = req.params;
 
@@ -90,6 +91,7 @@ patientRouter.put("/appointment/:appointment_Id/accept", async (req, res) => {
 
 patientRouter.delete(
   "/appointment/:appointment_Id/cancel",
+  authorizeRoles("patient"),
   async (req, res) => {
     try {
       const appointment = await patientService.cancelAppointmentByPatient(
