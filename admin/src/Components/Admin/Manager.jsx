@@ -6,6 +6,9 @@ import { ParentTable } from './ParentTable';
 const { Header, Content, Sider, Footer } = Layout;
 
 
+
+
+
 export const  Manager = () => {
     const [selectedMenuItem, setSelectedMenuItem] = useState("2");
     let content;
@@ -22,6 +25,24 @@ export const  Manager = () => {
       default:
         content = <ParentTable item={selectedMenuItem}/>;
     }
+    const menuItems = 
+[
+    {
+        key:"2",
+        label:"View Users",
+        onClick:() => setSelectedMenuItem("2"),
+    },
+    {
+        key:"1",
+        label:"View registers",
+        onClick:() => setSelectedMenuItem("1"),
+    },
+    {
+        key:"3",
+        label:"Add new user",
+        onClick:() => setSelectedMenuItem("3"),
+    },
+]
     return (
     <Layout style={{ minHeight: '100vh' }}>
         <Header>
@@ -32,10 +53,7 @@ export const  Manager = () => {
         </Header>
         <Layout>
             <Sider width={200} className="sidebar">
-                <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']}>
-                    <Menu.Item key="2" onClick={() => setSelectedMenuItem("2")}>View Users</Menu.Item>
-                    <Menu.Item key="1" onClick={() => setSelectedMenuItem("1")}>View registers</Menu.Item>
-                    <Menu.Item key="3" onClick={() => setSelectedMenuItem("3")}>Add new user</Menu.Item>
+                <Menu theme="dark" mode="inline" defaultSelectedKeys={['2']} items={menuItems}>
                 </Menu>
             </Sider>
             <Layout className="main-content">

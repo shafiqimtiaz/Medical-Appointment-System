@@ -5,7 +5,7 @@ export const ViewRegisters = (props) => {
 
     //const [statusFilter, setStatusFilter] = useState('All'); // initialize status filter to show all entries
 
-  const filteredData = props.data.filter(item => item.status === 'Pending');
+    const filteredData = props.data.filter(item => item.status === 'Pending');
 
     const columns = [
       {
