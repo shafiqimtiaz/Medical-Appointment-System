@@ -15,6 +15,9 @@ async function createAppointment(
         created_by: user.name,
         updated_by: user.name,
       },
+      include: {
+        medical_staff: true
+      }
     });
     return appointment;
   } catch (error) {
