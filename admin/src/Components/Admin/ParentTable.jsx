@@ -9,7 +9,8 @@ import axios from 'axios';
 export const ParentTable  = ({ item }) => {
   
     // const handleDelete = (id) => {
-        
+      window.alert(id);
+        //
     //     setData(updatedData);
     // };
     const handleDelete = async (id) => {
@@ -39,7 +40,7 @@ export const ParentTable  = ({ item }) => {
       //console.log(dateOfBirth);
       let [year, month, day] = dateOfBirth.split('-');
       day = day.substring(0,2);
-      console.log(year + " " + month + " " + day);
+      //console.log(year + " " + month + " " + day);
       const today = new Date();
       const birthDate = new Date(year, month - 1, day);
       let age = today.getFullYear() - birthDate.getFullYear();
@@ -57,6 +58,17 @@ export const ParentTable  = ({ item }) => {
       }else{
         return medicalStaff.active === true ? 'Active' : 'Pending';
       }
+    }
+
+    const getRole = (user) => {
+      return user.role === 'patient' ? user.role : user.medical_staff.type === 'd' ? 'Doctor' : 'Counsellor';
+    }
+
+    const getLicenseNumber = (user) => {      
+      if(user.role === 'patient'){
+        return 'N/A';
+      }
+      return user.medical_staff.license_number;
     }
     
     //Same as delete
@@ -85,9 +97,9 @@ export const ParentTable  = ({ item }) => {
             number: user.phone_number,
             address: user.address,
             email: user.email,
-            role: user.role,
+            role: getRole(user),
             status: getStaffStatus(user.medical_staff),
-            license: null,
+            license: getLicenseNumber(user)
 
           }
           newUserArray.push(userObj);
@@ -95,7 +107,7 @@ export const ParentTable  = ({ item }) => {
         setData(newUserArray);
       };
         fetchData();
-      }, [handleSubmit,handleDelete]);
+      }, [data]);
     }
     catch (error)
     {
