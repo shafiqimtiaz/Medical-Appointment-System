@@ -137,7 +137,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"patient@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"manager@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -189,7 +189,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": ""
 						}
 					]
 				}
@@ -218,7 +218,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": ""
 						}
 					]
 				}
@@ -247,7 +247,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": ""
 						}
 					]
 				}
@@ -276,7 +276,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": ""
 						}
 					]
 				}
@@ -290,7 +290,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"medicalStaff_Id\": 4,\r\n    \"patient_Id\": 2,\r\n    \"assignedStaff_Id\": 3,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"raw": "{\r\n    \"medicalStaff_Id\": 11,\r\n    \"patient_Id\": 10,\r\n    \"assignedStaff_Id\": 7,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -337,7 +337,7 @@
 					"variable": [
 						{
 							"key": "appointment_Id",
-							"value": "3"
+							"value": ""
 						}
 					]
 				}
@@ -367,7 +367,7 @@
 					"variable": [
 						{
 							"key": "appointment_Id",
-							"value": "3"
+							"value": ""
 						}
 					]
 				}
@@ -381,7 +381,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n  ]\r\n}",
+					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -425,6 +425,12 @@
 						"assessment",
 						":assessment_Id",
 						"cancel"
+					],
+					"variable": [
+						{
+							"key": "assessment_Id",
+							"value": ""
+						}
 					]
 				}
 			},
@@ -484,10 +490,10 @@
 		{
 			"name": "ApproveRegistration",
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:id",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:medicalStaff_id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -498,12 +504,12 @@
 						"v1",
 						"manager",
 						"approveRegistration",
-						":id"
+						":medicalStaff_id"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "medicalStaff_id",
+							"value": "4"
 						}
 					]
 				}
@@ -513,10 +519,10 @@
 		{
 			"name": "DenyRegistration",
 			"request": {
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:id",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:medicalStaff_id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -527,12 +533,12 @@
 						"v1",
 						"manager",
 						"denyRegistration",
-						":id"
+						":medicalStaff_id"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "3"
+							"key": "medicalStaff_id",
+							"value": ""
 						}
 					]
 				}
@@ -552,10 +558,10 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:id",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:patient_id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -566,12 +572,12 @@
 						"v1",
 						"manager",
 						"deletePatient",
-						":id"
+						":patient_id"
 					],
 					"variable": [
 						{
-							"key": "id",
-							"value": "1"
+							"key": "patient_id",
+							"value": ""
 						}
 					]
 				}
