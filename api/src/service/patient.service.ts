@@ -93,6 +93,9 @@ async function findAppointmentByPatient(user_id: any) {
     where: {
       patient_id: parseInt(user_id),
     },
+    include: {
+      medical_staff: true
+    }
   });
 }
 
