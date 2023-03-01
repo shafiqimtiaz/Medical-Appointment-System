@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Form, Input, Typography } from 'antd';
+import { Button, Form, Input, Typography, notification } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
@@ -16,10 +16,19 @@ const linkStyle = {
 
 export default function Signin() {
 
+  const awaitNotification = () => {
+    notification.open({
+      message: 'Registration is not yet approved',
+      placement: 'top'
+    });
+  };
+
+
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   const dispatch = useDispatch()
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+
   const handleLogIn = async(e) =>{
     e.preventDefault();
     dispatch(loginStart());
@@ -31,7 +40,12 @@ export default function Signin() {
       }
       const res = await axios.post("/auth/login",user)
       dispatch(loginSuccess(res.data));
+      if(res.data.message === "Staff not approved!")
+      awaitNotification();
+
+      else{
       navigate('/dashboard');
+      }
     } catch (error) {
       dispatch(loginFailure);
     }
