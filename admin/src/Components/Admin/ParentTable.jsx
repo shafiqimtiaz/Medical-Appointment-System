@@ -22,6 +22,30 @@ export const ParentTable  = ({ item }) => {
         // implement logic to accept user
             alert("User Accepted");
     };
+
+    function calculateAge(dateOfBirth) {
+      //console.log(dateOfBirth);
+      let [year, month, day] = dateOfBirth.split('-');
+      day = day.substring(0,2);
+      console.log(year + " " + month + " " + day);
+      const today = new Date();
+      const birthDate = new Date(year, month - 1, day);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
+    
+    const getStaffStatus = (medicalStaff) =>{
+
+      if(medicalStaff === null || medicalStaff === NaN){
+        return 'Active';
+      }else{
+        return medicalStaff.active === true ? 'Active' : 'Pending';
+      }
+    }
     
     //Same as delete
     const handleReject = (record) => {
@@ -40,16 +64,19 @@ export const ParentTable  = ({ item }) => {
         const userArray = result.data;
         let newUserArray= [];
         userArray.map(function(user){
+
           const userObj = {
             key: user.user_id,
             id: user.user_id,
             name: user.name,
-            age: user.date_of_birth,
+            age: calculateAge(user.date_of_birth),
+            number: user.phone_number,
             address: user.address,
             email: user.email,
             role: user.role,
-            status: 'Active',
+            status: getStaffStatus(user.medical_staff),
             license: null,
+
           }
           newUserArray.push(userObj);
         });
@@ -62,8 +89,6 @@ export const ParentTable  = ({ item }) => {
     {
       console.log(error)
     }
-
-    //const { currentUser } = useSelector((state) => state.user);
     
   return (
     // <TableComponent data={data} handleDelete={handleDelete} />

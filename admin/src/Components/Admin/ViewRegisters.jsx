@@ -39,6 +39,11 @@ export const ViewRegisters = (props) => {
         key: 'role',
       },
       {
+        title: 'Phone Number',
+        dataIndex: 'number',
+        key: 'number',
+      },
+      {
         title: 'License',
         dataIndex: 'license',
         key: 'license',

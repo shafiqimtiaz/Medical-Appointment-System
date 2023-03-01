@@ -42,6 +42,11 @@ export const ListUsers = (props) => {
           ),
       },
       {
+        title: 'Phone Number',
+        dataIndex: 'number',
+        key: 'number',
+      },
+      {
         title: 'Status',
         dataIndex: 'status',
         key: 'status',
