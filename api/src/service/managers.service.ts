@@ -51,9 +51,25 @@ async function deletePatient(patient_id: any) {
   }
 }
 
+async function getAllUsers(){
+  return await db.users.findMany({
+    where: {
+      NOT: {
+        role: "manager"
+      }
+    },
+    include: {
+      manager: true,
+      medical_staff: true,
+      patients: true
+    }
+});
+}
+
 export {
   getUnapprovedRegistrations,
   approveRegistration,
   rejectRegistration,
   deletePatient,
+  getAllUsers
 };
