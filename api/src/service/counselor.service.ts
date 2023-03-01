@@ -10,14 +10,10 @@ async function createAppointment(
     const appointment = await db.appointments.create({
       data: {
         appointment_date: new Date(appointmentDate),
-        patients: { connect: { patient_id: patient_Id } },
-        medical_staff: { connect: { medical_staff_id: assignedStaff_Id } },
+        patient_id: patient_Id,
+        medical_staff_id: assignedStaff_Id,
         created_by: user.name,
         updated_by: user.name,
-      },
-      include: {
-        patients: true,
-        medical_staff: true,
       },
     });
     return appointment;
