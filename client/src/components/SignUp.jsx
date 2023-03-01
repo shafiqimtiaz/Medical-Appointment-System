@@ -108,12 +108,11 @@ import axios from 'axios'
           email: email,
           password: password,
           role: role,
-          health_condition: "initial"
 
         }
       }
         const res = await axios.post("/auth/registration",newUser)
-        if(role != "patient" ){
+        if(role !== "patient" ){
           approveNotification()
         }
         else{

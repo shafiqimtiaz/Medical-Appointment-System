@@ -11,9 +11,12 @@ const columns = [
   },
   {
     title: 'Type',
-    dataIndex: 'type',
+    dataIndex: ['medical_staff','type'],
     key: 'type',
-  },
+    render:(text,record)=>{
+      return text.toUpperCase()
+    }
+},
   {
     title: 'Date',
     dataIndex: 'appointment_date',
