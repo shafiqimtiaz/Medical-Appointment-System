@@ -62,21 +62,22 @@ export const ViewRegisters = (props) => {
       {
         title: 'Actions',
         key: 'actions',
-        render: () => (
+        render: (text, record) => (
             <div>
               <Button
                 icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
                 style={{ color: '#52c41a', background: 'none', border: 'none' }}
                 onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
                 onMouseLeave={(e) => (e.target.style.color = '#52c41a')}
-                onClick={props.handleAccept}
+                onClick={() => props.handleAccept(record.id)}
               />
               <Button
                 icon={<CloseCircleOutlined style={{ color: '#f5222d' }} />}
                 style={{ color: '#f5222d', background: 'none', border: 'none' }}
                 onMouseEnter={(e) => (e.target.style.color = '#ff8a8a')}
                 onMouseLeave={(e) => (e.target.style.color = '#f5222d')}
-                onClick={props.handleReject}
+                onClick={() => props.handleReject(record.id)}
+                
               />
             </div>
           ),
