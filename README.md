@@ -1,7 +1,6 @@
 # SOEN6841 Winter 2023 Project
 ## Medical Appoinmnet System
 
-Branch
 ```
 main
 |-- integration
@@ -12,9 +11,6 @@ main
         |-- feature/feature-name
             |-- fix/specifics
 ```
-
-
-
 
 ### Project Title: Collecting data for patients with depression
 
