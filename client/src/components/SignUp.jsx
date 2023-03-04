@@ -8,7 +8,9 @@ import {
   } from 'antd';
 import { useState } from 'react';
 import axios from 'axios'
+
  import {useNavigate} from 'react-router-dom' 
+
   const { Option } = Select;
   const formItemLayout = {
     labelCol: {
@@ -64,7 +66,6 @@ import axios from 'axios'
     };
 
 
-
     const handleDateChange = (date)=>{
       setDOB(date)
     }
@@ -72,7 +73,9 @@ import axios from 'axios'
       try {
         e.preventDefault()
         let newUser = null;
+
         if(role === 'doctor'){
+
           newUser = {
             name: name,
             address: address,
@@ -99,6 +102,7 @@ import axios from 'axios'
             type: 'c'
           }
         }
+
         else{
          newUser = {
           name: name,
@@ -119,6 +123,7 @@ import axios from 'axios'
           openNotification();
           navigate('/');
         }
+
       } catch (error) {
         console.log(error)
       }
