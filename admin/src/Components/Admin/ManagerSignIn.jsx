@@ -1,36 +1,92 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {Layout, Space, Typography, Form, Button, Input} from 'antd'
 import axios from 'axios'
+import { Manager } from './Manager.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const {Header, Content} = Layout;
 const {Title} = Typography;
 
+
+const headerStyle = {
+    textAlign: 'center',
+    color: 'black',
+    height: 64,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingInline: 50,
+    lineHeight: '64px',
+    backgroundColor: 'rgba(255, 255, 255)',
+    zIndex: '5'
+  };
+
+const titleStyle = {
+    padding: '10px',
+    marginTop: '15px',
+};
+const contentStyle = {
+    textAlign: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: '10px',
+
+};
+const shapeStyle = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: '0',
+  left: '0',
+  zIndex: '6',
+  clipPath: 'polygon(51.3% 55.8%, 100% 100%, 0% 100%)',
+  backgroundColor: '#112a45'
+};
+const mContentStyle={
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  width: '600px',
+  height: '400px',
+  boxShadow: ' rgba(149, 157, 165, 0.2) 0px 8px 24px',
+  zIndex: '99',
+  backgroundColor:'white'
+}
 // return form with fields and check
-function FormHelper() {
+let access_token = null;
+function FormHelper(props) {
 
     const [form] = Form.useForm();
 
+    const acceptSignIn = async(user)=>{
+        try {
+            
+            let response = await axios.post('http://localhost:3001/api/v1/auth/login',user);
+            if(response.data.message === 'user not found!'){
+                console.log(response);
+            }else{
+                console.log(response);
+                access_token = response.data.access_token;
+                props.checkVal();
+                
+            }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+
     const handleManagerSubmit = () => {
         form.validateFields()
-            .then(async (values) => {
-    
+            .then((values) => {
                 const user = {
-                    username: values.username,
+                    email: values.username,
                     password: values.password
-                };
-    
-                const res = await axios.post('http://localhost:3001/api/v1/auth/login',user);
-                console.log(res);
-    
-                
-                   
+                };  
+                acceptSignIn(user);                 
             })
-            .catch((errorInfo) => {
-                
-            });
     };
-
-
     return (
       <Form
       name="basic"
@@ -93,55 +149,18 @@ function FormHelper() {
     </Form>
   );}
 
-const headerStyle = {
-    textAlign: 'center',
-    color: 'black',
-    height: 64,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingInline: 50,
-    lineHeight: '64px',
-    backgroundColor: 'rgba(255, 255, 255)',
-    zIndex: '5'
-  };
-
-const titleStyle = {
-    padding: '10px',
-    marginTop: '15px',
-};
-const contentStyle = {
-    textAlign: 'center',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '10px',
-
-};
-const shapeStyle = {
-  width: '100%',
-  height: '100%',
-  position: 'absolute',
-  top: '0',
-  left: '0',
-  zIndex: '6',
-  clipPath: 'polygon(51.3% 55.8%, 100% 100%, 0% 100%)',
-  backgroundColor: '#112a45'
-};
-const mContentStyle={
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  width: '600px',
-  height: '400px',
-  boxShadow: ' rgba(149, 157, 165, 0.2) 0px 8px 24px',
-  zIndex: '99',
-  backgroundColor:'white'
-}
   
  function ManagerSignIn() {
+
+  const [val, setVal] = useState(false);
+  const navigate = useNavigate();
+  function handleChange(){
+    const updatedVal = true;
+    setVal(updatedVal);
+  }
   return (
+    
+    val ? navigate('/Manager',{state:{val: access_token}}) : 
     <Space
     direction="vertical"
     style={{
@@ -156,10 +175,11 @@ const mContentStyle={
       <Content style={contentStyle}>
       <mContent style={mContentStyle}>
       <Title level={4} style={titleStyle}> Manager's Sign In</Title> 
-      <FormHelper />
+      <FormHelper checkVal={handleChange}/>
       </mContent>
       </Content>
-  </Space>
+  </Space> 
+    
   )
 }
 

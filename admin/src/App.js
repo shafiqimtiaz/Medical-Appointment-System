@@ -1,5 +1,5 @@
 import './App.css';
-// import { Manager } from './Components/Admin/Manager.jsx';
+import { Manager } from './Components/Admin/Manager.jsx';
 import ManagerSignIn  from './Components/Admin/ManagerSignIn';
 import {
   createBrowserRouter,
@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-            {/* <Route path="/Admin" element={ <Manager/> }> </Route> */}
+            <Route path="/Manager" element={ <Manager/> }> </Route>
             <Route path="/Admin" element={ < ManagerSignIn /> }> </Route>
         </Routes>
       </BrowserRouter>

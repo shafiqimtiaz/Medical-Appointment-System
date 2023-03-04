@@ -6,7 +6,13 @@ import axios from 'axios';
 
 //import { useSelector } from 'react-redux';
 
-export const ParentTable  = ({ item }) => {
+export const ParentTable  = ({ item, accessToken }) => {
+
+  const headers1 ={
+    Authorization: `Bearer ${accessToken}`
+  }
+  console.log(headers1);
+  //console.log("This is access token " + accessToken);
   
     const handleDelete = async (id) => {
       try {
@@ -105,7 +111,7 @@ export const ParentTable  = ({ item }) => {
       };
     useEffect(()=>{
       const fetchData = async () => {
-        const result = await axios.get('/manager/getallusers',{headers});
+        const result = await axios.get('http://localhost:3001/api/v1/manager/getallusers',{headers1});
         const userArray = result.data;
         let newUserArray= [];
         userArray.map(function(user){

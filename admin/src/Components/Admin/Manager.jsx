@@ -2,28 +2,30 @@ import React, { useState } from 'react';
 import { Layout, Menu, Button} from 'antd';
 import './Manager.scss';
 import { ParentTable } from './ParentTable';
+import {useLocation} from 'react-router-dom';
 
 const { Header, Content, Sider, Footer } = Layout;
 
 
-
-
-
 export const  Manager = () => {
+
+    const location = useLocation();
+   // console.log(location.state.val);
+
     const [selectedMenuItem, setSelectedMenuItem] = useState("2");
     let content;
     switch (selectedMenuItem) {
       case "1":
-        content = <ParentTable item={selectedMenuItem} />;
+        content = <ParentTable item={selectedMenuItem} accessToken = {location.state.val} />;
         break;
       case "2":
-        content = <ParentTable item={selectedMenuItem}/>;
+        content = <ParentTable item={selectedMenuItem} accessToken = {location.state.val}/>;
         break;
       case "3":
-        content = <ParentTable item={selectedMenuItem}/>;
+        content = <ParentTable item={selectedMenuItem} accessToken = {location.state.val}/>;
         break;
       default:
-        content = <ParentTable item={selectedMenuItem}/>;
+        content = <ParentTable item={selectedMenuItem} accessToken = {location.state.val} />;
     }
     const menuItems = 
 [
