@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Typography,DatePicker, notification } from "antd";
+import { Form, Input, Button, Typography,DatePicker } from "antd";
 import NOTIFICATION_DETAILS from "./Constants";
 import showNotification from "./showNotification";
 import acceptPatient from './AddUserWithBackEnd';

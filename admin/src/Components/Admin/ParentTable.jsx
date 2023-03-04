@@ -11,7 +11,7 @@ export const ParentTable  = ({ item }) => {
     const handleDelete = async (id) => {
       try {
         const headers = {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
         };
         await axios.delete(`/manager/deletePatient/${id}`,{headers});
         //const updatedData = data;
@@ -24,11 +24,9 @@ export const ParentTable  = ({ item }) => {
     const handleAccept = async (id) => {
       try {
         const headers = {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
         };
-        await axios.put(`/manager/approveRegistration/${id}`,{headers});
-        //const updatedData = data;
-        //setData(updatedData);
+        await axios.put(`http://localhost:3001/api/v1/manager/approveRegistration/${id}`,null,{headers});
       } catch (error) {
         console.error(error);
       }
@@ -39,7 +37,7 @@ export const ParentTable  = ({ item }) => {
       console.log(id);
       try {
         const headers = {
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys'
+          Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
         };
         await axios.delete(`manager/denyRegistration/${id}`,{headers});
         //const updatedData = data;
@@ -103,7 +101,7 @@ export const ParentTable  = ({ item }) => {
     //Fecth data API
     try {
       const headers = {
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys'
+        Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
       };
     useEffect(()=>{
       const fetchData = async () => {
