@@ -1,250 +1,154 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ListUsers } from './ListUsers';
 import { ViewRegisters } from './ViewRegisters';
 import { AddUser } from './AddUser';
+import axios from 'axios';
 
+//import { useSelector } from 'react-redux';
 
-export const ParentTable  = ({ item }) => {
+export const ParentTable  = ({ item, accessToken }) => {
+  
+    const handleDelete = async (id) => {
+      try {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`
+        };
+        await axios.delete(`/manager/deletePatient/${id}`,{headers});
+        //const updatedData = data;
+        //setData(updatedData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const handleAccept = async (id) => {
+      try {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`
+        };
+        await axios.put(`/manager/approveRegistration/${id}`,null,{headers});
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const handleReject = async (id) => {
+
+      console.log(id);
+      try {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`
+        };
+        await axios.delete(`manager/denyRegistration/${id}`,{headers});
+        //const updatedData = data;
+        //setData(updatedData);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+
+    const handleSubmit = (id) => {
+      const updatedData = data;
+      setData(updatedData);
+  };
+
+    // const handleAccept = (record) => {
+    //     // implement logic to accept user
+    //         alert("User Accepted");
+    // };
+
+    function calculateAge(dateOfBirth) {
+      //console.log(dateOfBirth);
+      let [year, month, day] = dateOfBirth.split('-');
+      day = day.substring(0,2);
+      //console.log(year + " " + month + " " + day);
+      const today = new Date();
+      const birthDate = new Date(year, month - 1, day);
+      let age = today.getFullYear() - birthDate.getFullYear();
+      const monthDiff = today.getMonth() - birthDate.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+      }
+      return age;
+    }
     
-    const handleDelete = (id) => {
-        const updatedData = data.filter((item) => item.id !== id);
-        setData(updatedData);
-    };
+    const getStaffStatus = (medicalStaff) =>{
 
-    const handleAccept = (record) => {
-        // implement logic to accept user
-            alert("User Accepted");
-    };
+      if(medicalStaff === null || medicalStaff === NaN){
+        return 'Active';
+      }else{
+        return medicalStaff.active === true ? 'Active' : 'Pending';
+      }
+    }
+
+    const getRole = (user) => {
+      return user.role === 'patient' ? user.role : user.medical_staff.type === 'd' ? 'Doctor' : 'Counsellor';
+    }
+
+    const getLicenseNumber = (user) => {      
+      if(user.role === 'patient'){
+        return 'N/A';
+      }
+      return user.medical_staff.license_number;
+    }
     
-    //Same as delete
-    const handleReject = (record) => {
-        // implement logic to reject user
-            alert("User Rejected");
-    };
-
+    // //Same as delete
+    // const handleReject = (record) => {
+    //     // implement logic to reject user
+    //         alert("User Rejected");
+    // };
+    const [data, setData] = useState([]);
     //Fecth data API
+    try {
+      // const headers1 = {
+      //   Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
+      // };
+      
+    useEffect(()=>{
+      const fetchData = async () => {
+        const headers = {
+          Authorization: `Bearer ${accessToken}`
+        };
+        const result = await axios.get('/manager/getallusers',{headers});
+        const userArray = result.data;
+        let newUserArray= [];
+        userArray.map(function(user){
 
+          const userObj = {
+            key: user.user_id,
+            id: user.user_id,
+            name: user.name,
+            age: calculateAge(user.date_of_birth),
+            number: user.phone_number,
+            address: user.address,
+            email: user.email,
+            role: getRole(user),
+            status: getStaffStatus(user.medical_staff),
+            license: getLicenseNumber(user)
 
-
-    const [data, setData] = useState
-    ([
-        {
-            id: '1',
-            name: 'John Doe',
-            age: 32,
-            address: '123 Main St',
-            email: 'John@gmail.com',
-            role: 'Patient',
-            status: 'Active',
-            license: null,
-          },
-          {
-            id: '2',
-            name: 'Jane Smith',
-            age: 26,
-            address: '456 Park Ave',
-            email: 'Jane@gmail.com',
-            role: 'Doctor',
-            status: 'Active',
-            license: '0001',
-          },
-          {
-            id: '3',
-            name: 'Bob Johnson',
-            age: 45,
-            address: '789 Broadway',
-            email: 'Bob@gmail.com',
-            role: 'Counsler',
-            status: 'Pending',
-            license: '0002',
-          },
-          {
-            id: '4',
-            name: 'Mary Johnson',
-            age: 28,
-            address: '789 Broadway',
-            email: 'Mary@gmail.com',
-            role: 'Counsler',
-            status: 'Active',
-            license: '0003',
-          },
-          {
-            id: '5',
-            name: 'Sarah Lee',
-            age: 39,
-            address: '789 Broadway',
-            email: 'Sarah@gmail.com',
-            role: 'Doctor',
-            status: 'Active',
-            license: '0004',
-          },
-          {
-            id: '6',
-            name: 'David Kim',
-            age: 47,
-            address: '123 Main St',
-            email: 'David@gmail.com',
-            role: 'Patient',
-            status: 'Pending',
-            license: null,
-          },
-          {
-            id: '7',
-            name: 'Alice Smith',
-            age: 54,
-            address: '456 Park Ave',
-            email: 'Alice@gmail.com',
-            role: 'Doctor',
-            status: 'Active',
-            license: '0005',
-          },
-          {
-            id: '8',
-            name: 'Robert Lee',
-            age: 32,
-            address: '789 Broadway',
-            email: 'Robert@gmail.com',
-            role: 'Counsler',
-            status: 'Active',
-            license: '0006',
-          },
-          {
-            id: '9',
-            name: 'Alex Kim',
-            age: 28,
-            address: '123 Main St',
-            email: 'Alex@gmail.com',
-            role: 'Patient',
-            status: 'Active',
-            license: null,
-          },
-          {
-            id: '10',
-            name: 'Tom Johnson',
-            age: 42,
-            address: '456 Park Ave',
-            email: 'Tom@gmail.com',
-            role: 'Doctor',
-            status: 'Pending',
-            license: '0007',
-          },
-        {
-        id: '11',
-        name: 'Karen Johnson',
-        age: 38,
-        address: '456 Pine St',
-        email: "karen@gmail.com",
-        role:"Patient",
-        status:"Inactive",
-        license:null,
-
-        },
-        {
-            id: '12',
-            name: 'David Lee',
-            age: 27,
-            address: '789 Maple Ave',
-            email: "david@gmail.com",
-            role:"Doctor",
-            status:"Active",
-            license:"0003"
-        },
-        {
-            id: '13',
-            name: 'Sarah Adams',
-            age: 29,
-            address: '789 Oak St',
-            email: "sarah@gmail.com",
-            role:"Counselor",
-            status:"Active",
-            license:"0004"
-
-        },
-        {
-            id: '14',
-            name: 'Jackie Chan',
-            age: 58,
-            address: '123 Pine St',
-            email: "jackie@gmail.com",
-            role:"Patient",
-            status:"Active",
-            license:null,
-
-        },
-        {
-            id: '15',
-            name: 'Maggie Kim',
-            age: 36,
-            address: '456 Maple Ave',
-            email: "maggie@gmail.com",
-            role:"Doctor",
-            status:"Inactive",
-            license:"0005"
-        },
-        {
-            id: '16',
-            name: 'Tom Johnson',
-            age: 51,
-            address: '789 Oak St',
-            email: "tom@gmail.com",
-            role:"Counselor",
-            status:"Pending",
-            license:"0006"
-
-        },
-        {
-            id: '17',
-            name: 'Lucas Wong',
-            age: 24,
-            address: '123 Elm St',
-            email: "lucas@gmail.com",
-            role:"Patient",
-            status:"Active",
-            license:null,
-
-        },
-        {
-            id: '18',
-            name: 'Emma Wilson',
-            age: 29,
-            address: '456 Pine St',
-            email: "emma@gmail.com",
-            role:"Doctor",
-            status:"Active",
-            license:"0007"
-        },
-        {
-            id: '19',
-            name: 'Michael Brown',
-            age: 46,
-            address: '789 Broadway',
-            email: "michael@gmail.com",
-            role:"Counselor",
-            status:"Inactive",
-            license:"0008"
-
-        },
-        {
-            id: '20',
-            name: 'Leah Taylor',
-            age: 34,
-            address: '123 Elm St',
-            email: "leah@gmail.com",
-            role:"Patient",
-            status:"Pending",
-            license:null,
-            },
-    ])
+          }
+          newUserArray.push(userObj);
+        });
+        setData(newUserArray);
+      };
+        fetchData();
+      }, [data]);
+    }
+    catch (error)
+    {
+      console.log(error)
+    }
+    
   return (
     // <TableComponent data={data} handleDelete={handleDelete} />
     //<ViewRegisters data={data} />
     <>
     {item === "2" ? (
-        <ListUsers data={data} handleDelete={handleDelete} />
+        <ListUsers key="2" data={data} handleDelete={handleDelete} />
       ) : item === "1" ? (
-        <ViewRegisters data={data} handleAccept={handleAccept} handleReject={handleReject}/>
+        <ViewRegisters key="1" data={data} handleAccept={handleAccept} handleReject={handleReject}/>
       ) : item === "3" ? (
-        <AddUser />
+        <AddUser key="3" handleSubmit={handleSubmit}/>
       ) : (
         <p>None of the conditions are true</p>
       )}

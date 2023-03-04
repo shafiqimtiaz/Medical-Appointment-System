@@ -1,9 +1,43 @@
 import React from 'react';
 import { Form, Input, Button, Typography,DatePicker } from "antd";
+import NOTIFICATION_DETAILS from "./Constants";
+import showNotification from "./showNotification";
+import acceptPatient from './AddUserWithBackEnd';
 
-export const AddUser = () => {
+
+export const AddUser = (props) => {
     const [form] = Form.useForm();
     const { Title, Text } = Typography;
+
+
+    const handleFormSubmit = () => {
+		form.validateFields()
+			.then((values) => {
+
+                // console.log(`hello world`);
+                // console.log(values);
+
+                const patient = {
+                    name : values.name,
+                    address: values.address,
+                    email: values.email,
+                    password: values.password,
+                    role: 'patient',
+                    date_of_birth: values.dob,
+                    phone_number: values.number
+                };
+
+                acceptPatient(patient);
+                showNotification("success", NOTIFICATION_DETAILS.success);
+                form.resetFields();
+                props.handleSubmit();
+                   
+			})
+			.catch((errorInfo) => {
+                showNotification("error", NOTIFICATION_DETAILS.error);
+            });
+	};
+
     return (
         <div>
             <Title // Form's Title
@@ -135,7 +169,7 @@ export const AddUser = () => {
                 <Form.Item // Form Item (Submit Button)
                 style={{ textAlign: 'left' }}
                 >
-                    <Button type="primary">Submit</Button>
+                    <Button type="primary" onClick={handleFormSubmit}>Submit</Button>
                 </Form.Item>
             </Form>
         </div>
