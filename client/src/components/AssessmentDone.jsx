@@ -1,7 +1,67 @@
 import React from 'react'
+import { Layout, Typography, Button } from 'antd';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+const {Text} = Typography
+const { Content } = Layout;
 
-export default function AssessmentDone() {
+const contentStyle = {
+  display: 'flex',
+  flexDirection: 'column',
+  textAlign: 'center',
+  justifyContent: 'center',
+  alignItems: 'center'
+}
+const titleStyle = {
+  fontSize: '48px',
+  letterSpacing: '15px',
+}
+const subStyle = {
+  fontSize: '24px',
+}
+const wordStyle = {
+  fontSize: '18px',
+}
+const buttonStyle = {
+  marginTop: '50px',
+}
+
+
+export default function AssessmentDone({isDone, setIsDone}) {
+
+  const { currentUser } = useSelector((state) => state.user);
+
+  const handleClick = async(e) =>{
+
+    const handleDelete = (data,{headers})=>{
+      const res = axios.delete(`patient/assessment/${data.data.assessment_id}/cancel`,{headers})
+      setIsDone(!data.data.active);
+    }
+    e.preventDefault()
+    try {
+      const headers = {
+        Authorization: `Bearer ${currentUser.access_token}`
+    }; 
+      axios.get(`patient/assessment/findbyuserid/${currentUser.user_id}`,{headers}).  
+      then(response => response).then(data => handleDelete(data,{headers})).catch(error=>console.log(error)) 
+
+      
+    } catch (error) {
+      
+    }
+  }
   return (
-    <div>AssessmentDone</div>
+    <Content style={contentStyle}>
+     <Text style={titleStyle}>Hi {currentUser.name}</Text>
+     <br/>
+     <Text style={subStyle}>You have successfuly completed the assessment</Text>
+     <br/>
+     <br/>
+     <Text style={wordStyle}>To attempt the assessment agian</Text>
+     <br/>
+     <Text style={wordStyle}>Click on the button Below!</Text>
+     <Button style ={buttonStyle} type='primary' onClick={handleClick}>Redo Assessment</Button>
+     {/* ()=> setIsDone(false) */}
+    </Content>
   )
 }

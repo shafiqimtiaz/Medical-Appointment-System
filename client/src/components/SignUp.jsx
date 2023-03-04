@@ -8,7 +8,9 @@ import {
   } from 'antd';
 import { useState } from 'react';
 import axios from 'axios'
-  
+
+ import {useNavigate} from 'react-router-dom' 
+
   const { Option } = Select;
   const formItemLayout = {
     labelCol: {
@@ -49,6 +51,7 @@ import axios from 'axios'
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [regNumber,setRegNumber] = useState("");
+    const navigate = useNavigate();
     const role = user.label;
 
     const openNotification = () => {
@@ -56,6 +59,12 @@ import axios from 'axios'
         message: 'You can successfully log in!',
       });
     };
+    const approveNotification = () => {
+      notification.open({
+        message: 'Please wait until the manager approves your registration',
+      });
+    };
+
 
     const handleDateChange = (date)=>{
       setDOB(date)
@@ -64,7 +73,9 @@ import axios from 'axios'
       try {
         e.preventDefault()
         let newUser = null;
-        if(role === 'doctor' || role === '"counselor"'){
+
+        if(role === 'doctor'){
+
           newUser = {
             name: name,
             address: address,
@@ -72,11 +83,26 @@ import axios from 'axios'
             phone_number: number,
             email: email,
             password: password,
-            role: role,
-            license_number: regNumber
+            role: "medical_staff",
+            license_number: regNumber,
+            type: 'd'
           }
   
         }
+        else if (role === 'counselor'){
+          newUser = {
+            name: name,
+            address: address,
+            date_of_birth: dob,
+            phone_number: number,
+            email: email,
+            password: password,
+            role: "medical_staff",
+            license_number: regNumber,
+            type: 'c'
+          }
+        }
+
         else{
          newUser = {
           name: name,
@@ -85,12 +111,19 @@ import axios from 'axios'
           phone_number: number,
           email: email,
           password: password,
-          role: role
+          role: role,
+
         }
       }
         const res = await axios.post("/auth/registration",newUser)
-        console.log(res.data);
-        openNotification();
+        if(role !== "patient" ){
+          approveNotification()
+        }
+        else{
+          openNotification();
+          navigate('/');
+        }
+
       } catch (error) {
         console.log(error)
       }

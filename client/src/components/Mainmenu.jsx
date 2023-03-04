@@ -13,11 +13,11 @@ const menuStyle= {
 const patientItems = [
   {
     key: '1',
-    label: `Take Assessment`,
+    label: `Assessments`,
   },
   {
     key: '2',
-    label: `Book Appointement`,
+    label: `Appointements`,
   },
 ];
 
@@ -43,7 +43,7 @@ export default function Mainmenu() {
             />
           </Sider>
           {
-        content === "Take Assessment" ?(
+        content === "Assessments" ?(
         <Content>
           <Assessment/>
         </Content>

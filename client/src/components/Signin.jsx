@@ -1,7 +1,9 @@
-import React from 'react'
-import { Button, Form, Input, Typography } from 'antd';
-import { Link } from 'react-router-dom';
-
+import React, { useState } from 'react'
+import { Button, Form, Input, Typography, notification } from 'antd';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { loginFailure, loginStart, loginSuccess } from '../redux/userSlice'
 const {mTap} = Typography;
 
 const linkStyle = {
@@ -13,6 +15,42 @@ const linkStyle = {
 };
 
 export default function Signin() {
+
+  const awaitNotification = () => {
+    notification.open({
+      message: 'Registration is not yet approved',
+      placement: 'top'
+    });
+  };
+
+
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const handleLogIn = async(e) =>{
+    e.preventDefault();
+    dispatch(loginStart());
+    let user = null;
+    try {
+      user = {
+        email: email,
+        password: password,
+      }
+      const res = await axios.post("/auth/login",user)
+      dispatch(loginSuccess(res.data));
+      if(res.data.message === "Staff not approved!")
+      awaitNotification();
+
+      else{
+      navigate('/dashboard');
+      }
+    } catch (error) {
+      dispatch(loginFailure);
+    }
+  }
+
   return (
     <Form
     name="basic"
@@ -34,16 +72,16 @@ export default function Signin() {
     autoComplete="off"
   >
     <Form.Item
-      label="Username"
-      name="username"
+      label="Email"
+      name="email"
       rules={[
         {
           required: true,
-          message: 'Please input your username!',
+          message: 'Please input your email!',
         },
       ]}
     >
-      <Input />
+      <Input onChange={e=>setEmail(e.target.value)}/>
     </Form.Item>
 
     <Form.Item
@@ -56,7 +94,7 @@ export default function Signin() {
         },
       ]}
     >
-      <Input.Password />
+      <Input.Password onChange={e=>setPassword(e.target.value)}/>
     </Form.Item>
 
     <Form.Item
@@ -66,7 +104,7 @@ export default function Signin() {
       }}
     >
       <Form.Item style={{display:'flex', alignItems:'center'}}>
-      <Button type="primary" htmlType="submit">
+      <Button type="primary" onClick={handleLogIn}>
         Login
       </Button>
       </Form.Item>
