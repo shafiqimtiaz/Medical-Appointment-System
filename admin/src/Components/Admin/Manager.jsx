@@ -3,16 +3,19 @@ import { Layout, Menu, Button} from 'antd';
 import './Manager.scss';
 import { ParentTable } from './ParentTable';
 import {useLocation} from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 const { Header, Content, Sider, Footer } = Layout;
 
 
 export const  Manager = () => {
 
-    const location = useLocation();
-   // console.log(location.state.val);
-
     const [selectedMenuItem, setSelectedMenuItem] = useState("2");
+    const [isLogOut, setLogOut] = useState(false);
+
+    try{
+    const location = useLocation();
+    
     let content;
     switch (selectedMenuItem) {
       case "1":
@@ -44,13 +47,22 @@ export const  Manager = () => {
         label:"Add new user",
         onClick:() => setSelectedMenuItem("3"),
     },
+
 ]
+
+
+function logOut(){
+    setLogOut(true);
+}
+
+
     return (
+        isLogOut ? <Navigate to="/Admin" /> : 
     <Layout style={{ minHeight: '100vh' }}>
         <Header>
             <div className="header-content">
             <div className="logo">Admin Dashboard</div>
-            <Button className="logout-btn" type="text">Logout</Button>
+            <Button className="logout-btn" type="text" onClick={logOut}>Logout</Button>
             </div>
         </Header>
         <Layout>
@@ -67,4 +79,7 @@ export const  Manager = () => {
         </Layout>
     </Layout>
 );
+    }catch(error){
+        return <Navigate to="/Admin" />;
+    }
 }
