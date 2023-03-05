@@ -108,7 +108,7 @@ export default function Signin() {
             <mTap style={linkStyle}>New User? Register Here</mTap>
           </Link>
           <Link to="/admin">
-            <mTap style={linkStyle}>Are you Admin? Login Here</mTap>
+            <mTap style={linkStyle}>Are you Manager? Login Here</mTap>
           </Link>
         </Form.Item>
       </Form.Item>
