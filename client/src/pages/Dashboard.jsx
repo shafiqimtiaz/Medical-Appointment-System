@@ -1,5 +1,5 @@
 import React from 'react'
-import Mainmenu from '../components/Mainmenu'
+import Mainmenu from '../components/Users/Mainmenu'
 import { Layout, Button, Typography } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../redux/userSlice';

@@ -1,7 +1,7 @@
 import React from 'react'
 import {Layout, Space, Image, Typography, Tabs} from 'antd'
 import logo from "../assets/logo.png"
-import Signin from '../components/Signin';
+import Signin from '../components/Users/Signin';
 
 const {Header, Content, mContent} = Layout;
 const {Title} = Typography;
