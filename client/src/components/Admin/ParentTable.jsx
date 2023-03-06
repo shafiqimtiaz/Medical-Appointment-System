@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ListUsers } from "./ListUsers";
 import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
@@ -7,11 +7,13 @@ import axios from "axios";
 //import { useSelector } from 'react-redux';
 
 export const ParentTable = ({ item, accessToken }) => {
+  const headers = useMemo(
+    () => ({ Authorization: `Bearer ${accessToken}` }),
+    [accessToken]
+  );
+
   const handleDelete = async (id) => {
     try {
-      const headers = {
-        Authorization: `Bearer ${accessToken}`,
-      };
       await axios.delete(`/manager/deletePatient/${id}`, { headers });
       //const updatedData = data;
       //setData(updatedData);
@@ -22,9 +24,6 @@ export const ParentTable = ({ item, accessToken }) => {
 
   const handleAccept = async (id) => {
     try {
-      const headers = {
-        Authorization: `Bearer ${accessToken}`,
-      };
       await axios.put(`/manager/approveRegistration/${id}`, null, { headers });
     } catch (error) {
       console.error(error);
@@ -34,9 +33,6 @@ export const ParentTable = ({ item, accessToken }) => {
   const handleReject = async (id) => {
     console.log(id);
     try {
-      const headers = {
-        Authorization: `Bearer ${accessToken}`,
-      };
       await axios.delete(`manager/denyRegistration/${id}`, { headers });
       //const updatedData = data;
       //setData(updatedData);
@@ -104,15 +100,8 @@ export const ParentTable = ({ item, accessToken }) => {
   const [data, setData] = useState([]);
   //Fecth data API
   try {
-    // const headers1 = {
-    //   Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozOSwiZW1haWwiOiJtYW5hZ2VyQHNwbS5jb20iLCJyb2xlIjoibWFuYWdlciIsImlhdCI6MTY3NzgyMjExNiwiZXhwIjoxNjc3OTA4NTE2fQ.JIVQvSEki1OksXAS9bqZ9iu0iHfczcHjKPf4zOC0hgE'
-    // };
-
     useEffect(() => {
       const fetchData = async () => {
-        const headers = {
-          Authorization: `Bearer ${accessToken}`,
-        };
         const result = await axios.get("/manager/getallusers", { headers });
         const userArray = result.data;
         let newUserArray = [];
@@ -135,7 +124,7 @@ export const ParentTable = ({ item, accessToken }) => {
         setData(newUserArray);
       };
       fetchData();
-    }, [accessToken]);
+    }, [headers]);
   } catch (error) {
     console.log(error);
   }
