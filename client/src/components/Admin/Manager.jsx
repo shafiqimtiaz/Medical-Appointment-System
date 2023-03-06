@@ -76,7 +76,7 @@ export const Manager = () => {
       <Layout style={{ minHeight: "100vh" }}>
         <Header>
           <div className="header-content">
-            <div className="logo">Admin Dashboard</div>
+            <div className="logo">Manager Dashboard</div>
             <Button type="primary" onClick={logOut}>
               Logout
             </Button>

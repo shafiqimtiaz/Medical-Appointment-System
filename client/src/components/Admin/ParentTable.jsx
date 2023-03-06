@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
+import { notification } from "antd";
 import { ListUsers } from "./ListUsers";
 import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
@@ -7,6 +8,13 @@ import axios from "axios";
 //import { useSelector } from 'react-redux';
 
 export const ParentTable = ({ item, accessToken }) => {
+  const error = () => {
+    notification.open({
+      message: "Invalid action !!",
+      placement: "top",
+    });
+  };
+
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${accessToken}` }),
     [accessToken]
@@ -124,7 +132,7 @@ export const ParentTable = ({ item, accessToken }) => {
         setData(newUserArray);
       };
       fetchData();
-    }, [headers]);
+    }, [headers, data]);
   } catch (error) {
     console.log(error);
   }
