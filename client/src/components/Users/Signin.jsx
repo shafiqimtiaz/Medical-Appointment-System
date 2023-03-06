@@ -21,6 +21,13 @@ export default function Signin() {
     });
   };
 
+  const invalidNotification = () => {
+    notification.open({
+      message: "Invalid Email or Password",
+      placement: "top",
+    });
+  };
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
@@ -38,6 +45,7 @@ export default function Signin() {
       const res = await axios.post("/auth/login", user);
       dispatch(loginSuccess(res.data));
       if (res.data.message === "Staff not approved!") awaitNotification();
+      else if (res.data.message === "user not found!") invalidNotification();
       else {
         navigate("/dashboard");
       }
