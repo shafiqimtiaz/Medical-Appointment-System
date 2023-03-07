@@ -8,6 +8,47 @@ export default function OperateAppointement() {
   const [appointments, setAppointments] = useState([]);
   const [filteredAppointements, setFilteredAppointements] = useState([]);
 
+  const headers = useMemo(
+    () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
+    [currentUser.access_token]
+  );
+
+  const userId = useMemo(() => currentUser.user_id, [currentUser.user_id]);
+
+  const filterData = (data) => {
+    const filtered = data.filter((item) => item.active === false);
+    setFilteredAppointements(filtered);
+  };
+
+  useEffect(() => {
+    axios
+      .get(`/patient/appointment/${userId}`, { headers })
+      .then((response) => response)
+      .then((res) => {
+        setAppointments(res.data);
+        filterData(res.data);
+      })
+      .catch((error) => console.log(error));
+  }, [userId, headers, appointments]);
+
+  const handleAccept = async (record) => {
+    await axios
+      .put(`/patient/appointment/${record.appointment_id}/accept`, null, {
+        headers,
+      })
+      .then((response) => response)
+      .catch((error) => console.log(error));
+  };
+
+  const handleReject = async (record) => {
+    axios
+      .delete(`/patient/appointment/${record.appointment_id}/cancel`, {
+        headers,
+      })
+      .then((response) => response)
+      .catch((error) => console.log(error));
+  };
+
   const columns = [
     {
       title: "Medical Staff",
@@ -65,46 +106,6 @@ export default function OperateAppointement() {
       ),
     },
   ];
-
-  const headers = useMemo(
-    () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
-    [currentUser.access_token]
-  );
-
-  const userId = useMemo(() => currentUser.user_id, [currentUser.user_id]);
-
-  const filterData = (data) => {
-    const filtered = data.filter((item) => item.active === false);
-    setFilteredAppointements(filtered);
-  };
-
-  useEffect(() => {
-    axios
-      .get(`/patient/appointment/${userId}`, { headers })
-      .then((response) => response)
-      .then((res) => {
-        setAppointments(res.data);
-        filterData(res.data);
-      })
-      .catch((error) => console.log(error));
-  }, [userId, headers, appointments]);
-
-  const handleAccept = async (record) => {
-    try {
-      await axios.put(
-        `/patient/appointment/${record.appointment_id}/accept`,
-        null,
-        { headers }
-      );
-    } catch (error) {}
-  };
-  const handleReject = async (record) => {
-    try {
-      axios.delete(`/patient/appointment/${record.appointment_id}/cancel`, {
-        headers,
-      });
-    } catch (error) {}
-  };
 
   return (
     <Table

@@ -5,12 +5,17 @@ import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
 import axios from "axios";
 
-//import { useSelector } from 'react-redux';
-
 export const ParentTable = ({ item, accessToken }) => {
-  const error = () => {
+  const showError = () => {
     notification.open({
-      message: "Invalid action !!",
+      message: "Error !!",
+      placement: "top",
+    });
+  };
+
+  const showSuccess = () => {
+    notification.open({
+      message: "Success !!",
       placement: "top",
     });
   };
@@ -23,29 +28,30 @@ export const ParentTable = ({ item, accessToken }) => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/manager/deletePatient/${id}`, { headers });
-      //const updatedData = data;
-      //setData(updatedData);
+      showSuccess();
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
+      showError();
     }
   };
 
   const handleAccept = async (id) => {
     try {
       await axios.put(`/manager/approveRegistration/${id}`, null, { headers });
+      showSuccess();
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
+      showError();
     }
   };
 
   const handleReject = async (id) => {
-    console.log(id);
     try {
       await axios.delete(`manager/denyRegistration/${id}`, { headers });
-      //const updatedData = data;
-      //setData(updatedData);
+      showSuccess();
     } catch (error) {
-      console.error(error);
+      console.error(error.response);
+      showError();
     }
   };
 
@@ -53,11 +59,6 @@ export const ParentTable = ({ item, accessToken }) => {
     const updatedData = data;
     setData(updatedData);
   };
-
-  // const handleAccept = (record) => {
-  //     // implement logic to accept user
-  //         alert("User Accepted");
-  // };
 
   function calculateAge(dateOfBirth) {
     //console.log(dateOfBirth);
@@ -100,16 +101,12 @@ export const ParentTable = ({ item, accessToken }) => {
     return user.medical_staff.license_number;
   };
 
-  // //Same as delete
-  // const handleReject = (record) => {
-  //     // implement logic to reject user
-  //         alert("User Rejected");
-  // };
   const [data, setData] = useState([]);
   //Fecth data API
-  try {
-    useEffect(() => {
-      const fetchData = async () => {
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const result = await axios.get("/manager/getallusers", { headers });
         const userArray = result.data;
         let newUserArray = [];
@@ -130,16 +127,14 @@ export const ParentTable = ({ item, accessToken }) => {
           return userObj;
         });
         setData(newUserArray);
-      };
-      fetchData();
-    }, [headers, data]);
-  } catch (error) {
-    console.log(error);
-  }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [headers, data]);
 
   return (
-    // <TableComponent data={data} handleDelete={handleDelete} />
-    //<ViewRegisters data={data} />
     <>
       {item === "2" ? (
         <ListUsers key="2" data={data} handleDelete={handleDelete} />
