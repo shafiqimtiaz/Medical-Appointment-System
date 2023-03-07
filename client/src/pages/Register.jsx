@@ -1,6 +1,6 @@
 import React from 'react'
 import {Layout, Space, Tabs, Typography } from 'antd'
-import SignUp from '../components/SignUp';
+import SignUp from '../components/Users/SignUp';
 
 const {Content} = Layout
 const {Title} = Typography;
