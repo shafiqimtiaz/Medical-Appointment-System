@@ -19,6 +19,7 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "prisma": "^4.11.0",
-    "prisma-erd-generator": "^1.2.5"
+    "prisma-erd-generator": "^1.2.5",
+    "spm_6841_project": "file:.."
   }
 }

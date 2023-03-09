@@ -4,9 +4,13 @@
   "description": "medical appointment full stack application",
   "main": "client/src/index.js",
   "scripts": {
+    "server-dep": "npm install --prefix server",
+    "client-dep": "npm install --prefix client",
     "server": "npm run dev --prefix server",
     "client": "npm start --prefix client",
-    "dev-con": "concurrently \"npm run server\" \"npm run client\""
+    "install-dep": "concurrently \"npm run server-dep\" \"npm run client-dep\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "npm run dev"
   },
   "repository": {
     "type": "git",
