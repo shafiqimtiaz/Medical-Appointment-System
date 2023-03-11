@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../ERD.svg"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model answers {
+  answer_id     Int         @id @default(autoincrement())
+  question      Int
+  answer        String      @db.VarChar(1000)
+  assessment_id Int
+  assessments   assessments @relation(fields: [assessment_id], references: [assessment_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("answers")
+}
+
+model appointments {
+  appointment_id   Int           @id @default(autoincrement())
+  appointment_date DateTime      @db.Timestamp(6)
+  active           Boolean       @default(false)
+  created_at       DateTime      @default(now()) @db.Timestamp(6)
+  created_by       String        @db.VarChar(50)
+  updated_at       DateTime      @updatedAt @db.Timestamp(6)
+  updated_by       String        @db.VarChar(50)
+  medical_staff_id Int
+  patient_id       Int
+  medical_staff    medical_staff @relation(fields: [medical_staff_id], references: [medical_staff_id])
+  patients         patients      @relation(fields: [patient_id], references: [patient_id], map: "appointments_patients_fk")
+
+  @@map("appointments")
+}
+
+model assessments {
+  assessment_id    Int            @id @default(autoincrement())
+  active           Boolean        @default(true)
+  created_at       DateTime       @default(now()) @db.Timestamp(6)
+  updated_at       DateTime       @updatedAt @db.Timestamp(6)
+  patient_id       Int            @unique
+  medical_staff_id Int?
+  answers          answers[]
+  medical_staff    medical_staff? @relation(fields: [medical_staff_id], references: [medical_staff_id])
+  patients         patients       @relation(fields: [patient_id], references: [patient_id], map: "assessments_patients_fk")
+
+  @@map("assessments")
+}
+
+model manager {
+  manager_id Int   @id
+  users      users @relation(fields: [manager_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+}
+
+model medical_staff {
+  medical_staff_id Int            @id
+  license_number   String         @db.VarChar(50)
+  active           Boolean        @default(false)
+  type             String         @db.Char(1)
+  appointments     appointments[]
+  assessments      assessments[]
+  users            users          @relation(fields: [medical_staff_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("medical_staff")
+}
+
+model patients {
+  patient_id   Int            @id
+  appointments appointments[]
+  assessments  assessments?
+  users        users          @relation(fields: [patient_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("patients")
+}
+
+model users {
+  user_id       Int            @id @default(autoincrement())
+  name          String         @db.VarChar(50)
+  address       String         @db.VarChar(200)
+  email         String         @unique @db.VarChar(50)
+  date_of_birth DateTime       @db.Date
+  phone_number  String         @db.VarChar(20)
+  password      String         @db.VarChar(100)
+  role          String         @db.VarChar(50)
+  created_at    DateTime       @default(now()) @db.Timestamp(6)
+  updated_at    DateTime       @updatedAt @db.Timestamp(6)
+  manager       manager?
+  medical_staff medical_staff?
+  patients      patients?
+
+  @@map("users")
+}

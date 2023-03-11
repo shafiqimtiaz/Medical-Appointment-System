@@ -1,0 +1,28 @@
+{
+  "name": "spm_6841_project",
+  "version": "1.0.0",
+  "description": "medical appointment full stack application",
+  "main": "client/src/index.js",
+  "scripts": {
+    "server-dep": "npm install --prefix server",
+    "client-dep": "npm install --prefix client",
+    "server": "npm run dev --prefix server",
+    "client": "npm start --prefix client",
+    "install-dep": "concurrently \"npm run server-dep\" \"npm run client-dep\"",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start": "npm run dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shafiqimtiaz/SPM_6841_Project.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shafiqimtiaz/SPM_6841_Project/issues"
+  },
+  "homepage": "https://github.com/shafiqimtiaz/SPM_6841_Project#readme",
+  "dependencies": {
+    "concurrently": "^7.6.0"
+  }
+}
