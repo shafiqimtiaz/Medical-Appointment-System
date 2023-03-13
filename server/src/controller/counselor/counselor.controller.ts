@@ -27,4 +27,24 @@ counselorRouter.post("/appointment", authorizeRoles("medical_staff"), async (req
   }
 });
 
+counselorRouter.get("/patients", authorizeRoles("medical_staff"), async (req, res) => {
+  try {
+    const patients = await counselorService.getAllPatients();
+    res.status(200).json(patients);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to get patients");
+  }
+});
+
+counselorRouter.get("/assessments", authorizeRoles("medical_staff"), async (req, res) => {
+  try {
+    const assessments = await counselorService.getWaitingAssessments();
+    res.status(200).json(assessments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Unable to get assessments");
+  }
+});
+
 export default counselorRouter;
