@@ -26,4 +26,61 @@ async function createAppointment(
   }
 }
 
-export { createAppointment };
+async function getAllPatients() {
+  try {
+    let patients = await db.patients.findMany({
+      include: {
+        users: true,
+        appointments: true,
+        assessments: true,
+      }
+    });
+
+    patients = patients.map((p: any) => {
+      return {
+        patient_id: p.patient_id,
+        user: p.users,
+        appointments: p.appointments,
+        assessments: p.assessments,
+      }
+    });
+
+    patients.forEach((p: any) => {
+      delete p.user.password;
+      delete p.user.user_id;
+    });
+    return patients;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get patients");
+  }
+}
+
+async function getWaitingAssessments() {
+  try {
+    let assessments = await db.assessments.findMany({
+      where: {
+        active: true,
+        medical_staff_id: null,
+      },
+      include: {
+        patients: {
+          include: {
+            users: true
+          },
+        },
+      },
+    });
+
+    assessments.forEach((a: any) => {
+      delete a.patients.users.password;
+      delete a.patients.users.user_id;
+    })
+    return assessments;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get assessments");
+  }
+}
+
+export { createAppointment, getAllPatients, getWaitingAssessments };
