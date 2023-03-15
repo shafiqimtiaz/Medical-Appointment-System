@@ -1,4 +1,4 @@
-import {db} from "../util/database";
+import { db } from "../util/database";
 
 async function createAppointment(
   appointmentDate: Date,
@@ -32,9 +32,8 @@ async function getAllPatients(withAppointments: boolean) {
       include: {
         users: true,
         assessments: true,
-        appointments: withAppointments
-      }
-
+        appointments: withAppointments,
+      },
     });
 
     patients = patients.map((p: any) => {
@@ -64,7 +63,7 @@ async function getAssessmentAnswersById(assessment_id: number) {
         assessment_id: assessment_id,
       },
       include: {
-        answers: true
+        answers: true,
       },
     });
   } catch (error) {
@@ -90,9 +89,8 @@ async function getAppointmentsForCounselor(counselorId: any) {
     appointments.forEach((a: any) => {
       delete a.patients.users.password;
       delete a.patients.users.user_id;
-    })
+    });
     return appointments;
-
   } catch (error) {
     console.error(error);
     throw new Error("Unable to get appointments");
@@ -150,7 +148,8 @@ async function approveAssessment(assessmentId: any, medicalStaff_Id: any) {
 export {
   createAppointment,
   getAllPatients,
-  getWaitingAssessments,
+  getAssessmentAnswersById,
+  getAppointmentsForCounselor,
   deleteAssessment,
   deactivateAssessment,
   approveAssessment,
