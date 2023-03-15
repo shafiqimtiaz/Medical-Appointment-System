@@ -632,7 +632,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/patients?andAppointments=false",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -642,7 +642,13 @@
 						"api",
 						"v1",
 						"counselor",
-						"appointment"
+						"patients"
+					],
+					"query": [
+						{
+							"key": "andAppointments",
+							"value": "false"
+						}
 					]
 				}
 			},
@@ -681,7 +687,7 @@
 			"response": []
 		},
 		{
-			"name": "Counselor-GetAssessments",
+			"name": "Counselor-GetAssessmentAnswers",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -696,7 +702,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -706,7 +712,14 @@
 						"api",
 						"v1",
 						"counselor",
-						"appointment"
+						"assessments",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2"
+						}
 					]
 				}
 			},
