@@ -1,9 +1,9 @@
 import { db } from "../util/database";
 
 async function createAppointment(
+  patient_Id: number,
+  medicalStaff_Id: number,
   appointmentDate: Date,
-  patient_Id: any,
-  assignedStaff_Id: any,
   user: any
 ) {
   try {
@@ -11,7 +11,7 @@ async function createAppointment(
       data: {
         appointment_date: new Date(appointmentDate),
         patient_id: patient_Id,
-        medical_staff_id: assignedStaff_Id,
+        medical_staff_id: medicalStaff_Id,
         created_by: user.name,
         updated_by: user.name,
       },
@@ -72,7 +72,7 @@ async function getAssessmentAnswersById(assessment_id: number) {
   }
 }
 
-async function getAppointmentsForCounselor(counselorId: any) {
+async function getAppointmentsForCounselor(counselorId: number) {
   try {
     const appointments = await db.appointments.findMany({
       where: {
@@ -97,11 +97,11 @@ async function getAppointmentsForCounselor(counselorId: any) {
   }
 }
 
-async function deleteAssessment(assessmentId: any) {
+async function deleteAssessment(assessmentId: number) {
   try {
     const assessment = await db.assessments.delete({
       where: {
-        assessment_id: parseInt(assessmentId),
+        assessment_id: assessmentId,
       },
     });
     return assessment;
@@ -111,11 +111,11 @@ async function deleteAssessment(assessmentId: any) {
   }
 }
 
-async function deactivateAssessment(assessmentId: any) {
+async function deactivateAssessment(assessmentId: number) {
   try {
     const assessment = await db.assessments.update({
       where: {
-        assessment_id: parseInt(assessmentId),
+        assessment_id: assessmentId,
       },
       data: {
         active: false,
@@ -128,14 +128,17 @@ async function deactivateAssessment(assessmentId: any) {
   }
 }
 
-async function approveAssessment(assessmentId: any, medicalStaff_Id: any) {
+async function approveAssessment(
+  assessmentId: number,
+  medicalStaff_Id: number
+) {
   try {
     const assessment = await db.assessments.update({
       where: {
-        assessment_id: parseInt(assessmentId),
+        assessment_id: assessmentId,
       },
       data: {
-        medical_staff_id: parseInt(medicalStaff_Id),
+        medical_staff_id: medicalStaff_Id,
       },
     });
     return assessment;
@@ -145,39 +148,71 @@ async function approveAssessment(assessmentId: any, medicalStaff_Id: any) {
   }
 }
 
-async function getAssessmentByCounselorAndAssessmentId(assessment_id: any, medicalStaff_id: any) {
+async function getAssessmentByCounselorAndAssessmentId(
+  assessment_id: number,
+  medicalStaff_id: number
+) {
   try {
     const assessment = await db.assessments.findFirst({
       where: {
-        assessment_id: parseInt(assessment_id),
-        medical_staff_id: parseInt(medicalStaff_id)
-      }
+        assessment_id: assessment_id,
+        medical_staff_id: medicalStaff_id,
+      },
     });
     return assessment;
   } catch (error) {
     console.error(error);
-    throw new Error("Unable to assign assessment");
+    throw new Error("Unable to get assessment");
   }
 }
 
-async function assignAssessment(assessment_id: any, medicalStaff_id: any) {
+async function assignAssessment(
+  assessment_id: number,
+  medicalStaff_id: number
+) {
   try {
     const assessment = await db.assessments.update({
       where: {
-        assessment_id: parseInt(assessment_id),
+        assessment_id: assessment_id,
       },
       data: {
-        medical_staff_id: parseInt(medicalStaff_id),
+        medical_staff_id: medicalStaff_id,
       },
       include: {
         medical_staff: true,
-        patients: true
-      }
+        patients: true,
+      },
     });
     return assessment;
   } catch (error) {
     console.error(error);
-    throw new Error("Unable to assign assessment");
+    throw new Error("Unable to assign medical staff");
+  }
+}
+
+async function modifyAppointment(
+  appointmentId: number,
+  appointmentDate: Date,
+  user: any
+) {
+  try {
+    const appointment = await db.appointments.update({
+      where: {
+        appointment_id: appointmentId,
+      },
+      data: {
+        appointment_date: new Date(appointmentDate),
+        active: false,
+        updated_by: user.name,
+      },
+      include: {
+        medical_staff: true,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to modify appointment");
   }
 }
 
@@ -190,5 +225,6 @@ export {
   deactivateAssessment,
   approveAssessment,
   assignAssessment,
-  getAssessmentByCounselorAndAssessmentId
+  getAssessmentByCounselorAndAssessmentId,
+  modifyAppointment,
 };
