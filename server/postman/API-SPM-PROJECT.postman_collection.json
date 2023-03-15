@@ -1,10 +1,9 @@
 {
 	"info": {
-
-		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
+		"_postman_id": "d03b493e-6e63-4c81-bc85-2161be08787e",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19239159"
+		"_exporter_id": "4848308"
 	},
 	"item": [
 		{
@@ -818,6 +817,48 @@
 							"key": "id",
 							"value": "2"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AssignPatientToDoctor",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6ImNvdW5zZWxvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzg4NzI5ODAsImV4cCI6MTY3ODk1OTM4MH0.itX_gYQTtFLz-BKs3RNaIqZrIiw3aXJ_J_2M9YXijHY",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"assessment_id\" : \"3\",\n    \"medical_staff_id\" : \"3\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/assign",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						"assign"
 					]
 				}
 			},

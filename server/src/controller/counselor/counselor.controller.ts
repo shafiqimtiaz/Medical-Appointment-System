@@ -136,4 +136,30 @@ counselorRouter.put(
   }
 );
 
+counselorRouter.put("/assessments/assign", authorizeRoles("medical_staff"), async (req, res) => {
+    const { assessment_id, medical_staff_id} = req.body;
+
+    try {
+      const {user_id} = req as CustomRequest;
+      const counselor = await counselorService.getAssessmentByCounselorAndAssessmentId(
+        assessment_id,
+        user_id
+      );
+
+      if(counselor){
+        const approvedAssessment = await counselorService.assignAssessment(
+          assessment_id,
+          medical_staff_id
+        );
+        res.status(200).json(approvedAssessment);
+      }else{
+        res.status(200).json("Counselor is not authorized to assign this patient");
+      }
+      
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to approve assessment");
+    }
+});
+
 export default counselorRouter;
