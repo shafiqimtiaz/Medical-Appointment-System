@@ -16,8 +16,8 @@ async function createAppointment(
         updated_by: user.name,
       },
       include: {
-        medical_staff: true
-      }
+        medical_staff: true,
+      },
     });
     return appointment;
   } catch (error) {
@@ -34,6 +34,7 @@ async function getAllPatients(withAppointments: boolean) {
         assessments: true,
         appointments: withAppointments
       }
+
     });
 
     patients = patients.map((p: any) => {
@@ -42,7 +43,7 @@ async function getAllPatients(withAppointments: boolean) {
         user: p.users,
         appointments: p.appointments,
         assessments: p.assessments,
-      }
+      };
     });
 
     patients.forEach((p: any) => {
@@ -81,7 +82,7 @@ async function getAppointmentsForCounselor(counselorId: any) {
       include: {
         patients: {
           include: {
-            users: true
+            users: true,
           },
         },
       },
@@ -91,10 +92,66 @@ async function getAppointmentsForCounselor(counselorId: any) {
       delete a.patients.users.user_id;
     })
     return appointments;
+
   } catch (error) {
     console.error(error);
     throw new Error("Unable to get appointments");
   }
 }
 
-export { createAppointment, getAllPatients, getAssessmentAnswersById, getAppointmentsForCounselor };
+async function deleteAssessment(assessmentId: any) {
+  try {
+    const assessment = await db.assessments.delete({
+      where: {
+        assessment_id: parseInt(assessmentId),
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to delete assessment");
+  }
+}
+
+async function deactivateAssessment(assessmentId: any) {
+  try {
+    const assessment = await db.assessments.update({
+      where: {
+        assessment_id: parseInt(assessmentId),
+      },
+      data: {
+        active: false,
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to deactivate assessment");
+  }
+}
+
+async function approveAssessment(assessmentId: any, medicalStaff_Id: any) {
+  try {
+    const assessment = await db.assessments.update({
+      where: {
+        assessment_id: parseInt(assessmentId),
+      },
+      data: {
+        medical_staff_id: parseInt(medicalStaff_Id),
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to deactivate assessment");
+  }
+}
+
+export {
+  createAppointment,
+  getAllPatients,
+  getWaitingAssessments,
+  deleteAssessment,
+  deactivateAssessment,
+  approveAssessment,
+};

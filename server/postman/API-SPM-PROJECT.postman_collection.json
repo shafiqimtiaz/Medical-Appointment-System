@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "76eaf4b8-6eaf-42b6-b420-0cb62cbbc122",
+
+		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16570401"
+		"_exporter_id": "19239159"
 	},
 	"item": [
 		{
@@ -44,7 +45,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"patient\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"patient@spm.com\",\r\n    \"password\":\"123456\",\r\n    \"role\" : \"patient\"\r\n}",
+					"raw": "{\r\n    \"name\": \"patient\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"patient2@spm.com\",\r\n    \"password\":\"123456\",\r\n    \"role\" : \"patient\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -137,7 +138,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"manager@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"counselor@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -290,7 +291,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"medicalStaff_Id\": 11,\r\n    \"patient_Id\": 10,\r\n    \"assignedStaff_Id\": 7,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
+					"raw": "{\r\n    \"medicalStaff_Id\": 3,\r\n    \"patient_Id\": 7,\r\n    \"assignedStaff_Id\": 4,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -381,7 +382,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_id\": 2,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n    ]\r\n}",
+					"raw": "{\r\n    \"patient_id\": 8,\r\n    \"answers\": [\r\n        { \"question\": 1, \"answer\": \"Answer 1\" },\r\n        { \"question\": 2, \"answer\": \"Answer 2\" },\r\n        { \"question\": 3, \"answer\": \"Answer 3\" }\r\n    ]\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -488,38 +489,6 @@
 			"response": []
 		},
 		{
-			"name": "GetAllUsers",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoyLCJlbWFpbCI6Im1hbmFnZXJAc3BtLmNvbSIsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNjc3NjgzNzkzLCJleHAiOjE2Nzc3NzAxOTN9.V0lhFAkcw3COpB6NU6hmdDVVl01XP6hkpgMRKz6tcys",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/getallusers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"manager",
-						"getallusers"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "ApproveRegistration",
 			"request": {
 				"method": "PUT",
@@ -610,6 +579,135 @@
 						{
 							"key": "patient_id",
 							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - Delete Assessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/delete/:assessmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						"delete",
+						":assessmentId"
+					],
+					"variable": [
+						{
+							"key": "assessmentId",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - Deactivate Assessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/deactivate/:assessmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						"deactivate",
+						":assessmentId"
+					],
+					"variable": [
+						{
+							"key": "assessmentId",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - Approve Assessment",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"medicalStaff_Id\" : 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/approve/:assessmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						"approve",
+						":assessmentId"
+					],
+					"variable": [
+						{
+							"key": "assessmentId",
+							"value": "18"
 						}
 					]
 				}

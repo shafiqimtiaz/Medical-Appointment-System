@@ -43,7 +43,7 @@ model assessments {
   active           Boolean        @default(true)
   created_at       DateTime       @default(now()) @db.Timestamp(6)
   updated_at       DateTime       @updatedAt @db.Timestamp(6)
-  patient_id       Int            @unique
+  patient_id       Int            
   medical_staff_id Int?
   answers          answers[]
   medical_staff    medical_staff? @relation(fields: [medical_staff_id], references: [medical_staff_id])
