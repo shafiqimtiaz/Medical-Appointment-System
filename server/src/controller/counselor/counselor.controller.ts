@@ -39,7 +39,11 @@ counselorRouter.get("/appointment", authorizeRoles("medical_staff"), async (req,
 
 counselorRouter.get("/patients", authorizeRoles("medical_staff"), async (req, res) => {
   try {
-    const patients = await counselorService.getAllPatients();
+    let withAppointments = false;
+    if (req.query.andAppointments && req.query.andAppointments === "true") {
+      withAppointments = true;
+    }
+    const patients = await counselorService.getAllPatients(withAppointments);
     res.status(200).json(patients);
   } catch (error) {
     console.error(error);
@@ -47,13 +51,13 @@ counselorRouter.get("/patients", authorizeRoles("medical_staff"), async (req, re
   }
 });
 
-counselorRouter.get("/assessments", authorizeRoles("medical_staff"), async (req, res) => {
+counselorRouter.get("/assessments/:id", authorizeRoles("medical_staff"), async (req, res) => {
   try {
-    const assessments = await counselorService.getWaitingAssessments();
+    const assessments = await counselorService.getAssessmentAnswersById(parseInt(req.params.id));
     res.status(200).json(assessments);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Unable to get assessments");
+    res.status(500).send("Unable to get assessment");
   }
 });
 

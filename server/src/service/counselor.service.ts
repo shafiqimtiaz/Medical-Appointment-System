@@ -1,4 +1,4 @@
-import { db } from "../util/database";
+import {db} from "../util/database";
 
 async function createAppointment(
   appointmentDate: Date,
@@ -26,13 +26,13 @@ async function createAppointment(
   }
 }
 
-async function getAllPatients() {
+async function getAllPatients(withAppointments: boolean) {
   try {
     let patients = await db.patients.findMany({
       include: {
         users: true,
-        appointments: true,
         assessments: true,
+        appointments: withAppointments
       }
     });
 
@@ -56,27 +56,16 @@ async function getAllPatients() {
   }
 }
 
-async function getWaitingAssessments() {
+async function getAssessmentAnswersById(assessment_id: number) {
   try {
-    let assessments = await db.assessments.findMany({
+    return await db.assessments.findFirst({
       where: {
-        active: true,
-        medical_staff_id: null,
+        assessment_id: assessment_id,
       },
       include: {
-        patients: {
-          include: {
-            users: true
-          },
-        },
+        answers: true
       },
     });
-
-    assessments.forEach((a: any) => {
-      delete a.patients.users.password;
-      delete a.patients.users.user_id;
-    })
-    return assessments;
   } catch (error) {
     console.error(error);
     throw new Error("Unable to get assessments");
@@ -108,4 +97,4 @@ async function getAppointmentsForCounselor(counselorId: any) {
   }
 }
 
-export { createAppointment, getAllPatients, getWaitingAssessments, getAppointmentsForCounselor };
+export { createAppointment, getAllPatients, getAssessmentAnswersById, getAppointmentsForCounselor };

@@ -72,7 +72,7 @@ model medical_staff {
 model patients {
   patient_id   Int            @id
   appointments appointments[]
-  assessments  assessments?
+  assessments  assessments[]
   users        users          @relation(fields: [patient_id], references: [user_id], onDelete: Cascade, onUpdate: Cascade)
 
   @@map("patients")
