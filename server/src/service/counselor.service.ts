@@ -202,6 +202,7 @@ async function modifyAppointment(
       },
       data: {
         appointment_date: new Date(appointmentDate),
+        active: false,
         updated_by: user.name,
       },
       include: {
