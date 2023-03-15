@@ -1,5 +1,6 @@
 {
 	"info": {
+
 		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
@@ -707,6 +708,115 @@
 						{
 							"key": "assessmentId",
 							"value": "18"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor-GetPatients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6ImNvdW5zZWxvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzg4NDI4MDQsImV4cCI6MTY3ODkyOTIwNH0.Ejgsjcui2HX5W0apjNipU_Cb-9mUVo1s8n2MY3uqvq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/patients?andAppointments=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"patients"
+					],
+					"query": [
+						{
+							"key": "andAppointments",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor-GetAppointments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6ImNvdW5zZWxvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzg4NDI4MDQsImV4cCI6MTY3ODkyOTIwNH0.Ejgsjcui2HX5W0apjNipU_Cb-9mUVo1s8n2MY3uqvq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor-GetAssessmentAnswers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6ImNvdW5zZWxvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzg4NDI4MDQsImV4cCI6MTY3ODkyOTIwNH0.Ejgsjcui2HX5W0apjNipU_Cb-9mUVo1s8n2MY3uqvq8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "2"
 						}
 					]
 				}
