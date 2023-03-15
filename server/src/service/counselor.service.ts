@@ -83,4 +83,29 @@ async function getWaitingAssessments() {
   }
 }
 
-export { createAppointment, getAllPatients, getWaitingAssessments };
+async function getAppointmentsForCounselor(counselorId: any) {
+  try {
+    const appointments = await db.appointments.findMany({
+      where: {
+        medical_staff_id: counselorId,
+      },
+      include: {
+        patients: {
+          include: {
+            users: true
+          },
+        },
+      },
+    });
+    appointments.forEach((a: any) => {
+      delete a.patients.users.password;
+      delete a.patients.users.user_id;
+    })
+    return appointments;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get appointments");
+  }
+}
+
+export { createAppointment, getAllPatients, getWaitingAssessments, getAppointmentsForCounselor };
