@@ -145,6 +145,42 @@ async function approveAssessment(assessmentId: any, medicalStaff_Id: any) {
   }
 }
 
+async function getAssessmentByCounselorAndAssessmentId(assessment_id: any, medicalStaff_id: any) {
+  try {
+    const assessment = await db.assessments.findFirst({
+      where: {
+        assessment_id: parseInt(assessment_id),
+        medical_staff_id: parseInt(medicalStaff_id)
+      }
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to assign assessment");
+  }
+}
+
+async function assignAssessment(assessment_id: any, medicalStaff_id: any) {
+  try {
+    const assessment = await db.assessments.update({
+      where: {
+        assessment_id: parseInt(assessment_id),
+      },
+      data: {
+        medical_staff_id: parseInt(medicalStaff_id),
+      },
+      include: {
+        medical_staff: true,
+        patients: true
+      }
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to assign assessment");
+  }
+}
+
 export {
   createAppointment,
   getAllPatients,
@@ -153,4 +189,6 @@ export {
   deleteAssessment,
   deactivateAssessment,
   approveAssessment,
+  assignAssessment,
+  getAssessmentByCounselorAndAssessmentId
 };
