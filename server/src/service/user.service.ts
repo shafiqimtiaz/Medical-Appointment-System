@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 import * as JWT from "../util/jwt";
 import { db } from "../util/database";
+import { type } from "os";
 
 type UserCreateType = {
   name: string;
@@ -21,7 +22,7 @@ type MedicalStaffCreateType = {
   type: string;
 };
 
-async function returnUserRole(user_id: any) {
+async function returnUserRole(user_id: number) {
   const user = await db.users.findUnique({
     where: {
       user_id: user_id,
@@ -29,6 +30,16 @@ async function returnUserRole(user_id: any) {
   });
 
   return user.role;
+}
+
+async function returnStaffType(user_id: number) {
+  const staff = await db.medical_staff.findUnique({
+    where: {
+      medical_staff_id: user_id,
+    },
+  });
+
+  return staff.type;
 }
 
 async function createUser(user: UserCreateType) {
@@ -47,7 +58,7 @@ async function createUser(user: UserCreateType) {
   });
 }
 
-async function createManager(user_id: any) {
+async function createManager(user_id: number) {
   return await db.manager.create({
     data: {
       manager_id: user_id,
@@ -55,7 +66,7 @@ async function createManager(user_id: any) {
   });
 }
 
-async function createPatients(user_id: any, patient: PatientCreateType) {
+async function createPatients(user_id: number, patient: PatientCreateType) {
   return await db.patients.create({
     data: {
       patient_id: user_id,
@@ -64,7 +75,10 @@ async function createPatients(user_id: any, patient: PatientCreateType) {
   });
 }
 
-async function createMedicalStaff(user_id: any, staff: MedicalStaffCreateType) {
+async function createMedicalStaff(
+  user_id: number,
+  staff: MedicalStaffCreateType
+) {
   return await db.medical_staff.create({
     data: {
       medical_staff_id: user_id,
@@ -77,15 +91,39 @@ async function createMedicalStaff(user_id: any, staff: MedicalStaffCreateType) {
 async function findUserByEmail(email: any) {
   return await db.users.findUnique({
     where: {
-      email: email
+      email: email,
     },
   });
 }
 
-async function findUserById(id: any) {
+async function findUserById(id: number) {
   return await db.users.findUnique({
     where: {
       user_id: id,
+    },
+  });
+}
+
+async function findManagerById(id: number) {
+  return await db.manager.findUnique({
+    where: {
+      manager_id: id,
+    },
+  });
+}
+
+async function findPatientById(id: number) {
+  return await db.patients.findUnique({
+    where: {
+      patient_id: id,
+    },
+  });
+}
+
+async function findStaffById(id: number) {
+  return await db.medical_staff.findUnique({
+    where: {
+      medical_staff_id: id,
     },
   });
 }
@@ -94,31 +132,7 @@ async function findActiveStaffById(id: number) {
   return await db.medical_staff.findFirst({
     where: {
       medical_staff_id: id,
-      active: true
-    },
-  });
-}
-
-async function findManagerById(id: any) {
-  return await db.manager.findUnique({
-    where: {
-      manager_id: id,
-    },
-  });
-}
-
-async function findPatientById(id: any) {
-  return await db.patients.findUnique({
-    where: {
-      patient_id: id,
-    },
-  });
-}
-
-async function findStaffById(id: any) {
-  return await db.medical_staff.findUnique({
-    where: {
-      medical_staff_id: id,
+      active: true,
     },
   });
 }
@@ -131,15 +145,16 @@ async function login(user: any) {
   const existingUser = await findUserByEmail(user.email);
 
   if (!existingUser) {
-    return {message: "user not found!"};
+    return { message: "User not found!" };
   }
 
-  if(existingUser.role == "medical_staff"){
+  let staffType = null;
+  if (existingUser.role == "medical_staff") {
     const medicalStaff = await findActiveStaffById(existingUser.user_id);
-
-    if(!medicalStaff){
-      return {message: "Staff not approved!"};
+    if (!medicalStaff) {
+      return { message: "Staff not approved!" };
     }
+    staffType = await returnStaffType(existingUser.user_id);
   }
 
   const isValidPassword = await bcrypt.compare(
@@ -149,7 +164,25 @@ async function login(user: any) {
 
   if (isValidPassword) {
     let JWTtoken = JWT.generateAccessToken(existingUser);
-    return { access_token: JWTtoken, user_id: existingUser.user_id, email: existingUser.email, name: existingUser.name, role: existingUser.role };
+
+    if (staffType) {
+      return {
+        access_token: JWTtoken,
+        user_id: existingUser.user_id,
+        email: existingUser.email,
+        name: existingUser.name,
+        role: existingUser.role,
+        type: staffType,
+      };
+    } else {
+      return {
+        access_token: JWTtoken,
+        user_id: existingUser.user_id,
+        email: existingUser.email,
+        name: existingUser.name,
+        role: existingUser.role,
+      };
+    }
   } else {
     return null;
   }
@@ -159,6 +192,7 @@ export {
   UserCreateType,
   PatientCreateType,
   returnUserRole,
+  returnStaffType,
   createUser,
   createManager,
   createPatients,
@@ -170,4 +204,5 @@ export {
   findManagerById,
   findPatientById,
   findStaffById,
+  findActiveStaffById,
 };

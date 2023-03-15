@@ -137,7 +137,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"counselor@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"c@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -284,21 +284,12 @@
 			"response": []
 		},
 		{
-			"name": "Counselor - CreateAppointment",
+			"name": "Manager - ApproveRegistration",
 			"request": {
-				"method": "POST",
+				"method": "PUT",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"medicalStaff_Id\": 3,\r\n    \"patient_Id\": 7,\r\n    \"assignedStaff_Id\": 4,\r\n    \"appointmentDate\": \"2023-03-01T10:00:00.000Z\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:medicalStaff_id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -307,8 +298,95 @@
 					"path": [
 						"api",
 						"v1",
-						"counselor",
-						"appointment"
+						"manager",
+						"approveRegistration",
+						":medicalStaff_id"
+					],
+					"variable": [
+						{
+							"key": "medicalStaff_id",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetRegistrations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"newRegistrations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - DenyRegistration",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:medicalStaff_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"denyRegistration",
+						":medicalStaff_id"
+					],
+					"variable": [
+						{
+							"key": "medicalStaff_id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - DeletePatient",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:patient_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"deletePatient",
+						":patient_id"
+					],
+					"variable": [
+						{
+							"key": "patient_id",
+							"value": ""
+						}
 					]
 				}
 			},
@@ -466,63 +544,21 @@
 			"response": []
 		},
 		{
-			"name": "Manager - GetRegistrations",
+			"name": "Counselor - CreateAppointment",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/newRegistrations",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"manager",
-						"newRegistrations"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Manager - ApproveRegistration",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/approveRegistration/:medicalStaff_id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"manager",
-						"approveRegistration",
-						":medicalStaff_id"
-					],
-					"variable": [
-						{
-							"key": "medicalStaff_id",
-							"value": "4"
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_Id\": 8,\r\n    \"medicalStaff_Id\": 4,\r\n    \"appointmentDate\": \"2023-05-01T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Manager - DenyRegistration",
-			"request": {
-				"method": "DELETE",
-				"header": [],
+					}
+				},
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/denyRegistration/:medicalStaff_id",
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -531,44 +567,8 @@
 					"path": [
 						"api",
 						"v1",
-						"manager",
-						"denyRegistration",
-						":medicalStaff_id"
-					],
-					"variable": [
-						{
-							"key": "medicalStaff_id",
-							"value": ""
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Manager - DeletePatient",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/deletePatient/:patient_id",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"manager",
-						"deletePatient",
-						":patient_id"
-					],
-					"variable": [
-						{
-							"key": "patient_id",
-							"value": ""
-						}
+						"counselor",
+						"appointment"
 					]
 				}
 			},
@@ -639,15 +639,6 @@
 			"request": {
 				"method": "PUT",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"medicalStaff_Id\" : 4\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/approve/:assessmentId",
 					"protocol": "http",
@@ -700,6 +691,45 @@
 						"counselor",
 						"assessments",
 						"assign"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - ModifyAppointment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentDate\": \"2023-09-05T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment/modify/:appointmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment",
+						"modify",
+						":appointmentId"
+					],
+					"variable": [
+						{
+							"key": "appointmentId",
+							"value": "11"
+						}
 					]
 				}
 			},
