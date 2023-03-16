@@ -71,7 +71,7 @@ export const Manager = () => {
     }
 
     return isLogOut ? (
-      <Navigate to="/Admin" />
+      <Navigate to="/" />
     ) : (
       <Layout style={{ minHeight: "100vh" }}>
         <Header>
