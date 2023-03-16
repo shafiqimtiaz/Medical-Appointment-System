@@ -43,12 +43,15 @@ export default function Signin() {
         password: password,
       };
       const res = await axios.post("/auth/login", user);
-      dispatch(loginSuccess(res.data));
+
       if (res.data.message === "Staff not approved!") awaitNotification();
-      else if (res.data.message === "user not found!") invalidNotification();
-      else {
+      else if (res.data.message === "User not found!") invalidNotification();
+      else if (res.data.role === "manager") {
+        navigate("/Manager", { state: { val: res.data.access_token } });
+      } else {
         navigate("/dashboard");
       }
+      dispatch(loginSuccess(res.data));
     } catch (error) {
       dispatch(loginFailure);
     }
@@ -114,9 +117,6 @@ export default function Signin() {
         <Form.Item>
           <Link to="/register">
             <mTap style={linkStyle}>New User? Register Here</mTap>
-          </Link>
-          <Link to="/admin">
-            <mTap style={linkStyle}>Are you Manager? Login Here</mTap>
           </Link>
         </Form.Item>
       </Form.Item>
