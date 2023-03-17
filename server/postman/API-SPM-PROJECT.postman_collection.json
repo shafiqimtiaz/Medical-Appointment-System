@@ -313,6 +313,28 @@
 			"response": []
 		},
 		{
+			"name": "Manager - GetAllUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/getallusers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"getallusers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "Manager - GetRegistrations",
 			"request": {
 				"method": "GET",
@@ -768,38 +790,6 @@
 			"response": []
 		},
 		{
-			"name": "Counselor - GetPatients",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/patients",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"counselor",
-						"patients"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "Counselor - GetAssessmentById",
 			"request": {
 				"auth": {
@@ -833,6 +823,60 @@
 							"key": "id",
 							"value": "18"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - GetDoctors",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/doctors",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"doctors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - GetPatients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/patients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"patients"
 					]
 				}
 			},
