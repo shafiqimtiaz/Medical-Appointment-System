@@ -56,6 +56,27 @@ async function getAllPatients(withAppointments: boolean) {
   }
 }
 
+async function getAllDoctors() {
+  try {
+    const doctors = await db.medical_staff.findMany({
+      where: {
+        type: "d",
+      },
+      include: {
+        users: true,
+      },
+    });
+    doctors.forEach((d: any) => {
+      delete d.users.password;
+      delete d.users.user_id;
+    });
+    return doctors;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get doctors");
+  }
+}
+
 async function getAssessmentAnswersById(assessment_id: number) {
   try {
     return await db.assessments.findFirst({
@@ -219,6 +240,7 @@ async function modifyAppointment(
 export {
   createAppointment,
   getAllPatients,
+  getAllDoctors,
   getAssessmentAnswersById,
   getAppointmentsForCounselor,
   deleteAssessment,
