@@ -67,6 +67,20 @@ counselorRouter.get(
 );
 
 counselorRouter.get(
+  "/doctors",
+  authorizeRoles("medical_staff"),
+  async (req, res) => {
+    try {
+      const doctors = await counselorService.getAllDoctors();
+      res.status(200).json(doctors);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to get doctors");
+    }
+  }
+);
+
+counselorRouter.get(
   "/assessments/:id",
   authorizeRoles("medical_staff"),
   async (req, res) => {
