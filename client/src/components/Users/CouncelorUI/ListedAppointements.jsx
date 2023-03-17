@@ -2,12 +2,13 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Table, Space, Button } from "antd";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import AppointementModal from "./AppointementModal";
 
 const columns = [
   {
     title: "Name",
-    dataIndex: "created_by",
-    key: "created_by",
+    dataIndex: ["patients", "users", "name"],
+    key: "name",
   },
   {
     title: "Date",
@@ -29,31 +30,19 @@ const columns = [
     title: "Action",
     dataIndex: "action",
     key: "action",
-    render: (text, record) => {
+    render: (_, record) => (
       <Space size="middle">
-      <Button
-        type="primary"
-        style={{ backgroundColor: "yellow" }}
-        onClick={() => {
-        }}
-      >
-        Modify
-      </Button>
+        <AppointementModal record={record}/>
       </Space>
-    },
-  },
+    ),
+},
 
 ];
 
 export default function ListedAppointements() {
   const { currentUser } = useSelector((state) => state.user);
   const [appointments, setAppointments] = useState([]);
-  const [filteredAppointements, setFilteredAppointements] = useState([]);
 
-  const filterData = (data) => {
-    const filtered = data.filter((item) => item.active === true);
-    setFilteredAppointements(filtered);
-  };
 
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
@@ -64,10 +53,9 @@ export default function ListedAppointements() {
 
   useEffect(() => {
     axios
-      .get(`/patient/appointment/${userId}`, { headers })
+      .get(`/counselor/appointment`, { headers })
       .then((res) => {
         setAppointments(res.data);
-        filterData(res.data);
       })
       .catch((error) => console.log(error));
   }, [userId, headers, appointments]);
@@ -75,7 +63,7 @@ export default function ListedAppointements() {
   return (
     <Table
       columns={columns}
-      dataSource={filteredAppointements}
+      dataSource={appointments}
       pagination={false}
     />
   );
