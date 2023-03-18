@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useMemo } from 'react';
 import { Table, Button, Modal, List } from 'antd';
-import { QuestionCircleTwoTone } from '@ant-design/icons'
+import { QuestionCircleTwoTone, CheckCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { notification } from "antd";
 //import {ParentTable} from "/Users/hadi/Desktop/Concordia/Soen6841/SPM_6841_Project/client/src/components/Admin/ParentTable.jsx"
 import axios from "axios";
@@ -82,6 +82,8 @@ export default function PendingPatients({accessToken}) {
     { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Thoughts that you would be better off dead or of hurting yourself in some way?",answer: "",id:9 },
   ]);
 
+  const [counserlorData, setCounselorData] = useState([]);
+  const [selectedRecord, setSelectedRecord] = useState();
 
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
@@ -140,9 +142,10 @@ export default function PendingPatients({accessToken}) {
   };
 
 
-  const handleOpenModal = (selectedId) => {
+  const handleOpenModal = (selectedId,record) => {
     setSelectedId(selectedId)
     fetchAnswers(selectedId);
+    setSelectedRecord(record);
     setVisible(true);
   };
 
@@ -150,12 +153,21 @@ export default function PendingPatients({accessToken}) {
     setVisible(false);
   };
 
+  useEffect(() => {}, [counserlorData]);
 
-  const handleApprove = async (id) => {
+  const addCounselorData =  (record) => {
+    console.log(record);
+    setCounselorData([...counserlorData,record]);
+  }
+
+  const handleApprove = async (record) => {
     try {
       await axios.put(`/counselor/assessments/approve/${selectedId}`, null,{ headers });
       showSuccess();
       setVisible(false);
+      addCounselorData(selectedRecord);
+
+      
     } catch (error) {
       console.error(error.response);
       showError();
@@ -174,7 +186,7 @@ export default function PendingPatients({accessToken}) {
     }
   };
 
-  const columns = [
+  const membersOfTable = [
     {
       title: 'Id',
       dataIndex: 'id',
@@ -204,20 +216,24 @@ export default function PendingPatients({accessToken}) {
       title: 'Phone Number',
       dataIndex: 'number',
       key: 'number',
-    },
+    }
+  ]
+
+  const columns = [
+    ...membersOfTable,
     {
       key: 'assessments',
     },
     {
       title: 'Action',
       key: 'action',
-      render: (record) => (
+      render: (record) => (        
         <>
           <Button
             disabled={record.assessments!=null ? false : true}
             type="primary"
             onClick={() => {
-              handleOpenModal(record.assessments);
+              handleOpenModal(record.assessments,record);
             }}
             style={{ borderRadius: '5px' }}
           >
@@ -270,8 +286,48 @@ export default function PendingPatients({accessToken}) {
     },
   ];
 
+  
+  const upperTable = [
+    ...membersOfTable,
+    {
+      title: 'Action',
+      key: 'action',
+      render: (record) => (        
+        <>
+          {/* <Button
+            disabled={record.assessments!=null ? false : true}
+            type="primary"
+            onClick={() => {
+              handleOpenModal(record.assessments,record);
+            }}
+            style={{ borderRadius: '5px' }}
+          >
+            Assign
+          </Button> */}
+
+          
+
+          <Button 
+          icon={<PlusOutlined />} style={{ background: 'none', border: 'none' }}>
+          </Button>
+
+          <Button
+                icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
+                style={{ color: '#52c41a', background: 'none', border: 'none' }}
+                onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
+                onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
+
+          />
+
+
+        </>
+        ),
+    },
+  ];
+
   return (
     <>
+    <Table dataSource={counserlorData} columns={upperTable} pagination={{pageSize:4}}/>
     <Table dataSource={data} columns={columns} pagination={{pageSize:4}}/>
     </>
   )

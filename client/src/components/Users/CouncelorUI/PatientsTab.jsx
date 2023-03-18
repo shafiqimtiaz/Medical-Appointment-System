@@ -22,12 +22,8 @@ export default function PatientsTab() {
     <Content style={contentStyle}>
       <Title level={4} style={titleStyle}>
         {" "}
-        Patients
-        <PatientsInfo/>
-      </Title>
-      <Title level={4} style={titleStyle}>
-        {" "}
-        Pending Patients
+        Assigned Patients
+        All Patients
         <PendingPatients/>
       </Title>
     </Content>
