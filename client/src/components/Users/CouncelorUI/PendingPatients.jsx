@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 //Fetch all patients and add them to table
 //Activate button if assement is true 
 
-
 const showError = () => {
   notification.open({
     message: "Error !!",
@@ -24,6 +23,8 @@ const showSuccess = () => {
     placement: "top",
   });
 };
+
+
 
 function calculateAge(dateOfBirth) {
   //console.log(dateOfBirth);
@@ -84,6 +85,11 @@ export default function PendingPatients({accessToken}) {
 
   const [counserlorData, setCounselorData] = useState([]);
   const [selectedRecord, setSelectedRecord] = useState();
+  const [doctorsVisibility, setDoctorsVisibility] = useState(false);
+  const [doctorsData, setDoctorsData] = useState([]);
+  const [patientSelected, setPatientSelected] = useState();
+  const [patientWithAssessment, setPatientWithAssessment] = useState([]);
+  
 
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
@@ -156,8 +162,13 @@ export default function PendingPatients({accessToken}) {
   useEffect(() => {}, [counserlorData]);
 
   const addCounselorData =  (record) => {
-    console.log(record);
-    setCounselorData([...counserlorData,record]);
+    const checkIfRecordConsists = counserlorData.filter((item) => {
+      return item.id === record.id;
+    })
+    if(checkIfRecordConsists.length == 0){
+      setCounselorData([...counserlorData,record]);
+    }
+    
   }
 
   const handleApprove = async (record) => {
@@ -167,6 +178,25 @@ export default function PendingPatients({accessToken}) {
       setVisible(false);
       addCounselorData(selectedRecord);
 
+      const obj = {
+          patientId: selectedRecord.id,
+          assessmentId: selectedId
+      }
+
+      let check = false;
+      patientWithAssessment.map((item) => {
+        console.log(`${item.patientId} ${obj.patientId}`);
+        if(item.patientId == obj.patientId){
+          item.assessmentId = obj.assessmentId;
+          check = true;
+        }
+      })
+      if(check === false){
+        patientWithAssessment.push(obj);
+      }
+      
+      setPatientWithAssessment(patientWithAssessment);
+      console.log(patientWithAssessment);
       
     } catch (error) {
       console.error(error.response);
@@ -184,6 +214,98 @@ export default function PendingPatients({accessToken}) {
       showError();
       setVisible(false);
     }
+  };
+  
+  const handleAddDoctor = async (patientRecord) => {
+
+    try{
+      const response = await axios.get(`counselor/doctors`, {headers});
+      const listOfDoctors = await response.data;
+
+      setDoctorsData([]);
+      let doctorsList = [];
+      listOfDoctors.map((item) => {
+        if(item.active === true){
+         // console.log(item)
+
+          const doctRec = {
+
+            key:item.medical_staff_id,
+            id: item.medical_staff_id,
+            name: item.users.name,
+            email: item.users.email,
+            age: calculateAge(item.users.date_of_birth),
+            address: item.users.address,
+            number: item.users.phone_number,
+          }
+
+          doctorsList.push(doctRec);
+        }
+        
+      });
+      //doctorsData.push(doctRec);
+      setDoctorsData(doctorsList);
+      setDoctorsVisibility(true);
+      removeRecord(patientRecord)
+
+    }catch(error){
+      console.log(error.response);
+      showError();
+    }
+    
+  };
+
+  
+
+  const showNotification = (type, details) => {
+    notification[type]({
+      message: details.message,
+      description: details.description
+    });
+  };
+  const handleVisibilityForDoctorModal = () => {
+    setDoctorsVisibility(false);
+  }
+  
+  const  AssignDoctor = async (doctorRecord) => {
+
+    try{
+      //console.log(patientWithAssessment);
+      const getRecord = patientWithAssessment.filter((item)=>{
+
+        return item.patientId === patientSelected.id
+      });
+      console.log(getRecord);
+
+      const reqBody = {
+        assessment_id:getRecord[0].assessmentId,
+        medical_staff_id: doctorRecord.id
+      }
+     console.log(reqBody);
+
+      const response = await axios.put(`/counselor/assessments/assign`, reqBody,{ headers });
+      console.log(response);
+
+      const NOTIFICATION_DETAILS = {
+        success: {
+          message: "Assigned",
+          description: `${doctorRecord.name} has been Assigned ${patientSelected.name}`
+        }
+      }
+
+      showNotification("success",NOTIFICATION_DETAILS.success);
+      setDoctorsVisibility(false);
+      removeRecord(patientSelected.id);
+    }catch(error){
+      console.log(error.response);
+      showError();
+    }
+    
+  }
+
+  const removeRecord = (id) => {
+    const updatedRecords = counserlorData.filter((record) => record.id !== id);
+    setCounselorData(updatedRecords);
   };
 
   const membersOfTable = [
@@ -286,6 +408,25 @@ export default function PendingPatients({accessToken}) {
     },
   ];
 
+  const doctorDataTable = [
+    ...membersOfTable,
+    {
+      title: 'Actions',
+      key: 'actions',
+      render: (_, record) => (
+        <>
+          <Button key="approve" type="primary" 
+          onClick={() => {
+            AssignDoctor(record)
+          }} 
+          style={{ borderRadius: '5px' }}>
+                Assign
+          </Button>
+        </>
+      ),
+    },
+  ]
+
   
   const upperTable = [
     ...membersOfTable,
@@ -294,21 +435,16 @@ export default function PendingPatients({accessToken}) {
       key: 'action',
       render: (record) => (        
         <>
-          {/* <Button
-            disabled={record.assessments!=null ? false : true}
-            type="primary"
-            onClick={() => {
-              handleOpenModal(record.assessments,record);
-            }}
-            style={{ borderRadius: '5px' }}
-          >
-            Assign
-          </Button> */}
-
-          
-
           <Button 
-          icon={<PlusOutlined />} style={{ background: 'none', border: 'none' }}>
+          icon={<PlusOutlined />} style={{ background: 'none', border: 'none' }}
+          onClick={() => {
+              setPatientSelected({
+                name:record.name,
+                id: record.id
+                });
+              handleAddDoctor(record);
+            }}
+          >
           </Button>
 
           <Button
@@ -319,6 +455,19 @@ export default function PendingPatients({accessToken}) {
 
           />
 
+          <Modal
+              title="Doctors"
+              open={doctorsVisibility}
+              mask={false}
+              width={1000}
+              footer={[
+                <Button key="back" onClick={handleVisibilityForDoctorModal}>Cancel</Button>
+              ]}
+          >
+
+          <Table dataSource={doctorsData} columns={doctorDataTable} pagination={{pageSize:4}}/>
+
+          </Modal>
 
         </>
         ),
