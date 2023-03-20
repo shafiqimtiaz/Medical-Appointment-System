@@ -1,6 +1,6 @@
-import { Button, Form, Select, DatePicker, notification, Modal } from 'antd';
+import { Button, Form, DatePicker, notification, Modal } from 'antd';
 import axios from 'axios';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 const layout = {
   labelCol: {
@@ -10,6 +10,7 @@ const layout = {
     span: 16,
   },
 };
+
 export default function AppointementModal({record}) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { currentUser } = useSelector((state) => state.user);
@@ -32,15 +33,22 @@ export default function AppointementModal({record}) {
           placement: "top",
         });
       };
-        
+      const deleteNotification = () => {
+        notification.open({
+          message: "Your appointement has been successfully deleted!",
+          placement: "top",
+        });
+      };
 
     const showModal = () => {
       setIsModalOpen(true);
     };
     const handleOk = async() => {
+      let editedDate = new Date(date);
+      editedDate.setHours(editedDate.getHours() - 4);
         try {
             let appointement = {
-                appointmentDate: new Date(date)
+                appointmentDate: editedDate
             }
             const res = await axios.put(`/counselor/appointment/modify/${record.appointment_id}`, appointement, {headers})
             appointementNotification();
@@ -63,7 +71,14 @@ export default function AppointementModal({record}) {
         <Button type="primary" style={{backgroundColor: "orange"}} onClick={showModal}>
           Modify
         </Button>
-        <Modal title="Modify Appointment" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+        <Modal 
+        cancelText="Cancel"
+        okText="Submit"
+        cancelButtonProps={{ 
+          type: "primary",
+          danger: true,
+        }}
+        title="Modify Appointment" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
         <Form
       {...layout}
       ref={formRef}

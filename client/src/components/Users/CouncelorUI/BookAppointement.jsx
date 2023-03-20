@@ -50,11 +50,13 @@ export default function BookAppointement() {
 
   const handleAppointement = async() =>{
     let appointement = null;
+    let editedDate = new Date(date);
+    editedDate.setHours(editedDate.getHours() - 4);
     try {
       appointement = {
         patient_Id: parseInt(id.key),
         medicalStaff_Id: currentUser.user_id,
-        appointmentDate: new Date(date)
+        appointmentDate: editedDate
       }
     const res = await axios.post("/counselor/appointment", appointement, {headers})
     appointementNotification();
