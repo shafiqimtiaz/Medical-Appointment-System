@@ -6,24 +6,6 @@ import Signin from "../components/Users/Signin";
 const { Header, Content } = Layout;
 const { Title } = Typography;
 
-const items = [
-  {
-    key: "1",
-    label: `Patient`,
-    children: <Signin />,
-  },
-  {
-    key: "2",
-    label: `Doctor`,
-    children: <Signin />,
-  },
-  {
-    key: "3",
-    label: `Counselor`,
-    children: <Signin />,
-  },
-];
-
 const headerStyle = {
   textAlign: "center",
   color: "black",
@@ -98,7 +80,7 @@ export default function Home() {
             {" "}
             Sign In
           </Title>
-          <Tabs style={tabsStyle} defaultActiveKey="1" items={items} />
+          <Signin />
         </mContent>
       </Content>
     </Space>

@@ -36,10 +36,9 @@ export function isAuthenticated(
 }
 
 export const authorizeRoles = (...authorizedRoles: string[]) => {
-
   return (req: Request, res: Response, next: NextFunction) => {
-    if ('token' in req) {
-      const {role} = req as CustomRequest;
+    if ("token" in req) {
+      const { role } = req as CustomRequest;
       if (authorizedRoles.includes(role)) {
         return next();
       }

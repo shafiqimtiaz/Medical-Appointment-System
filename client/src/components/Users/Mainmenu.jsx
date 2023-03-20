@@ -1,51 +1,20 @@
-import React, { useState } from "react";
-import { Layout, Menu } from "antd";
-import Assessment from "./Assessment";
-import FullAppointment from "./FullAppointment";
-const { Content, Sider } = Layout;
+import React from "react";
+import { Layout } from "antd";
+import { useSelector } from "react-redux";
+import CouncelorMenu from "./CouncelorUI/CounselorMenu";
+import PatientMenu from "./PatientMenu";
 
-const menuStyle = {
-  height: "100vh",
-  marginTop: "20px",
-};
 
-const patientItems = [
-  {
-    key: "1",
-    label: `Assessments`,
-  },
-  {
-    key: "2",
-    label: `Appointments`,
-  },
-];
 
 export default function Mainmenu() {
-  const [content, setContent] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <Layout>
-      <Sider breakpoint="lg" collapsedWidth="0">
-        <div className="logo" />
-        <Menu
-          selectable
-          onSelect={({ key }) => {
-            setContent(patientItems[key - 1].label);
-          }}
-          style={menuStyle}
-          theme="dark"
-          mode="inline"
-          items={patientItems}
-        />
-      </Sider>
-      {content === "Assessments" ? (
-        <Content>
-          <Assessment />
-        </Content>
+      {currentUser.role === "medical_staff" ? (
+        <CouncelorMenu/>
       ) : (
-        <Content>
-          <FullAppointment />
-        </Content>
+        <PatientMenu/>
       )}
     </Layout>
   );
