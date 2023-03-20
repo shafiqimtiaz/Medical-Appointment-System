@@ -19,13 +19,14 @@ const titleStyle = {
 
 export default function PatientsTab() {
   return (
-    <Content style={contentStyle}>
+     <Content style={contentStyle}>
       <Title level={4} style={titleStyle}>
         {" "}
-        Assigned Patients
-        All Patients
         <PendingPatients/>
       </Title>
-    </Content>
+    </Content> 
+   
+    
+   
   );
 }

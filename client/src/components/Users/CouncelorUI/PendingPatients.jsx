@@ -5,6 +5,7 @@ import { notification } from "antd";
 //import {ParentTable} from "/Users/hadi/Desktop/Concordia/Soen6841/SPM_6841_Project/client/src/components/Admin/ParentTable.jsx"
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { Typography } from 'antd';
 
 
 //Fetch all patients and add them to table
@@ -89,6 +90,7 @@ export default function PendingPatients({accessToken}) {
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
   const [patientWithAssessment, setPatientWithAssessment] = useState([]);
+  const { Title } = Typography;
   
 
   const headers = useMemo(
@@ -453,12 +455,17 @@ export default function PendingPatients({accessToken}) {
                 onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
                 onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
 
+                onClick={() => {
+                  removeRecord(record.id);
+            }}
+
           />
 
           <Modal
               title="Doctors"
               open={doctorsVisibility}
               mask={false}
+              onCancel={handleVisibilityForDoctorModal}
               width={1000}
               footer={[
                 <Button key="back" onClick={handleVisibilityForDoctorModal}>Cancel</Button>
@@ -476,7 +483,13 @@ export default function PendingPatients({accessToken}) {
 
   return (
     <>
+    <Title level={4} style={{ marginBottom: '10px' }}>
+        Assigned Patients
+    </Title>
     <Table dataSource={counserlorData} columns={upperTable} pagination={{pageSize:4}}/>
+    <Title level={4} style={{ marginBottom: '10px' }}>
+        All Patients
+    </Title>
     <Table dataSource={data} columns={columns} pagination={{pageSize:4}}/>
     </>
   )
