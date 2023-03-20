@@ -305,6 +305,29 @@ export default function PendingPatients({accessToken}) {
     
   }
 
+  const deactivateAssessment = async (record) => {
+
+    const getRecord = patientWithAssessment.filter((item)=>{
+
+      return item.patientId === record.id
+    });
+
+
+    const response = await axios.put(`/counselor/assessments/deactivate/${getRecord[0].assessmentId}`, null,{ headers });
+    console.log(response);
+    removeRecord(record.id);
+
+    const NOTIFICATION_DETAILS = {
+      success: {
+        message: "Assessment Deactivated",
+        description: `Deactivation Successfull`
+      }
+    }
+    
+    showNotification("success",NOTIFICATION_DETAILS.success);
+    
+  }
+
   const removeRecord = (id) => {
     const updatedRecords = counserlorData.filter((record) => record.id !== id);
     setCounselorData(updatedRecords);
@@ -456,7 +479,8 @@ export default function PendingPatients({accessToken}) {
                 onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
 
                 onClick={() => {
-                  removeRecord(record.id);
+                  deactivateAssessment(record);
+                  //removeRecord(record.id);
             }}
 
           />
