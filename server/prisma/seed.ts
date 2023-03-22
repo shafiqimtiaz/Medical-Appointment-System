@@ -31,6 +31,12 @@ async function main() {
     },
   });
 
+  await prisma.patients.create({
+    data: {
+      patient_id: p1.user_id,
+    },
+  });
+
   const p2 = await prisma.users.upsert({
     where: { email: "p2@spm.com" },
     update: {},
@@ -42,6 +48,12 @@ async function main() {
       phone_number: "514-304-3434",
       password: bcrypt.hashSync("123456", 10),
       role: "patient",
+    },
+  });
+
+  await prisma.patients.create({
+    data: {
+      patient_id: p2.user_id,
     },
   });
 

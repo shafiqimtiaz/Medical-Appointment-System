@@ -69,7 +69,6 @@ async function createPatients(user_id: number, patient: PatientCreateType) {
   return await db.patients.create({
     data: {
       patient_id: user_id,
-      health_condition: patient.health_condition,
     },
   });
 }

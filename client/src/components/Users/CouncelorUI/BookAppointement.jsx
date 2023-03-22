@@ -71,6 +71,11 @@ export default function BookAppointment() {
       .get("/counselor/patients", { headers })
       .then((response) => response)
       .then((res) => {
+        // const filteredPatients = res.data.filter(
+        //   (patient) => patient.medical_staff_id === currentUser.user_id
+        // );
+        // setPatients(filteredPatients);
+
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
