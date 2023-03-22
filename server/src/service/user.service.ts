@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 import * as JWT from "../util/jwt";
 import { db } from "../util/database";
-import { type } from "os";
 
 type UserCreateType = {
   name: string;

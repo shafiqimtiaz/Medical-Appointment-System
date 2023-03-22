@@ -1,5 +1,7 @@
 import { PrismaClient } from "@prisma/client";
+const bcrypt = require("bcrypt");
 const prisma = new PrismaClient();
+
 async function main() {
   const manager = await prisma.users.upsert({
     where: { email: "m@spm.com" },
@@ -10,7 +12,7 @@ async function main() {
       email: "m@spm.com",
       date_of_birth: new Date("1986-02-20 00:00:00.00"),
       phone_number: "514-304-3434",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       role: "manager",
     },
   });
@@ -24,7 +26,7 @@ async function main() {
       email: "p1@spm.com",
       date_of_birth: new Date("1991-08-20 00:00:00.00"),
       phone_number: "514-304-3434",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       role: "patient",
     },
   });
@@ -38,7 +40,7 @@ async function main() {
       email: "p2@spm.com",
       date_of_birth: new Date("1990-10-10 00:00:00.00"),
       phone_number: "514-304-3434",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       role: "patient",
     },
   });
@@ -52,7 +54,7 @@ async function main() {
       email: "c1@spm.com",
       date_of_birth: new Date("1980-10-12 00:00:00.00"),
       phone_number: "514-304-3434",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       role: "medical_staff",
       medical_staff: {
         create: {
@@ -72,11 +74,11 @@ async function main() {
       email: "d1@spm.com",
       date_of_birth: new Date("1970-10-12 00:00:00.00"),
       phone_number: "514-304-3434",
-      password: "123456",
+      password: bcrypt.hashSync("123456", 10),
       role: "medical_staff",
       medical_staff: {
         create: {
-          license_number: "9007199254740991",
+          license_number: "9007199959640881",
           type: "d",
         },
       },
