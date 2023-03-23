@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "db-reset": "prisma migrate reset --force",
+    "db-init": "prisma db push && prisma generate && prisma db seed",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "license": "MIT",
@@ -21,5 +23,8 @@
     "prisma": "^4.11.0",
     "prisma-erd-generator": "^1.2.5",
     "spm_6841_project": "file:.."
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
