@@ -86,7 +86,7 @@ export default function BookAppointment() {
       const convDate1 = new Date(element.appointment_date).toISOString();
       const convDate2 = appointment.appointmentDate.toISOString();
       if (
-        element.patient_id === appointment.patient_Id &&
+        // element.patient_id === appointment.patient_Id &&
         convDate1 === convDate2
       ) {
         return true;
