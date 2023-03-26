@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
+		"_postman_id": "3d659bed-cc87-4e71-9baf-0260490f9ae8",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "19239159"
+		"_exporter_id": "16570401"
 	},
 	"item": [
 		{
@@ -877,6 +877,77 @@
 						"v1",
 						"counselor",
 						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - GetAssignedPatients",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6ImRvY3RvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzk4NTIwMTIsImV4cCI6MTY3OTkzODQxMn0.9kWxMonVr1KerXH4s-hYtTowoyTJZjqqiNaKFo46F4A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/patients",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"doctor",
+						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - GetAssessmentById",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{TOKEN}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/:id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"assessments",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "18"
+						}
 					]
 				}
 			},
