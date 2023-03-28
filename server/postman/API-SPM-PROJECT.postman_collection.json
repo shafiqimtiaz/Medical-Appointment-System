@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "3d659bed-cc87-4e71-9baf-0260490f9ae8",
+		"_postman_id": "ed7640d1-3abc-4dd9-a5fa-f5cf86d9358e",
 		"name": "API-SPM-PROJECT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16570401"
+		"_exporter_id": "19239159"
 	},
 	"item": [
 		{
@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"manager@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
+					"raw": "{\r\n    \"name\": \"manager\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"m@spm.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"manager\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"patient\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"patient2@spm.com\",\r\n    \"password\":\"123456\",\r\n    \"role\" : \"patient\"\r\n}",
+					"raw": "{\r\n    \"name\": \"patient1\",\r\n    \"address\": \"Montreal\",\r\n    \"date_of_birth\" : \"1996-02-20 19:36:12.928\",\r\n    \"phone_number\" : \"514-304-3434\",\r\n    \"email\": \"p1@spm.com\",\r\n    \"password\":\"123456\",\r\n    \"role\" : \"patient\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -137,7 +137,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"c@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"d1@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -572,7 +572,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"patient_Id\": 8,\r\n    \"medicalStaff_Id\": 4,\r\n    \"appointmentDate\": \"2023-05-01T10:00:00.000Z\"\r\n}",
+					"raw": "{\r\n    \"patient_Id\": 8,\r\n    \"medicalStaff_Id\": 9,\r\n    \"appointmentDate\": \"2023-05-01T10:00:00.000Z\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -591,6 +591,75 @@
 						"v1",
 						"counselor",
 						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - ModifyAppointment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentDate\": \"2023-09-05T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment/modify/:appointmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment",
+						"modify",
+						":appointmentId"
+					],
+					"variable": [
+						{
+							"key": "appointmentId",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - DeleteAppointment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment/delete/:appointmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"appointment",
+						"delete",
+						":appointmentId"
+					],
+					"variable": [
+						{
+							"key": "appointmentId",
+							"value": "18"
+						}
 					]
 				}
 			},
@@ -693,7 +762,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"assessment_id\" : 18,\r\n    \"medical_staff_id\" : 3 \r\n}",
+					"raw": "{\r\n    \"assessment_id\" : 6,\r\n    \"medical_staff_id\" : 10 \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -713,45 +782,6 @@
 						"counselor",
 						"assessments",
 						"assign"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Counselor - ModifyAppointment",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"appointmentDate\": \"2023-09-05T10:00:00.000Z\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/appointment/modify/:appointmentId",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "{{PORT}}",
-					"path": [
-						"api",
-						"v1",
-						"counselor",
-						"appointment",
-						"modify",
-						":appointmentId"
-					],
-					"variable": [
-						{
-							"key": "appointmentId",
-							"value": "11"
-						}
 					]
 				}
 			},
@@ -883,18 +913,130 @@
 			"response": []
 		},
 		{
-			"name": "Doctor - GetAssignedPatients",
+			"name": "Doctor - CreateAppointment",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"patient_Id\": 8,\r\n    \"medicalStaff_Id\": 10,\r\n    \"appointmentDate\": \"2023-06-01T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"doctor",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - ModifyApointment",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"appointmentDate\": \"2023-10-05T10:00:00.000Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/appointment/modify/:appointmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"doctor",
+						"appointment",
+						"modify",
+						":appointmentId"
+					],
+					"variable": [
 						{
-							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjozLCJlbWFpbCI6ImRvY3RvckBzcG0uY29tIiwicm9sZSI6Im1lZGljYWxfc3RhZmYiLCJpYXQiOjE2Nzk4NTIwMTIsImV4cCI6MTY3OTkzODQxMn0.9kWxMonVr1KerXH4s-hYtTowoyTJZjqqiNaKFo46F4A",
-							"type": "string"
+							"key": "appointmentId",
+							"value": "16"
 						}
 					]
-				},
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - DeleteAppointment",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/appointment/delete/:appointmentId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"doctor",
+						"appointment",
+						"delete",
+						":appointmentId"
+					],
+					"variable": [
+						{
+							"key": "appointmentId",
+							"value": "16"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - GetAppointment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/appointment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"doctor",
+						"appointment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Doctor - GetPatients",
+			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -915,22 +1057,12 @@
 			"response": []
 		},
 		{
-			"name": "Doctor - GetAssessmentById",
+			"name": "Doctor - GetAssessmentsById",
 			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{TOKEN}}",
-							"type": "string"
-						}
-					]
-				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/counselor/assessments/:id",
+					"raw": "http://localhost:{{PORT}}/api/v1/doctor/assessments/:id",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -939,14 +1071,14 @@
 					"path": [
 						"api",
 						"v1",
-						"counselor",
+						"doctor",
 						"assessments",
 						":id"
 					],
 					"variable": [
 						{
 							"key": "id",
-							"value": "18"
+							"value": "6"
 						}
 					]
 				}
