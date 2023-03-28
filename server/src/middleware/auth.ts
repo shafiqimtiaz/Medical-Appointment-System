@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { jwt } from "../util/jwt";
+import * as userService from "../service/user.service";
 
 export interface CustomRequest extends Request {
   token: string;

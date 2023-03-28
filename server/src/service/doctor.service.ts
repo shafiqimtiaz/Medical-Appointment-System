@@ -1,5 +1,95 @@
 import { db } from "../util/database";
 
+async function createAppointment(
+  patient_Id: number,
+  medicalStaff_Id: number,
+  appointmentDate: Date,
+  user: any
+) {
+  try {
+    const appointment = await db.appointments.create({
+      data: {
+        appointment_date: new Date(appointmentDate),
+        patient_id: patient_Id,
+        medical_staff_id: medicalStaff_Id,
+        created_by: user.name,
+        updated_by: user.name,
+      },
+      include: {
+        medical_staff: true,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to create appointment");
+  }
+}
+
+async function modifyAppointment(
+  appointmentId: number,
+  appointmentDate: Date,
+  user: any
+) {
+  try {
+    const appointment = await db.appointments.update({
+      where: {
+        appointment_id: appointmentId,
+      },
+      data: {
+        appointment_date: new Date(appointmentDate),
+        active: false,
+        updated_by: user.name,
+      },
+      include: {
+        medical_staff: true,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to modify appointment");
+  }
+}
+
+async function deleteAppointment(appointmentId: number) {
+  try {
+    const appointment = await db.appointments.delete({
+      where: {
+        appointment_id: appointmentId,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to delete appointment");
+  }
+}
+
+async function getAppointmentsForDoctor(doctorId: number) {
+  try {
+    const appointments = await db.appointments.findMany({
+      where: {
+        medical_staff_id: doctorId,
+      },
+      include: {
+        patients: {
+          include: {
+            users: true,
+          },
+        },
+      },
+    });
+    appointments.forEach((a: any) => {
+      delete a.patients.users.password;
+      delete a.patients.users.user_id;
+    });
+    return appointments;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get appointments");
+  }
+}
 
 async function getPatientsForDoctor(doctorId: number) {
   try {
@@ -9,14 +99,14 @@ async function getPatientsForDoctor(doctorId: number) {
           some: {
             medical_staff_id: doctorId,
             active: true,
-          }
-        }
+          },
+        },
       },
       include: {
         users: true,
         assessments: true,
-      }
-    })
+      },
+    });
 
     // remove password and user_id from users
     patients.forEach((p: any) => {
@@ -51,4 +141,11 @@ async function getAssessmentAnswersById(assessment_id: number) {
   }
 }
 
-export { getPatientsForDoctor, getAssessmentAnswersById };
+export {
+  createAppointment,
+  modifyAppointment,
+  deleteAppointment,
+  getAppointmentsForDoctor,
+  getPatientsForDoctor,
+  getAssessmentAnswersById,
+};
