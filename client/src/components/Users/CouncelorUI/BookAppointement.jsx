@@ -71,6 +71,10 @@ export default function BookAppointment() {
       .get("/counselor/patients", { headers })
       .then((response) => response)
       .then((res) => {
+        // const filteredPatients = res.data.filter(
+        //   (patient) => patient.medical_staff_id === currentUser.user_id
+        // );
+        // setPatients(filteredPatients);
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
@@ -80,7 +84,10 @@ export default function BookAppointment() {
     for (const element of appointments) {
       const convDate1 = new Date(element.appointment_date).toISOString();
       const convDate2 = appointment.appointmentDate.toISOString();
-      if (convDate1 === convDate2) {
+      if (
+        // element.patient_id === appointment.patient_Id &&
+        convDate1 === convDate2
+      ) {
         return true;
       }
     }
@@ -93,7 +100,7 @@ export default function BookAppointment() {
     });
     await getAppointments();
   };
-
+  
   const handleAppointment = async () => {
     await getAppointments();
     try {

@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 import * as JWT from "../util/jwt";
 import { db } from "../util/database";
-import { type } from "os";
 
 type UserCreateType = {
   name: string;
@@ -70,7 +69,6 @@ async function createPatients(user_id: number, patient: PatientCreateType) {
   return await db.patients.create({
     data: {
       patient_id: user_id,
-      health_condition: patient.health_condition,
     },
   });
 }
