@@ -75,7 +75,6 @@ export default function BookAppointment() {
         //   (patient) => patient.medical_staff_id === currentUser.user_id
         // );
         // setPatients(filteredPatients);
-
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
@@ -101,7 +100,7 @@ export default function BookAppointment() {
     });
     await getAppointments();
   };
-
+  
   const handleAppointment = async () => {
     await getAppointments();
     try {

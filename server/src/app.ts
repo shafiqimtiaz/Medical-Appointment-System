@@ -6,6 +6,7 @@ import userRouter from "./controller/user/user.controller";
 import patientRouter from "./controller/patient/patient.controller";
 import counselorRouter from "./controller/counselor/counselor.controller";
 import managerRouter from "./controller/manager/manager.controller";
+import doctorRouter from "./controller/doctor/doctor.controller";
 
 dotenv.config();
 const app = express();
@@ -17,6 +18,7 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/patient", patientRouter);
 app.use("/api/v1/counselor", counselorRouter);
 app.use("/api/v1/manager", managerRouter);
+app.use("/api/v1/doctor", doctorRouter);
 
 const port = process.env.PORT || 3001;
 
