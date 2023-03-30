@@ -61,9 +61,15 @@ export const Manager = () => {
       },
       {
         key: "3",
-        label: "Add new user",
+        label: "Add New User",
         onClick: () => setSelectedMenuItem("3"),
       },
+      {
+        key: "4",
+        label: "Reports",
+        onClick: () => setSelectedMenuItem("4"),
+      },
+
     ];
 
     function logOut() {
