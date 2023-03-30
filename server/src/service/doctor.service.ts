@@ -141,6 +141,29 @@ async function getAssessmentAnswersById(assessment_id: number) {
   }
 }
 
+async function getAppointmentById(appointment_id: number) {
+  try {
+    const appointment = await db.appointments.findFirst({
+      where: {
+        appointment_id: appointment_id,
+      },
+      include: {
+        patients: {
+          include: {
+            users: true,
+          },
+        },
+      },
+    });
+    
+    delete appointment.patients.users.password;
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get appointment");
+  }
+}
+
 export {
   createAppointment,
   modifyAppointment,
@@ -148,4 +171,5 @@ export {
   getAppointmentsForDoctor,
   getPatientsForDoctor,
   getAssessmentAnswersById,
+  getAppointmentById
 };
