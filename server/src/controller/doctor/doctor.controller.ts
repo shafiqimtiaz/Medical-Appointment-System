@@ -163,4 +163,20 @@ doctorRouter.get(
   }
 );
 
+doctorRouter.delete(
+  "/assessments/delete/:assessmentId",
+  authorizeRoles("medical_staff"),
+  async (req, res) => {
+    const { assessmentId } = req.params;
+
+    try {
+      const assessment = await doctorService.deleteAssessment(+assessmentId);
+      res.status(200).json({ deleted: assessment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to delete assessment");
+    }
+  }
+);
+
 export default doctorRouter;

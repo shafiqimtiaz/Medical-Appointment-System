@@ -164,6 +164,20 @@ async function getAppointmentById(appointment_id: number) {
   }
 }
 
+async function deleteAssessment(assessmentId: number) {
+  try {
+    const assessment = await db.assessments.delete({
+      where: {
+        assessment_id: assessmentId,
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to delete assessment");
+  }
+}
+
 export {
   createAppointment,
   modifyAppointment,
@@ -171,5 +185,6 @@ export {
   getAppointmentsForDoctor,
   getPatientsForDoctor,
   getAssessmentAnswersById,
-  getAppointmentById
+  getAppointmentById,
+  deleteAssessment
 };
