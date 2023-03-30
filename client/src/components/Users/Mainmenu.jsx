@@ -3,17 +3,24 @@ import { Layout } from "antd";
 import { useSelector } from "react-redux";
 import CouncelorMenu from "./CouncelorUI/CounselorMenu";
 import PatientMenu from "./PatientMenu";
+import DoctorMenu from "./DoctorUI/DoctorMenu";
 
 
 
 export default function Mainmenu() {
   const { currentUser } = useSelector((state) => state.user);
 
+  console.log(currentUser)
+
   return (
     <Layout>
-      {currentUser.role === "medical_staff" ? (
+      {currentUser.type === "c" ? (
         <CouncelorMenu/>
-      ) : (
+      ) : 
+      currentUser.type === "d" ? (
+        <DoctorMenu/>
+      ) :
+      (
         <PatientMenu/>
       )}
     </Layout>

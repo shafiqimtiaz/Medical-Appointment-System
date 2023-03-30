@@ -22,7 +22,7 @@ const patientItems = [
 
 
 export default function PatientMenu() {
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState("Assessments");
 
   return (
     <Layout>

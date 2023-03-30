@@ -4,6 +4,7 @@ import { ListUsers } from "./ListUsers";
 import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
 import axios from "axios";
+import Reports from "./Reports";
 
 export const ParentTable = ({ item, accessToken }) => {
   const showError = () => {
@@ -147,7 +148,10 @@ export const ParentTable = ({ item, accessToken }) => {
         />
       ) : item === "3" ? (
         <AddUser key="3" handleSubmit={handleSubmit} />
-      ) : (
+      ) : item === "4" ? (
+        <Reports key="4" />
+      ) 
+      : (
         <p>None of the conditions are true</p>
       )}
     </>
