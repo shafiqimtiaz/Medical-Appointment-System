@@ -10,7 +10,6 @@ import DoctorMenu from "./DoctorUI/DoctorMenu";
 export default function Mainmenu() {
   const { currentUser } = useSelector((state) => state.user);
 
-  console.log(currentUser)
 
   return (
     <Layout>
