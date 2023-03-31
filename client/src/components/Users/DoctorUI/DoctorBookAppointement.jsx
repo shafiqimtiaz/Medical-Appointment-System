@@ -71,7 +71,6 @@ export default function DoctorBookAppointement() {
       .get("/doctor/patients", { headers })
       .then((response) => response)
       .then((res) => {
-        console.log(res.data);
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
