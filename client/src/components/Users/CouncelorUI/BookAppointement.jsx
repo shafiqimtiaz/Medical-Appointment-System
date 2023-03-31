@@ -20,6 +20,7 @@ const tailLayout = {
 export default function BookAppointment() {
   const { currentUser } = useSelector((state) => state.user);
   const [patients, setPatients] = useState([]);
+  const [filteredPatients, setfilteredPatients] = useState([]);
   const [patient, setPatient] = useState("");
   const [appointments, setAppointments] = useState([]);
   const [date, setDate] = useState("");
@@ -66,6 +67,13 @@ export default function BookAppointment() {
       .catch((error) => console.log(error));
   };
 
+  const handleFilteredPatients = (data) =>{
+    console.log(data.map((patient) => patient.assessments.map((assessment) => assessment.medical_staff_id)));
+    const filtered = data.map((patient) => patient.assessments.filter((assessment) => assessment.medical_staff_id === currentUser.user_id))
+    // data.filter((patient) => patient.assessments.medical_staff_id
+    // === currentUser.user_id);
+    console.log(filtered);
+  }
   const getPatients = async () => {
     await axios
       .get("/counselor/patients", { headers })
@@ -75,6 +83,7 @@ export default function BookAppointment() {
         //   (patient) => patient.medical_staff_id === currentUser.user_id
         // );
         // setPatients(filteredPatients);
+        handleFilteredPatients(res.data)
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
