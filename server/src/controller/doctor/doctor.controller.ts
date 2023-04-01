@@ -97,6 +97,24 @@ doctorRouter.put(
   }
 );
 
+doctorRouter.put(
+  "/assessment/deactivate/:assessmentId",
+  authorizeRoles("medical_staff"),
+  authorizeTypes("d"),
+  async (req, res) => {
+    try {
+      const { assessmentId } = req.params;
+      const deactivatedAssessment = await doctorService.deactivateAssessment(
+        +assessmentId
+      );
+      res.status(200).json(deactivatedAssessment);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to deactivate assessment");
+    }
+  }
+);
+
 doctorRouter.get(
   "/appointment",
   authorizeRoles("medical_staff"),
@@ -160,22 +178,6 @@ doctorRouter.get(
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to get assessment");
-    }
-  }
-);
-
-doctorRouter.delete(
-  "/assessments/delete/:assessmentId",
-  authorizeRoles("medical_staff"),
-  async (req, res) => {
-    const { assessmentId } = req.params;
-
-    try {
-      const assessment = await doctorService.deleteAssessment(+assessmentId);
-      res.status(200).json({ deleted: assessment });
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Unable to delete assessment");
     }
   }
 );

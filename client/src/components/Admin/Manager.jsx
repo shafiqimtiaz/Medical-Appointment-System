@@ -50,14 +50,14 @@ export const Manager = () => {
     }
     const menuItems = [
       {
-        key: "2",
-        label: "View Users",
-        onClick: () => setSelectedMenuItem("2"),
-      },
-      {
         key: "1",
         label: "View Registration",
         onClick: () => setSelectedMenuItem("1"),
+      },
+      {
+        key: "2",
+        label: "View Users",
+        onClick: () => setSelectedMenuItem("2"),
       },
       {
         key: "3",
@@ -69,7 +69,6 @@ export const Manager = () => {
         label: "Reports",
         onClick: () => setSelectedMenuItem("4"),
       },
-
     ];
 
     function logOut() {

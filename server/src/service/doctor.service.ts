@@ -158,6 +158,46 @@ async function deactivateAppointment(appointmentId: number) {
   }
 }
 
+async function getAppointmentById(appointment_id: number) {
+  try {
+    const appointment = await db.appointments.findFirst({
+      where: {
+        appointment_id: appointment_id,
+      },
+      include: {
+        patients: {
+          include: {
+            users: true,
+          },
+        },
+      },
+    });
+
+    delete appointment.patients.users.password;
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to get appointment");
+  }
+}
+
+async function deactivateAssessment(assessmentId: number) {
+  try {
+    const assessment = await db.assessments.update({
+      where: {
+        assessment_id: assessmentId,
+      },
+      data: {
+        active: false,
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to deactivate assessment");
+  }
+}
+
 export {
   createAppointment,
   modifyAppointment,
@@ -166,4 +206,6 @@ export {
   getPatientsForDoctor,
   getAssessmentAnswersById,
   deactivateAppointment,
+  getAppointmentById,
+  deactivateAssessment,
 };
