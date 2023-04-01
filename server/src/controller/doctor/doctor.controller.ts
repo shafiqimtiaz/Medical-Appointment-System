@@ -92,7 +92,7 @@ doctorRouter.put(
       res.status(200).json(deactivatedAppointment);
     } catch (error) {
       console.error(error);
-      res.status(500).send("Unable to deactivate assessment");
+      res.status(500).send("Unable to deactivate appointment");
     }
   }
 );
