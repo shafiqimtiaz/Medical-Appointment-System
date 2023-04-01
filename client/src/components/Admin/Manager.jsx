@@ -4,7 +4,6 @@ import "./Manager.scss";
 import { ParentTable } from "./ParentTable";
 import { useLocation } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { Reports } from "./Reports";
 
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -39,11 +38,6 @@ export const Manager = () => {
             item={selectedMenuItem}
             accessToken={location.state.val}
           />
-        );
-        break;
-      case "4":
-        content = (
-          <Reports item={selectedMenuItem} accessToken={location.state.val} />
         );
         break;
       default:
