@@ -169,12 +169,13 @@ doctorRouter.get(
 doctorRouter.get(
   "/appointment/:id",
   authorizeRoles("medical_staff"),
+  authorizeTypes("d"),
   async (req, res) => {
     try {
-      const assessments = await doctorService.getAppointmentById(
+      const appointment = await doctorService.getAppointmentById(
         parseInt(req.params.id)
       );
-      res.status(200).json(assessments);
+      res.status(200).json(appointment);
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to get assessment");
