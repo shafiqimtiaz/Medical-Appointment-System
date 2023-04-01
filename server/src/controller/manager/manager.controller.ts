@@ -141,8 +141,8 @@ managerRouter.get(
   authorizeRoles("manager"),
   async (req, res) => {
     try {
-      const appointments = await managerService.getAppointmentStats();
-      res.status(200).json(appointments);
+      const appointmentStats = await managerService.getAppointmentStats();
+      res.status(200).json(appointmentStats);
     } catch (e) {
       console.error(e);
       res.status(500).send("Something went wrong");
