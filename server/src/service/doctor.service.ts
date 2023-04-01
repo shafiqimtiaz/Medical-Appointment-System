@@ -141,6 +141,23 @@ async function getAssessmentAnswersById(assessment_id: number) {
   }
 }
 
+async function deactivateAppointment(appointmentId: number) {
+  try {
+    const assessment = await db.appointment.update({
+      where: {
+        appointment_id: appointmentId,
+      },
+      data: {
+        active: false,
+      },
+    });
+    return assessment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to deactivate appointment");
+  }
+}
+
 export {
   createAppointment,
   modifyAppointment,
@@ -148,4 +165,5 @@ export {
   getAppointmentsForDoctor,
   getPatientsForDoctor,
   getAssessmentAnswersById,
+  deactivateAppointment,
 };
