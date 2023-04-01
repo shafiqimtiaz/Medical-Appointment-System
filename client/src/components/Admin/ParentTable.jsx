@@ -108,7 +108,7 @@ export const ParentTable = ({ item, accessToken }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("/manager/getallusers", { headers });
+        const result = await axios.get("/manager/users", { headers });
         const userArray = result.data;
         let newUserArray = [];
         userArray.map(function (user) {
@@ -150,8 +150,7 @@ export const ParentTable = ({ item, accessToken }) => {
         <AddUser key="3" handleSubmit={handleSubmit} />
       ) : item === "4" ? (
         <Reports key="4" />
-      ) 
-      : (
+      ) : (
         <p>None of the conditions are true</p>
       )}
     </>

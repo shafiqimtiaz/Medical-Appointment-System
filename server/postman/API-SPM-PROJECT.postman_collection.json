@@ -318,7 +318,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/getallusers",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
