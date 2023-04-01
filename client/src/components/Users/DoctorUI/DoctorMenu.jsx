@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Menu } from "antd";
-import PatientsTab from "./PatientsTab";
-import AppointementsTab from "./AppointementsTab";
+import DoctorPatientsTab from "./DoctorPatientsTab";
+import DoctorAppointementsTab from "./DoctorAppointementsTab";
 const { Content, Sider } = Layout;
 
 const menuStyle = {
@@ -21,7 +21,7 @@ const counselorItems = [
 ];
 
 
-export default function CouncelorMenu() {
+export default function DoctorMenu() {
   const [content, setContent] = useState("Patients");
 
   return (
@@ -41,11 +41,11 @@ export default function CouncelorMenu() {
       </Sider>
       {content === "Patients" ? (
         <Content>
-          <PatientsTab/>
+          <DoctorPatientsTab/>
         </Content>
       ) : (
         <Content>
-          <AppointementsTab/>
+          <DoctorAppointementsTab/>
         </Content>
       )}
     </Layout>

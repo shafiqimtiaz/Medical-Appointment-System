@@ -47,3 +47,16 @@ export const authorizeRoles = (...authorizedRoles: string[]) => {
     return res.json("Unauthorized");
   };
 };
+
+export const authorizeTypes = (...authorizedTypes: string[]) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    if ("token" in req) {
+      const { user_id } = req as CustomRequest;
+      const staff_type = userService.returnStaffType(+user_id);
+      if (authorizedTypes.includes(await staff_type)) {
+        return next();
+      }
+    }
+    return res.json("Unauthorized");
+  };
+};

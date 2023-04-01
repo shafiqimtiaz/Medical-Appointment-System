@@ -1,5 +1,6 @@
 import { Button, DatePicker, Form, Input, Select, notification } from "antd";
 import { useState } from "react";
+import moment from "moment";
 import axios from "axios";
 
 import { useNavigate } from "react-router-dom";
@@ -60,6 +61,17 @@ export default function SignUp({ user }) {
   const handleDateChange = (date) => {
     setDOB(date);
   };
+
+  const disabledDateCheck = (date)=>{
+    if(date && date > moment().endOf("day")){
+      return true;
+    }
+    if(date && date > moment().subtract(18, "years")){
+      return true
+    }
+    
+    return false
+  }
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -174,7 +186,7 @@ export default function SignUp({ user }) {
           },
         ]}
       >
-        <DatePicker onChange={handleDateChange} value={dob} />
+        <DatePicker onChange={handleDateChange} value={dob} disabledDate={disabledDateCheck} />
       </Form.Item>
 
       <Form.Item

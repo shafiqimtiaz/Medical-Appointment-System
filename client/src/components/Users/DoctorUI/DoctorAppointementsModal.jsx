@@ -11,7 +11,7 @@ const layout = {
   },
 };
 
-export default function AppointementModal({ record }) {
+export default function DoctorAppointementsModal({ record }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
   const [date, setDate] = useState("");
@@ -55,7 +55,7 @@ export default function AppointementModal({ record }) {
         appointmentDate: editedDate,
       };
       await axios.put(
-        `/counselor/appointment/modify/${record.appointment_id}`,
+        `/doctor/appointment/modify/${record.appointment_id}`,
         appointement,
         { headers }
       );
@@ -67,7 +67,7 @@ export default function AppointementModal({ record }) {
   };
   const handleCancel = async() => {
     try{
-    await axios.delete(`/counselor/appointment/delete/${record.appointment_id}`, {headers});
+    await axios.delete(`/doctor/appointment/delete/${record.appointment_id}`, {headers});
     setIsModalOpen(false);
     deleteNotification()
     }
