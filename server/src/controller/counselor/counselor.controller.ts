@@ -1,35 +1,32 @@
 import express from "express";
 import * as counselorService from "../../service/counselor.service";
 import * as userService from "../../service/user.service";
-import { authorizeRoles, CustomRequest } from "../../middleware/auth";
+import {
+  authorizeRoles,
+  authorizeTypes,
+  CustomRequest,
+} from "../../middleware/auth";
 const counselorRouter = express.Router();
 
 counselorRouter.post(
   "/appointment",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
-    const { patient_Id, medicalStaff_Id, appointmentDate } = req.body;
-
     try {
+      const { patient_Id, medicalStaff_Id, appointmentDate } = req.body;
       const { user_id } = req as CustomRequest;
-
       const user = await userService.findUserById(+user_id);
       if (!user) {
         return res.status(404).send("Medical Staff record not found");
       }
-
-      const staff_type = await userService.returnStaffType(+user_id);
-      if (staff_type === "c") {
-        const appointment = await counselorService.createAppointment(
-          patient_Id,
-          medicalStaff_Id,
-          appointmentDate,
-          user
-        );
-        res.status(200).json(appointment);
-      } else {
-        res.status(500).json("User not authorized to create this appointment");
-      }
+      const appointment = await counselorService.createAppointment(
+        patient_Id,
+        medicalStaff_Id,
+        appointmentDate,
+        user
+      );
+      res.status(200).json(appointment);
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to create appointment");
@@ -40,6 +37,7 @@ counselorRouter.post(
 counselorRouter.put(
   "/assessments/assign",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     const { assessment_id, medical_staff_id } = req.body;
 
@@ -72,29 +70,22 @@ counselorRouter.put(
 counselorRouter.put(
   "/appointment/modify/:appointmentId",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     const { appointmentId } = req.params;
     const { appointmentDate } = req.body;
-
     try {
       const { user_id } = req as CustomRequest;
-
       const user = await userService.findUserById(+user_id);
       if (!user) {
         return res.status(404).send("Medical Staff record not found");
       }
-
-      const staff_type = await userService.returnStaffType(+user_id);
-      if (staff_type === "c") {
-        const modifiedAppointment = await counselorService.modifyAppointment(
-          +appointmentId,
-          appointmentDate,
-          user
-        );
-        res.status(200).json(modifiedAppointment);
-      } else {
-        res.status(500).json("User not authorized to modify this appointment");
-      }
+      const modifiedAppointment = await counselorService.modifyAppointment(
+        +appointmentId,
+        appointmentDate,
+        user
+      );
+      res.status(200).json(modifiedAppointment);
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to modify appointment");
@@ -105,6 +96,7 @@ counselorRouter.put(
 counselorRouter.get(
   "/appointment",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     try {
       const appointments = await counselorService.getAppointmentsForCounselor(
@@ -121,6 +113,7 @@ counselorRouter.get(
 counselorRouter.get(
   "/patients",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     try {
       let withAppointments = false;
@@ -155,26 +148,14 @@ counselorRouter.get(
 counselorRouter.delete(
   "/appointment/delete/:appointmentId",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
-    const { appointmentId } = req.params;
-
     try {
-      const { user_id } = req as CustomRequest;
-
-      const user = await userService.findUserById(+user_id);
-      if (!user) {
-        return res.status(404).send("Medical Staff record not found");
-      }
-
-      const staff_type = await userService.returnStaffType(+user_id);
-      if (staff_type === "c") {
-        const deletedAppointment = await counselorService.deleteAppointment(
-          +appointmentId
-        );
-        res.status(200).json({ deleted: deletedAppointment });
-      } else {
-        res.status(500).json("User not authorized to delete this appointment");
-      }
+      const { appointmentId } = req.params;
+      const deletedAppointment = await counselorService.deleteAppointment(
+        +appointmentId
+      );
+      res.status(200).json({ deleted: deletedAppointment });
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to delete appointment");
@@ -185,6 +166,7 @@ counselorRouter.delete(
 counselorRouter.get(
   "/doctors",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     try {
       const doctors = await counselorService.getAllDoctors();
@@ -199,6 +181,7 @@ counselorRouter.get(
 counselorRouter.get(
   "/assessments/:id",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
     try {
       const assessments = await counselorService.getAssessmentAnswersById(
@@ -215,10 +198,10 @@ counselorRouter.get(
 counselorRouter.delete(
   "/assessments/delete/:assessmentId",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
-    const { assessmentId } = req.params;
-
     try {
+      const { assessmentId } = req.params;
       const assessment = await counselorService.deleteAssessment(+assessmentId);
       res.status(200).json({ deleted: assessment });
     } catch (error) {
@@ -231,10 +214,10 @@ counselorRouter.delete(
 counselorRouter.put(
   "/assessments/deactivate/:assessmentId",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
-    const { assessmentId } = req.params;
-
     try {
+      const { assessmentId } = req.params;
       const deactivatedAssessment = await counselorService.deactivateAssessment(
         +assessmentId
       );
@@ -249,22 +232,16 @@ counselorRouter.put(
 counselorRouter.put(
   "/assessments/approve/:assessmentId",
   authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
   async (req, res) => {
-    const { assessmentId } = req.params;
-
     try {
+      const { assessmentId } = req.params;
       const { user_id } = req as CustomRequest;
-      const counselor = await userService.findActiveStaffById(+user_id);
-
-      if (counselor.type === "c") {
-        const approvedAssessment = await counselorService.approveAssessment(
-          +assessmentId,
-          +user_id
-        );
-        res.status(200).json(approvedAssessment);
-      } else {
-        res.status(500).json("User not authorized to approve this assessment");
-      }
+      const approvedAssessment = await counselorService.approveAssessment(
+        +assessmentId,
+        +user_id
+      );
+      res.status(200).json(approvedAssessment);
     } catch (error) {
       console.error(error);
       res.status(500).send("Unable to approve assessment");
