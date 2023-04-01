@@ -35,6 +35,15 @@ export default function AppointementModal({ record }) {
     });
   };
 
+  const deleteNotification = () => {
+    notification.open({
+      message:
+        "Your appointement has been deleted!",
+      placement: "top",
+    });
+  };
+
+
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -56,8 +65,15 @@ export default function AppointementModal({ record }) {
       errorNotification();
     }
   };
-  const handleCancel = () => {
+  const handleCancel = async() => {
+    try{
+    await axios.delete(`/counselor/appointment/delete/${record.appointment_id}`, {headers});
     setIsModalOpen(false);
+    deleteNotification()
+    }
+    catch(error){
+      errorNotification();
+    }
   };
 
   const handleDateChange = (date) => {
@@ -75,7 +91,7 @@ export default function AppointementModal({ record }) {
         Modify
       </Button>
       <Modal
-        cancelText="Cancel"
+        cancelText="Delete Appointment"
         okText="Submit"
         cancelButtonProps={{
           type: "primary",

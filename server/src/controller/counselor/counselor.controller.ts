@@ -129,6 +129,22 @@ counselorRouter.get(
   }
 );
 
+counselorRouter.get(
+  "/patients/assigned",
+  authorizeRoles("medical_staff"),
+  async (req, res) => {
+    try {
+      const patients = await counselorService.getPatientsForCounselor(
+        +(req as CustomRequest).user_id
+      );
+      res.status(200).json(patients);
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to get assigned patients");
+    }
+  }
+);
+
 counselorRouter.delete(
   "/appointment/delete/:appointmentId",
   authorizeRoles("medical_staff"),

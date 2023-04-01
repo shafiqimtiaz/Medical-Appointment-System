@@ -68,13 +68,9 @@ export default function BookAppointment() {
 
   const getPatients = async () => {
     await axios
-      .get("/counselor/patients", { headers })
+      .get("/counselor/patients/assigned", { headers })
       .then((response) => response)
       .then((res) => {
-        // const filteredPatients = res.data.filter(
-        //   (patient) => patient.medical_staff_id === currentUser.user_id
-        // );
-        // setPatients(filteredPatients);
         setPatients(res.data);
       })
       .catch((error) => console.log(error));
@@ -176,8 +172,8 @@ export default function BookAppointment() {
           }}
         >
           {patients.map((patient) => (
-            <Select.Option key={patient.patient_id} value={patient.user.name}>
-              {patient.user.name}
+            <Select.Option key={patient.patient_id} value={patient.users.name}>
+              {patient.users.name}
             </Select.Option>
           ))}
         </Select>
