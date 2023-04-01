@@ -4,6 +4,7 @@ import "./Manager.scss";
 import { ParentTable } from "./ParentTable";
 import { useLocation } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { Reports } from "./Reports";
 
 const { Header, Content, Sider, Footer } = Layout;
 
@@ -40,6 +41,11 @@ export const Manager = () => {
           />
         );
         break;
+      case "4":
+        content = (
+          <Reports item={selectedMenuItem} accessToken={location.state.val} />
+        );
+        break;
       default:
         content = (
           <ParentTable
@@ -50,14 +56,14 @@ export const Manager = () => {
     }
     const menuItems = [
       {
-        key: "2",
-        label: "View Users",
-        onClick: () => setSelectedMenuItem("2"),
-      },
-      {
         key: "1",
         label: "View Registration",
         onClick: () => setSelectedMenuItem("1"),
+      },
+      {
+        key: "2",
+        label: "View Users",
+        onClick: () => setSelectedMenuItem("2"),
       },
       {
         key: "3",
@@ -69,7 +75,6 @@ export const Manager = () => {
         label: "Reports",
         onClick: () => setSelectedMenuItem("4"),
       },
-
     ];
 
     function logOut() {
