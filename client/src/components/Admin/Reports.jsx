@@ -26,23 +26,62 @@ ChartJS.register(
 export default function Reports() {
   const [line, setLine] = useState({});
 
-  const location = useLocation();
+  // const location = useLocation();
 
-  const accessToken = location.state.val;
+  // const accessToken = location.state.val;
 
-  const headers = useMemo(
-    () => ({ Authorization: `Bearer ${accessToken}}` }),
-    [accessToken]
-  );
+  // const headers = useMemo(
+  //   () => ({ Authorization: `Bearer ${accessToken}}` }),
+  //   [accessToken]
+  // );
 
-  useEffect(() => {
-    axios
-      .get("/manager/assessment/stats", { headers })
-      .then((response) => setLine(response.data))
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  // fetch data but doesnt work
+  // useEffect(() => {
+  //   axios
+  //     .get("/manager/assessment/stats", { headers })
+  //     .then((response) => setLine(response.data))
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  const sample_data = [
+    {
+      assessment_id: 7,
+      active: false,
+      created_at: "2023-03-29T00:49:49.630Z",
+      updated_at: "2023-04-02T20:08:55.765Z",
+      patient_id: 7,
+      medical_staff_id: 9,
+      medical_staff: {
+        type: "c",
+      },
+    },
+    {
+      assessment_id: 8,
+      active: false,
+      created_at: "2023-03-31T04:01:35.723Z",
+      updated_at: "2023-04-01T10:00:12.432Z",
+      patient_id: 7,
+      medical_staff_id: 10,
+      medical_staff: {
+        type: "d",
+      },
+    },
+  ];
+
+  // post-process data
+  let sample_hour = sample_data.map((item) => {
+    let currTime = new Date();
+    let date = new Date(item.updated_at);
+    console.log(currTime, date);
+    if (date.getDate() === currTime.getDate()) {
+      return date.getHours();
+    }
+    return false;
+  });
+
+  console.log(sample_hour);
 
   const dataHour = {
     labels: [
