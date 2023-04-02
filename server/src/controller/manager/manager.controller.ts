@@ -128,6 +128,9 @@ managerRouter.get(
   async (req, res) => {
     try {
       const assessmentStats = await managerService.getAssessmentStats();
+      assessmentStats.map((stat: { updated_at: any }) => {
+        console.log(stat.updated_at);
+      });
       res.status(200).json(assessmentStats);
     } catch (e) {
       console.error(e);

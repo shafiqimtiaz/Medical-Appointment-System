@@ -1,75 +1,86 @@
 import React from "react";
 import {
   Chart as ChartJS,
-  BarElement,
-  LinearScale,
   CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
 } from "chart.js";
-import { Bar } from "react-chartjs-2";
-import { useState, useEffect } from "react";
+import { Line } from "react-chartjs-2";
 import axios from "axios";
 
-ChartJS.register(CategoryScale, LinearScale, BarElement);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 export default function Reports() {
-  const [chart, setChart] = useState({});
+  // const [chart, setChart] = useState({});
 
-  useEffect(() => {
-    axios
-      .get("/manager/patient/stats")
-      .then((response) => setChart(response.data))
-      .catch(function (error) {
-        console.log(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get("/manager/assessment/stats")
+  //     .then((response) => setChart(response.data))
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // }, []);
 
-  const dataArray = Object.values(chart);
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Chart.js Line Chart",
+      },
+    },
+  };
 
-  let data = {
-    labels: dataArray.map((item) => item.description),
+  const labels = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+  ];
+
+  const data = {
+    labels,
     datasets: [
       {
-        label: "Quantity",
-        data: dataArray.map((item) => item.quantity),
-        backgroundColor: [
-          "rgba(255, 99, 132, 0.2)",
-          "rgba(255, 159, 64, 0.2)",
-          "rgba(255, 205, 86, 0.2)",
-          "rgba(75, 192, 192, 0.2)",
-          "rgba(54, 162, 235, 0.2)",
-          "rgba(153, 102, 255, 0.2)",
-          "rgba(201, 203, 207, 0.2)",
-        ],
-        borderColor: [
-          "rgb(255, 99, 132)",
-          "rgb(255, 159, 64)",
-          "rgb(255, 205, 86)",
-          "rgb(75, 192, 192)",
-          "rgb(54, 162, 235)",
-          "rgb(153, 102, 255)",
-          "rgb(201, 203, 207)",
-        ],
-        borderWidth: 1,
+        label: "Dataset 1",
+        // data: labels.map(() =>
+        //   faker.datatype.number({ min: -1000, max: 1000 })
+        // ),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      {
+        label: "Dataset 2",
+        // data: labels.map(() =>
+        //   faker.datatype.number({ min: -1000, max: 1000 })
+        // ),
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgba(53, 162, 235, 0.5)",
       },
     ],
   };
-
-  let options = {
-    maintainAspectRation: false,
-    type: "bar",
-    scales: {
-      y: {
-        beginAtZero: true,
-      },
-    },
-    legend: {
-      labels: { fontSize: 22 },
-    },
-  };
-
   return (
     <div>
-      <Bar data={data} height={150} options={options} />
+      <Line options={options} data={data} />
     </div>
   );
 }
