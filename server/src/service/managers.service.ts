@@ -147,24 +147,14 @@ async function getAppointmentStats() {
 
 async function getAssessmentStats() {
   let assessments = await db.assessments.findMany({
+    where: {
+      active: false,
+      medical_staff: { not: undefined },
+      patient_id: { not: undefined },
+    },
     include: {
-      patients: {
-        include: {
-          users: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      },
       medical_staff: {
-        include: {
-          users: {
-            select: {
-              name: true,
-            },
-          },
-        },
+        select: { type: true },
       },
     },
   });
