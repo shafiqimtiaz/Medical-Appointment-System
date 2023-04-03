@@ -2,6 +2,8 @@ import { Button, Form, DatePicker, notification, Modal } from "antd";
 import axios from "axios";
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import FormItem from "antd/es/form/FormItem";
 const layout = {
   labelCol: {
     span: 8,
@@ -42,6 +44,14 @@ export default function AppointementModal({ record }) {
       placement: "top",
     });
   };
+
+  const disabledDateCheck = (date)=>{
+    if(date && date < moment().endOf("day")){
+      return true;
+    }
+    return false
+  }
+
 
 
   const showModal = () => {
@@ -91,16 +101,28 @@ export default function AppointementModal({ record }) {
         Modify
       </Button>
       <Modal
-        cancelText="Delete Appointment"
-        okText="Submit"
-        cancelButtonProps={{
-          type: "primary",
-          danger: true,
-        }}
         title="Modify Appointment"
         open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        onCancel={()=> setIsModalOpen(false)}
+        footer={[
+          <>
+         <Button
+          type="primary"
+          danger="true"
+          onClick={handleCancel}
+          >
+            CancelAppointement
+         </Button>
+
+          <Button
+          type="primary"
+          onClick={handleOk}
+          >
+              Submit
+            </Button>
+            </>
+        ]}
+        
       >
         <Form
           {...layout}
@@ -127,6 +149,7 @@ export default function AppointementModal({ record }) {
               format="YYYY/MM/DD HH:mm"
               onChange={handleDateChange}
               value={date}
+              disabledDate={disabledDateCheck}
             />
           </Form.Item>
         </Form>

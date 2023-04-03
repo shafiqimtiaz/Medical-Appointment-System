@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from "moment";
 import { Form, Input, Button, Typography,DatePicker } from "antd";
 import NOTIFICATION_DETAILS from "./Constants";
 import showNotification from "./showNotification";
@@ -8,6 +9,18 @@ import acceptPatient from './AddUserWithBackEnd';
 export const AddUser = (props) => {
     const [form] = Form.useForm();
     const { Title, Text } = Typography;
+
+    const disabledDateCheck = (date)=>{
+        if(date && date > moment().endOf("day")){
+          return true;
+        }
+        if(date && date > moment().subtract(18, "years")){
+          return true
+        }
+        
+        return false
+      }
+    
 
 
     const handleFormSubmit = () => {
@@ -136,7 +149,7 @@ export const AddUser = (props) => {
                         },
                     ]}
                     >
-                    <DatePicker/>
+                    <DatePicker disabledDate={disabledDateCheck}/>
                 </Form.Item>
                 <Form.Item // Form Item (Address)
                     label="Address"

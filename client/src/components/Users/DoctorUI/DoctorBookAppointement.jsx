@@ -1,6 +1,7 @@
 import { Button, Form, Select, DatePicker, notification } from "antd";
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
+import moment from "moment";
 import { useSelector } from "react-redux";
 const layout = {
   labelCol: {
@@ -55,6 +56,14 @@ export default function DoctorBookAppointement() {
     newDate.setHours(newDate.getHours() - 4, newDate.getMinutes(), 0, 0);
     setDate(newDate);
   };
+
+  const disabledDateCheck = (date)=>{
+    if(date && date < moment().endOf("day")){
+      return true;
+    }
+    return false
+  }
+
 
   const getAppointments = async () => {
     await axios
@@ -153,6 +162,7 @@ export default function DoctorBookAppointement() {
           format="YYYY/MM/DD HH:mm"
           onChange={handleDateChange}
           value={date}
+          disabledDate={disabledDateCheck}
         />
       </Form.Item>
       <Form.Item
