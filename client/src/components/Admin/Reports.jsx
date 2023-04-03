@@ -10,9 +10,11 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useLocation } from "react-router-dom";
+import { Button } from "antd";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 ChartJS.register(
   CategoryScale,
@@ -25,54 +27,53 @@ ChartJS.register(
 );
 
 export default function Reports() {
-
   const [data, setData] = useState();
 
-  const todaysData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-  const weeksData = [0,0,0,0,0,0,0];
-
-  const monthsData = [0,0,0,0,0,0,0,0,0,0,0,0];
-
-  const location = useLocation();
+  const todaysData = new Array(24).fill(0);
+  const weeksData = new Array(7).fill(0);
+  const monthsData = new Array(12).fill(0);
 
   const { currentUser } = useSelector((state) => state.user);
-
 
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
     [currentUser.access_token]
-  )
+  );
 
-  useEffect(() => { axios
-    .get("manager/assessment/stats"
-    , { headers })
-    .then((response) => response)
-    .then((res) => {
-      setData(res.data);
-      todaysData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-      weeksData = [0,0,0,0,0,0,0];
-      monthsData = [0,0,0,0,0,0,0,0,0,0,0,0];
-      setTodaysData(data);
-      setWeeksData(data);
-      setMonthsData(data);
-      console.log("I rendered");
-    })
-    .catch((error) => console.log(error));}, [headers]);
+  useEffect(() => {
+    axios
+      .get("manager/assessment/stats", { headers })
+      .then((response) => response)
+      .then((res) => {
+        setData(res.data);
+        // todaysData = new Array(24).fill(0);
+        // weeksData = new Array(7).fill(0);
+        // monthsData = new Array(12).fill(0);
+        setTodaysData(data);
+        setWeeksData(data);
+        setMonthsData(data);
+      })
+      .catch((error) => console.log(error));
+  }, [headers]);
 
   // post-process data
   const setTodaysData = (data) => {
-    if(data){
-    data.map((item) => {
-      let currTime = new Date();
-      let date = new Date(item.updated_at);
-      if (date.getDate() === currTime.getDate() && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        todaysData[date.getHours()] = todaysData[date.getHours()] + 1;
-      } return false;
-    })
-    return todaysData;}
-    else return false;
-  }
+    if (data) {
+      data.map((item) => {
+        let currTime = new Date();
+        let date = new Date(item.updated_at);
+        if (
+          date.getDate() === currTime.getDate() &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          todaysData[date.getHours()] = todaysData[date.getHours()] + 1;
+        }
+        return false;
+      });
+      return todaysData;
+    } else return false;
+  };
 
   let previousDateOne = new Date();
   previousDateOne.setDate(previousDateOne.getDate() - 1);
@@ -88,84 +89,135 @@ export default function Reports() {
   previousDateSix.setDate(previousDateSix.getDate() - 6);
 
   const setWeeksData = (data) => {
-    if(data){
-    data.map((item) => {
-      let currTime = new Date();
-      let date = new Date(item.updated_at);
-      if (date.getDate() === currTime.getDate() && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[6] = weeksData[6] + 1;
-      } 
-      else if (date.getDate() === previousDateOne && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[5] = weeksData[5] + 1;
-      } 
-      else if (date.getDate() === previousDateTwo && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[4] = weeksData[4] + 1;
-      } 
-      else if (date.getDate() === previousDateThree && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[3] = weeksData[3] + 1;
-      } 
-      else if (date.getDate() === previousDateFour && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[2] = weeksData[2] + 1;
-      } 
-      else if (date.getDate() === previousDateFive && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[1] = weeksData[1] + 1;
-      } 
-      else if (date.getDate() === previousDateSix && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
-        weeksData[0] = weeksData[0] + 1;
-      } return false;
-    })
-    return weeksData;}
-    else return false;
-  }
+    if (data) {
+      data.map((item) => {
+        let currTime = new Date();
+        let date = new Date(item.updated_at);
+        if (
+          date.getDate() === currTime.getDate() &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[6] = weeksData[6] + 1;
+        } else if (
+          date.getDate() === previousDateOne &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[5] = weeksData[5] + 1;
+        } else if (
+          date.getDate() === previousDateTwo &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[4] = weeksData[4] + 1;
+        } else if (
+          date.getDate() === previousDateThree &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[3] = weeksData[3] + 1;
+        } else if (
+          date.getDate() === previousDateFour &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[2] = weeksData[2] + 1;
+        } else if (
+          date.getDate() === previousDateFive &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[1] = weeksData[1] + 1;
+        } else if (
+          date.getDate() === previousDateSix &&
+          date.getMonth() === currTime.getMonth() &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          weeksData[0] = weeksData[0] + 1;
+        }
+        return false;
+      });
+      return weeksData;
+    } else return false;
+  };
 
   const setMonthsData = (data) => {
-    if(data){
-    data.map((item) => {
-      let currTime = new Date();
-      let date = new Date(item.updated_at);
-      if (date.getMonth() === 0 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[0] = monthsData[0] + 1;
-      }
-      else if (date.getMonth() === 1 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[1] = monthsData[1] + 1;
-      } 
-      else if (date.getMonth() === 2 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[2] = monthsData[2] + 1;
-      } 
-      else if (date.getMonth() === 3 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[3] = monthsData[3] + 1;
-      } 
-      else if (date.getMonth() === 4 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[4] = monthsData[4] + 1;
-      } 
-      else if (date.getMonth() === 5 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[5] = monthsData[5] + 1;
-      } 
-      else if (date.getMonth() === 6 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[6] = monthsData[6] + 1;
-      } 
-      else if (date.getMonth() === 7 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[7] = monthsData[7] + 1;
-      }
-      else if (date.getMonth() === 8 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[8] = monthsData[8] + 1;
-      }
-      else if (date.getMonth() === 9 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[9] = monthsData[9] + 1;
-      }
-      else if (date.getMonth() === 10 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[10] = monthsData[10] + 1;
-      }
-      else if (date.getMonth() === 11 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[11] = monthsData[11] + 1;
-      }
-      else if (date.getMonth() === 12 && date.getFullYear() === currTime.getFullYear()) {
-        monthsData[12] = monthsData[12] + 1;
-      } return false;
-    })
-    return monthsData;}
-    else return false;
-  }
+    if (data) {
+      data.map((item) => {
+        let currTime = new Date();
+        let date = new Date(item.updated_at);
+        if (
+          date.getMonth() === 0 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[0] = monthsData[0] + 1;
+        } else if (
+          date.getMonth() === 1 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[1] = monthsData[1] + 1;
+        } else if (
+          date.getMonth() === 2 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[2] = monthsData[2] + 1;
+        } else if (
+          date.getMonth() === 3 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[3] = monthsData[3] + 1;
+        } else if (
+          date.getMonth() === 4 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[4] = monthsData[4] + 1;
+        } else if (
+          date.getMonth() === 5 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[5] = monthsData[5] + 1;
+        } else if (
+          date.getMonth() === 6 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[6] = monthsData[6] + 1;
+        } else if (
+          date.getMonth() === 7 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[7] = monthsData[7] + 1;
+        } else if (
+          date.getMonth() === 8 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[8] = monthsData[8] + 1;
+        } else if (
+          date.getMonth() === 9 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[9] = monthsData[9] + 1;
+        } else if (
+          date.getMonth() === 10 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[10] = monthsData[10] + 1;
+        } else if (
+          date.getMonth() === 11 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[11] = monthsData[11] + 1;
+        } else if (
+          date.getMonth() === 12 &&
+          date.getFullYear() === currTime.getFullYear()
+        ) {
+          monthsData[12] = monthsData[12] + 1;
+        }
+        return false;
+      });
+      return monthsData;
+    } else return false;
+  };
 
   const dataHour = {
     labels: [
@@ -197,21 +249,10 @@ export default function Reports() {
     datasets: [
       {
         label: "Patients",
-        // data: labels.map(() =>
-        //   faker.datatype.number({ min: -1000, max: 1000 })
-        // ),
         data: setTodaysData(data),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      // {
-      //   label: "Dataset 2",
-      //   // data: labels.map(() =>
-      //   //   faker.datatype.number({ min: -1000, max: 1000 })
-      //   // ),
-      //   borderColor: "rgb(53, 162, 235)",
-      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
-      // },
     ],
   };
 
@@ -228,21 +269,10 @@ export default function Reports() {
     datasets: [
       {
         label: "Patients",
-        // data: labels.map(() =>
-        //   faker.datatype.number({ min: -1000, max: 1000 })
-        // ),
         data: setWeeksData(data),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(0, 101, 255)",
+        backgroundColor: "rgba(0, 101, 255, 0.5)",
       },
-      // {
-      //   label: "Dataset 2",
-      //   // data: labels.map(() =>
-      //   //   faker.datatype.number({ min: -1000, max: 1000 })
-      //   // ),
-      //   borderColor: "rgb(53, 162, 235)",
-      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
-      // },
     ],
   };
 
@@ -264,21 +294,10 @@ export default function Reports() {
     datasets: [
       {
         label: "Patients",
-        // data: labels.map(() =>
-        //   faker.datatype.number({ min: -1000, max: 1000 })
-        // ),
         data: setMonthsData(data),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
+        borderColor: "rgba(0, 181, 0)",
+        backgroundColor: "rgba(0, 181, 0, 0.5)",
       },
-      // {
-      //   label: "Dataset 2",
-      //   // data: labels.map(() =>
-      //   //   faker.datatype.number({ min: -1000, max: 1000 })
-      //   // ),
-      //   borderColor: "rgb(53, 162, 235)",
-      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
-      // },
     ],
   };
 
@@ -290,7 +309,7 @@ export default function Reports() {
       },
       title: {
         display: true,
-        text: "Number of Patients Processed Today",
+        text: "Number of Patients Processed - Today (24 Hours)",
       },
     },
   };
@@ -303,7 +322,7 @@ export default function Reports() {
       },
       title: {
         display: true,
-        text: "Number of Patients Processed Last 7 Days",
+        text: "Number of Patients Processed - Last 7 Days",
       },
     },
   };
@@ -316,19 +335,35 @@ export default function Reports() {
       },
       title: {
         display: true,
-        text: "Number of Patients Processed Per Month This Year",
+        text: "Number of Patients Processed - Per Month this Year",
       },
     },
   };
 
-  console.log("Month");
-  console.log(new Date().getMonth());
+  const printReport = () => {
+    const pdf = new jsPDF("l", "pt", "letter");
+    const prints = document.querySelector("#prints");
+
+    html2canvas(prints).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      pdf.addImage(imgData, "PNG", 15, 0, 775, 600);
+      pdf.save("reports");
+    });
+  };
 
   return (
     <div>
-      <Line options={optionsDay} data={dataHour} />
-      <Line options={optionsWeek} data={dataWeek} />
-      <Line options={optionsMonth} data={dataMonth} />
+      <div id="prints">
+        <Line options={optionsDay} height={75} data={dataHour} />
+        <br />
+        <Line options={optionsWeek} height={75} data={dataWeek} />
+        <br />
+        <Line options={optionsMonth} height={75} data={dataMonth} />
+      </div>
+      <br />
+      <Button type="primary" onClick={printReport}>
+        Print
+      </Button>
     </div>
   );
 }
