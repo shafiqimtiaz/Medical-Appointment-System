@@ -12,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 ChartJS.register(
   CategoryScale,
@@ -24,64 +25,147 @@ ChartJS.register(
 );
 
 export default function Reports() {
-  const [line, setLine] = useState({});
 
-  // const location = useLocation();
+  const [data, setData] = useState();
 
-  // const accessToken = location.state.val;
+  const todaysData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-  // const headers = useMemo(
-  //   () => ({ Authorization: `Bearer ${accessToken}}` }),
-  //   [accessToken]
-  // );
+  const weeksData = [0,0,0,0,0,0,0];
 
-  // fetch data but doesnt work
-  // useEffect(() => {
-  //   axios
-  //     .get("/manager/assessment/stats", { headers })
-  //     .then((response) => setLine(response.data))
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // }, []);
+  const monthsData = [0,0,0,0,0,0,0,0,0,0,0,0];
 
-  const sample_data = [
-    {
-      assessment_id: 7,
-      active: false,
-      created_at: "2023-03-29T00:49:49.630Z",
-      updated_at: "2023-04-02T20:08:55.765Z",
-      patient_id: 7,
-      medical_staff_id: 9,
-      medical_staff: {
-        type: "c",
-      },
-    },
-    {
-      assessment_id: 8,
-      active: false,
-      created_at: "2023-03-31T04:01:35.723Z",
-      updated_at: "2023-04-01T10:00:12.432Z",
-      patient_id: 7,
-      medical_staff_id: 10,
-      medical_staff: {
-        type: "d",
-      },
-    },
-  ];
+  const location = useLocation();
+
+  const { currentUser } = useSelector((state) => state.user);
+
+
+  const headers = useMemo(
+    () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
+    [currentUser.access_token]
+  )
+
+  useEffect(() => { axios
+    .get("manager/assessment/stats"
+    , { headers })
+    .then((response) => response)
+    .then((res) => {
+      setData(res.data);
+      todaysData = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      weeksData = [0,0,0,0,0,0,0];
+      monthsData = [0,0,0,0,0,0,0,0,0,0,0,0];
+      setTodaysData(data);
+      setWeeksData(data);
+      setMonthsData(data);
+      console.log("I rendered");
+    })
+    .catch((error) => console.log(error));}, [headers]);
 
   // post-process data
-  let sample_hour = sample_data.map((item) => {
-    let currTime = new Date();
-    let date = new Date(item.updated_at);
-    console.log(currTime, date);
-    if (date.getDate() === currTime.getDate()) {
-      return date.getHours();
-    }
-    return false;
-  });
+  const setTodaysData = (data) => {
+    if(data){
+    data.map((item) => {
+      let currTime = new Date();
+      let date = new Date(item.updated_at);
+      if (date.getDate() === currTime.getDate() && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        todaysData[date.getHours()] = todaysData[date.getHours()] + 1;
+      } return false;
+    })
+    return todaysData;}
+    else return false;
+  }
 
-  console.log(sample_hour);
+  let previousDateOne = new Date();
+  previousDateOne.setDate(previousDateOne.getDate() - 1);
+  let previousDateTwo = new Date();
+  previousDateTwo.setDate(previousDateTwo.getDate() - 2);
+  let previousDateThree = new Date();
+  previousDateThree.setDate(previousDateThree.getDate() - 3);
+  let previousDateFour = new Date();
+  previousDateFour.setDate(previousDateFour.getDate() - 4);
+  let previousDateFive = new Date();
+  previousDateFive.setDate(previousDateFive.getDate() - 5);
+  let previousDateSix = new Date();
+  previousDateSix.setDate(previousDateSix.getDate() - 6);
+
+  const setWeeksData = (data) => {
+    if(data){
+    data.map((item) => {
+      let currTime = new Date();
+      let date = new Date(item.updated_at);
+      if (date.getDate() === currTime.getDate() && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[6] = weeksData[6] + 1;
+      } 
+      else if (date.getDate() === previousDateOne && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[5] = weeksData[5] + 1;
+      } 
+      else if (date.getDate() === previousDateTwo && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[4] = weeksData[4] + 1;
+      } 
+      else if (date.getDate() === previousDateThree && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[3] = weeksData[3] + 1;
+      } 
+      else if (date.getDate() === previousDateFour && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[2] = weeksData[2] + 1;
+      } 
+      else if (date.getDate() === previousDateFive && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[1] = weeksData[1] + 1;
+      } 
+      else if (date.getDate() === previousDateSix && date.getMonth() === currTime.getMonth() && date.getFullYear() === currTime.getFullYear()) {
+        weeksData[0] = weeksData[0] + 1;
+      } return false;
+    })
+    return weeksData;}
+    else return false;
+  }
+
+  const setMonthsData = (data) => {
+    if(data){
+    data.map((item) => {
+      let currTime = new Date();
+      let date = new Date(item.updated_at);
+      if (date.getMonth() === 0 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[0] = monthsData[0] + 1;
+      }
+      else if (date.getMonth() === 1 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[1] = monthsData[1] + 1;
+      } 
+      else if (date.getMonth() === 2 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[2] = monthsData[2] + 1;
+      } 
+      else if (date.getMonth() === 3 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[3] = monthsData[3] + 1;
+      } 
+      else if (date.getMonth() === 4 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[4] = monthsData[4] + 1;
+      } 
+      else if (date.getMonth() === 5 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[5] = monthsData[5] + 1;
+      } 
+      else if (date.getMonth() === 6 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[6] = monthsData[6] + 1;
+      } 
+      else if (date.getMonth() === 7 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[7] = monthsData[7] + 1;
+      }
+      else if (date.getMonth() === 8 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[8] = monthsData[8] + 1;
+      }
+      else if (date.getMonth() === 9 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[9] = monthsData[9] + 1;
+      }
+      else if (date.getMonth() === 10 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[10] = monthsData[10] + 1;
+      }
+      else if (date.getMonth() === 11 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[11] = monthsData[11] + 1;
+      }
+      else if (date.getMonth() === 12 && date.getFullYear() === currTime.getFullYear()) {
+        monthsData[12] = monthsData[12] + 1;
+      } return false;
+    })
+    return monthsData;}
+    else return false;
+  }
 
   const dataHour = {
     labels: [
@@ -112,30 +196,93 @@ export default function Reports() {
     ],
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Patients",
         // data: labels.map(() =>
         //   faker.datatype.number({ min: -1000, max: 1000 })
         // ),
-        data: [1, 4, 3, 12, 6, 10],
+        data: setTodaysData(data),
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
-      {
-        label: "Dataset 2",
-        // data: labels.map(() =>
-        //   faker.datatype.number({ min: -1000, max: 1000 })
-        // ),
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
+      // {
+      //   label: "Dataset 2",
+      //   // data: labels.map(() =>
+      //   //   faker.datatype.number({ min: -1000, max: 1000 })
+      //   // ),
+      //   borderColor: "rgb(53, 162, 235)",
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
     ],
   };
 
-  const dataWeek = {};
+  const dataWeek = {
+    labels: [
+      previousDateSix.toDateString(),
+      previousDateFive.toDateString(),
+      previousDateFour.toDateString(),
+      previousDateThree.toDateString(),
+      previousDateTwo.toDateString(),
+      previousDateOne.toDateString(),
+      new Date().toDateString(),
+    ],
+    datasets: [
+      {
+        label: "Patients",
+        // data: labels.map(() =>
+        //   faker.datatype.number({ min: -1000, max: 1000 })
+        // ),
+        data: setWeeksData(data),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      // {
+      //   label: "Dataset 2",
+      //   // data: labels.map(() =>
+      //   //   faker.datatype.number({ min: -1000, max: 1000 })
+      //   // ),
+      //   borderColor: "rgb(53, 162, 235)",
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
+    ],
+  };
 
-  const dataMonth = {};
+  const dataMonth = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Patients",
+        // data: labels.map(() =>
+        //   faker.datatype.number({ min: -1000, max: 1000 })
+        // ),
+        data: setMonthsData(data),
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgba(255, 99, 132, 0.5)",
+      },
+      // {
+      //   label: "Dataset 2",
+      //   // data: labels.map(() =>
+      //   //   faker.datatype.number({ min: -1000, max: 1000 })
+      //   // ),
+      //   borderColor: "rgb(53, 162, 235)",
+      //   backgroundColor: "rgba(53, 162, 235, 0.5)",
+      // },
+    ],
+  };
 
-  const options = {
+  const optionsDay = {
     responsive: true,
     plugins: {
       legend: {
@@ -143,16 +290,45 @@ export default function Reports() {
       },
       title: {
         display: true,
-        text: "Chart.js Line Chart",
+        text: "Number of Patients Processed Today",
       },
     },
   };
 
+  const optionsWeek = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Number of Patients Processed Last 7 Days",
+      },
+    },
+  };
+
+  const optionsMonth = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Number of Patients Processed Per Month This Year",
+      },
+    },
+  };
+
+  console.log("Month");
+  console.log(new Date().getMonth());
+
   return (
     <div>
-      <Line options={options} data={dataHour} />
-      {/* <Line options={options} data={dataWeek} /> */}
-      {/* <Line options={options} data={dataMonth} /> */}
+      <Line options={optionsDay} data={dataHour} />
+      <Line options={optionsWeek} data={dataWeek} />
+      <Line options={optionsMonth} data={dataMonth} />
     </div>
   );
 }
