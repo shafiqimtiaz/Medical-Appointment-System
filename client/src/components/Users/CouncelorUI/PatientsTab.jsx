@@ -1,8 +1,6 @@
 import React from "react";
 import { Layout, Typography } from "antd";
-import PatientsInfo from "./PatientsInfo";
 import PendingPatients from "./PendingPatients";
-
 
 const { Content } = Layout;
 const { Title } = Typography;
@@ -19,14 +17,11 @@ const titleStyle = {
 
 export default function PatientsTab() {
   return (
-     <Content style={contentStyle}>
+    <Content style={contentStyle}>
       <Title level={4} style={titleStyle}>
         {" "}
-        <PendingPatients/>
+        <PendingPatients />
       </Title>
-    </Content> 
-   
-    
-   
+    </Content>
   );
 }

@@ -38,17 +38,16 @@ export default function DoctorAppointementsModal({ record }) {
 
   const deleteNotification = () => {
     notification.open({
-      message:
-        "Your appointement has been deleted!",
+      message: "Your appointement has been deleted!",
       placement: "top",
     });
   };
-  const disabledDateCheck = (date)=>{
-    if(date && date < moment().endOf("day")){
+  const disabledDateCheck = (date) => {
+    if (date && date < moment().endOf("day")) {
       return true;
     }
-    return false
-  }
+    return false;
+  };
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -71,13 +70,15 @@ export default function DoctorAppointementsModal({ record }) {
       errorNotification();
     }
   };
-  const handleCancel = async() => {
-    try{
-    await axios.delete(`/doctor/appointment/delete/${record.appointment_id}`, {headers});
-    setIsModalOpen(false);
-    deleteNotification()
-    }
-    catch(error){
+  const handleCancel = async () => {
+    try {
+      await axios.delete(
+        `/doctor/appointment/delete/${record.appointment_id}`,
+        { headers }
+      );
+      setIsModalOpen(false);
+      deleteNotification();
+    } catch (error) {
       errorNotification();
     }
   };
@@ -99,26 +100,18 @@ export default function DoctorAppointementsModal({ record }) {
       <Modal
         title="Modify Appointment"
         open={isModalOpen}
-        onCancel={()=> setIsModalOpen(false)}
+        onCancel={() => setIsModalOpen(false)}
         footer={[
           <>
-         <Button
-          type="primary"
-          danger="true"
-          onClick={handleCancel}
-          >
-            CancelAppointement
-         </Button>
+            <Button type="primary" danger="true" onClick={handleCancel}>
+              Cancel Appointment
+            </Button>
 
-          <Button
-          type="primary"
-          onClick={handleOk}
-          >
+            <Button type="primary" onClick={handleOk}>
               Submit
             </Button>
-            </>
+          </>,
         ]}
-        
       >
         <Form
           {...layout}
