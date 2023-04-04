@@ -137,7 +137,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"email\": \"d1@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
+					"raw": "{\r\n  \"email\": \"m@spm.com\",\r\n  \"password\":\"123456\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -318,7 +318,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/v1/manager/getallusers",
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/users",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -328,7 +328,7 @@
 						"api",
 						"v1",
 						"manager",
-						"getallusers"
+						"users"
 					]
 				}
 			},
@@ -409,6 +409,121 @@
 							"key": "patient_id",
 							"value": ""
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetPatientStats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/patient/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"patient",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetDoctorStats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/doctor/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"doctor",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetCounselorStats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/counselor/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"counselor",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetAppointmentStats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/appointment/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"appointment",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Manager - GetAssessmentStats",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/manager/assessment/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"manager",
+						"assessment",
+						"stats"
 					]
 				}
 			},
@@ -907,6 +1022,29 @@
 						"v1",
 						"counselor",
 						"patients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Counselor - GetAssignedPatients",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/v1/counselor/patients/assigned",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"v1",
+						"counselor",
+						"patients",
+						"assigned"
 					]
 				}
 			},

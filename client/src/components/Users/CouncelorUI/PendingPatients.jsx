@@ -2,10 +2,12 @@ import { React, useState, useEffect, useMemo } from 'react';
 import { Table, Button, Modal, List } from 'antd';
 import { QuestionCircleTwoTone, CheckCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { notification } from "antd";
-//import {ParentTable} from "/Users/hadi/Desktop/Concordia/Soen6841/SPM_6841_Project/client/src/components/Admin/ParentTable.jsx"
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Typography } from 'antd';
+import { addToArray, removeFromArray, resetArray, getCurrentPatients } from "../../../redux/counserlorSlice";
+import { addItem, removeItem, resetItems, currentPatientsWithAssessment } from "../../../redux/patientWithAssessmentIdSlice";
+import { store } from "../../../redux/store";
 
 
 //Fetch all patients and add them to table
@@ -89,10 +91,30 @@ export default function PendingPatients({accessToken}) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
-  const [patientWithAssessment, setPatientWithAssessment] = useState([]);
   const { Title } = Typography;
-  
 
+  const dispatch = useDispatch();
+  // dispatch(resetArray());
+  // dispatch(resetItems());
+
+  // const myArray1 = useSelector((state) => {
+  //   console.log(state);
+  // })
+  // const patientWithAssessment = [];
+  // const myArray = [];
+  // function GetUpdatedState(){
+  //   myArray = [];
+  //   patientWithAssessment = [];
+  // }
+
+  let myArray = useSelector(getCurrentPatients);
+  let patientWithAssessment = useSelector(currentPatientsWithAssessment);
+
+  function GetUpdatedState(){
+    myArray = store.getState().counserlor.myArray;
+    patientWithAssessment = store.getState().getAssessmentId.myArray;
+  }
+  
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
     [currentUser.access_token]
@@ -161,20 +183,27 @@ export default function PendingPatients({accessToken}) {
     setVisible(false);
   };
 
-  useEffect(() => {}, [counserlorData]);
+  useEffect(() => {
+    setCounselorData(myArray);
+  }, [counserlorData]);
 
   const addCounselorData =  (record) => {
-    const checkIfRecordConsists = counserlorData.filter((item) => {
+
+    const checkIfRecordConsists = myArray.filter((item) => {
       return item.id === record.id;
     })
     if(checkIfRecordConsists.length == 0){
-      setCounselorData([...counserlorData,record]);
+      console.log(`was this called? `);
+      dispatch(addToArray(record));
+      GetUpdatedState();
+      setCounselorData(myArray);
     }
     
   }
 
   const handleApprove = async (record) => {
     try {
+
       await axios.put(`/counselor/assessments/approve/${selectedId}`, null,{ headers });
       showSuccess();
       setVisible(false);
@@ -185,22 +214,10 @@ export default function PendingPatients({accessToken}) {
           assessmentId: selectedId
       }
 
-      let check = false;
-      patientWithAssessment.map((item) => {
-        console.log(`${item.patientId} ${obj.patientId}`);
-        if(item.patientId == obj.patientId){
-          item.assessmentId = obj.assessmentId;
-          check = true;
-        }
-      })
-      if(check === false){
-        patientWithAssessment.push(obj);
-      }
-      
-      setPatientWithAssessment(patientWithAssessment);
-      console.log(patientWithAssessment);
-      
+      dispatch(addItem(obj));
+      GetUpdatedState();
     } catch (error) {
+      console.log(error);
       console.error(error.response);
       showError();
       setVisible(false);
@@ -228,7 +245,6 @@ export default function PendingPatients({accessToken}) {
       let doctorsList = [];
       listOfDoctors.map((item) => {
         if(item.active === true){
-         // console.log(item)
 
           const doctRec = {
 
@@ -248,7 +264,8 @@ export default function PendingPatients({accessToken}) {
       //doctorsData.push(doctRec);
       setDoctorsData(doctorsList);
       setDoctorsVisibility(true);
-      removeRecord(patientRecord)
+      
+      //removeRecord(patientRecord)
 
     }catch(error){
       console.log(error.response);
@@ -272,12 +289,13 @@ export default function PendingPatients({accessToken}) {
   const  AssignDoctor = async (doctorRecord) => {
 
     try{
-      //console.log(patientWithAssessment);
+
       const getRecord = patientWithAssessment.filter((item)=>{
 
         return item.patientId === patientSelected.id
       });
       console.log(getRecord);
+      console.log(patientWithAssessment);
 
       const reqBody = {
         assessment_id:getRecord[0].assessmentId,
@@ -297,7 +315,17 @@ export default function PendingPatients({accessToken}) {
 
       showNotification("success",NOTIFICATION_DETAILS.success);
       setDoctorsVisibility(false);
-      removeRecord(patientSelected.id);
+      //removeRecord(patientSelected.id);
+    
+
+      dispatch(removeFromArray(patientSelected));
+      dispatch(removeItem(patientSelected));
+      GetUpdatedState();
+      console.log(patientWithAssessment);
+      console.log(myArray);
+
+    
+      setCounselorData(myArray);
     }catch(error){
       console.log(error.response);
       showError();
@@ -308,14 +336,17 @@ export default function PendingPatients({accessToken}) {
   const deactivateAssessment = async (record) => {
 
     const getRecord = patientWithAssessment.filter((item)=>{
-
       return item.patientId === record.id
     });
 
+    console.log(patientWithAssessment);
 
     const response = await axios.put(`/counselor/assessments/deactivate/${getRecord[0].assessmentId}`, null,{ headers });
     console.log(response);
-    removeRecord(record.id);
+    dispatch(removeFromArray(record));
+    dispatch(removeItem(record));
+    GetUpdatedState();
+    setCounselorData(myArray);
 
     const NOTIFICATION_DETAILS = {
       success: {
@@ -327,12 +358,6 @@ export default function PendingPatients({accessToken}) {
     showNotification("success",NOTIFICATION_DETAILS.success);
     
   }
-
-  const removeRecord = (id) => {
-    const updatedRecords = counserlorData.filter((record) => record.id !== id);
-    setCounselorData(updatedRecords);
-  };
-
   const membersOfTable = [
     {
       title: 'Id',

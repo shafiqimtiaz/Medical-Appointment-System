@@ -17,7 +17,7 @@ const tailLayout = {
   },
 };
 
-export default function BookAppointment() {
+export default function DoctorBookAppointement() {
   const { currentUser } = useSelector((state) => state.user);
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState("");
@@ -58,7 +58,7 @@ export default function BookAppointment() {
 
   const getAppointments = async () => {
     await axios
-      .get("/counselor/appointment", { headers })
+      .get("/doctor/appointment", { headers })
       .then((response) => response)
       .then((res) => {
         setAppointments(res.data);
@@ -68,7 +68,7 @@ export default function BookAppointment() {
 
   const getPatients = async () => {
     await axios
-      .get("/counselor/patients/assigned", { headers })
+      .get("/doctor/patients", { headers })
       .then((response) => response)
       .then((res) => {
         setPatients(res.data);
@@ -81,7 +81,6 @@ export default function BookAppointment() {
       const convDate1 = new Date(element.appointment_date).toISOString();
       const convDate2 = appointment.appointmentDate.toISOString();
       if (
-        // element.patient_id === appointment.patient_Id &&
         convDate1 === convDate2
       ) {
         return true;
@@ -91,7 +90,7 @@ export default function BookAppointment() {
   };
 
   const createAppointment = async (appointment) => {
-    await axios.post("/counselor/appointment", appointment, {
+    await axios.post("/doctor/appointment", appointment, {
       headers,
     });
     await getAppointments();
