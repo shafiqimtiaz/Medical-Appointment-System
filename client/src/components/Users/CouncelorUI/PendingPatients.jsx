@@ -535,11 +535,11 @@ export default function PendingPatients({accessToken}) {
     <Title level={4} style={{ marginBottom: '10px' }}>
         Assigned Patients
     </Title>
-    <Table dataSource={counserlorData} columns={upperTable} pagination={{pageSize:4}}/>
+    <Table dataSource={counserlorData} columns={upperTable} pagination={{pageSize:5}}/>
     <Title level={4} style={{ marginBottom: '10px' }}>
         All Patients
     </Title>
-    <Table dataSource={data} columns={columns} pagination={{pageSize:4}}/>
+    <Table dataSource={data} columns={columns} pagination={{pageSize:5}}/>
     </>
   )
 }

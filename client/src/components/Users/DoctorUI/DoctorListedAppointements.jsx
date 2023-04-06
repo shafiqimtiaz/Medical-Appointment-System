@@ -64,7 +64,7 @@ export default function DoctorListedAppointements() {
     <Table
       columns={columns}
       dataSource={appointments}
-      pagination={false}
+      pagination={{pageSize:5}}
     />
   );
 }

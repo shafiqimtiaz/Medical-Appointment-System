@@ -211,10 +211,10 @@ export default function DoctorPatients({ data, setdata}) {
           </Button>
           <span>    </span>
           <Button key="deny" 
-            type="primary" 
-            style={{ borderRadius: '5px', backgroundColor: '#52c41a', borderColor: '#52c41a'}} 
+            type="danger" 
+            style={{ borderRadius: '5px' ,backgroundColor: '#ff4500', borderColor: '#52c41a', color:'white'}} 
             onClick={() => handleDeny(record.assessments)} >
-                Done
+                Reject
           </Button>
           <Modal
             title="Assesment"
@@ -260,10 +260,10 @@ export default function DoctorPatients({ data, setdata}) {
 
   return (
     <>
-        <Title level={4} style={{ marginBottom: '10px' }}>
+        <Title level={4} style={{ marginBottom: '10px', marginLeft: '10px' }}>
           List of Patients
         </Title>
-        <Table dataSource={Patients} columns={columns}/>
+        <Table dataSource={Patients} columns={columns} pagination={{pageSize:5}}/>
     </>
   )
 }
