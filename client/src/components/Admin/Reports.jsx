@@ -100,37 +100,37 @@ export default function Reports() {
         ) {
           weeksData[6] = weeksData[6] + 1;
         } else if (
-          date.getDate() === previousDateOne &&
+          date.getDate() === previousDateOne.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
           weeksData[5] = weeksData[5] + 1;
         } else if (
-          date.getDate() === previousDateTwo &&
+          date.getDate() === previousDateTwo.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
           weeksData[4] = weeksData[4] + 1;
         } else if (
-          date.getDate() === previousDateThree &&
+          date.getDate() === previousDateThree.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
           weeksData[3] = weeksData[3] + 1;
         } else if (
-          date.getDate() === previousDateFour &&
+          date.getDate() === previousDateFour.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
           weeksData[2] = weeksData[2] + 1;
         } else if (
-          date.getDate() === previousDateFive &&
+          date.getDate() === previousDateFive.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
           weeksData[1] = weeksData[1] + 1;
         } else if (
-          date.getDate() === previousDateSix &&
+          date.getDate() === previousDateSix.getDate() &&
           date.getMonth() === currTime.getMonth() &&
           date.getFullYear() === currTime.getFullYear()
         ) {
