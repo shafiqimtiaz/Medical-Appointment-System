@@ -305,11 +305,18 @@ export default function Reports() {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "right",
       },
       title: {
         display: true,
         text: "Number of Patients Processed - Today (24 Hours)",
+        font: {
+          size: 20,
+        },
+        padding: {
+          top: 30,
+          bottom: 30
+        },
       },
     },
   };
@@ -318,11 +325,18 @@ export default function Reports() {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "right",
       },
       title: {
         display: true,
         text: "Number of Patients Processed - Last 7 Days",
+        font: {
+          size: 20,
+        },
+        padding: {
+          top: 30,
+          bottom: 30
+        },
       },
     },
   };
@@ -331,11 +345,18 @@ export default function Reports() {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "right",
       },
       title: {
         display: true,
         text: "Number of Patients Processed - Per Month this Year",
+        font: {
+          size: 20,
+        },
+        padding: {
+          top: 30,
+          bottom: 30
+        },
       },
     },
   };
@@ -353,6 +374,10 @@ export default function Reports() {
 
   return (
     <div>
+      <Button type="primary" onClick={printReport}>
+        Print
+      </Button>
+      <br />
       <div id="prints">
         <Line options={optionsDay} height={75} data={dataHour} />
         <br />
@@ -360,10 +385,6 @@ export default function Reports() {
         <br />
         <Line options={optionsMonth} height={75} data={dataMonth} />
       </div>
-      <br />
-      <Button type="primary" onClick={printReport}>
-        Print
-      </Button>
     </div>
   );
 }
