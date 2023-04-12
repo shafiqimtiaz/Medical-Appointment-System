@@ -2,12 +2,10 @@ import { React, useState, useEffect, useMemo } from 'react';
 import { Table, Button, Modal, List } from 'antd';
 import { QuestionCircleTwoTone, CheckCircleOutlined, PlusOutlined } from '@ant-design/icons'
 import { notification } from "antd";
+//import {ParentTable} from "/Users/hadi/Desktop/Concordia/Soen6841/SPM_6841_Project/client/src/components/Admin/ParentTable.jsx"
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Typography } from 'antd';
-import { addToArray, removeFromArray, resetArray, getCurrentPatients } from "../../../redux/counserlorSlice";
-import { addItem, removeItem, resetItems, currentPatientsWithAssessment } from "../../../redux/patientWithAssessmentIdSlice";
-import { store } from "../../../redux/store";
 
 
 //Fetch all patients and add them to table
@@ -66,6 +64,21 @@ function getAssessmentID(assessments) {
   return assessmentID;
 }
 
+function filterPateintCounselorId(assessments) {
+  let counselorID = null;
+  if (assessments.length === 0) {
+    return null;
+  } 
+  else {
+    assessments.forEach((assessment) => {
+      if (assessment.active === true && assessment.medical_staff_id !== null) {
+        counselorID = assessment.medical_staff_id;
+      }
+    });
+  }
+  return counselorID;
+}
+
 
 
 export default function PendingPatients({accessToken}) {
@@ -87,34 +100,15 @@ export default function PendingPatients({accessToken}) {
   ]);
 
   const [counserlorData, setCounselorData] = useState([]);
+  const [counselorPatients, setCounselorPatients] = useState(null);
   const [selectedRecord, setSelectedRecord] = useState();
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
+  const [patientWithAssessment, setPatientWithAssessment] = useState([]);
   const { Title } = Typography;
-
-  const dispatch = useDispatch();
-  // dispatch(resetArray());
-  // dispatch(resetItems());
-
-  // const myArray1 = useSelector((state) => {
-  //   console.log(state);
-  // })
-  // const patientWithAssessment = [];
-  // const myArray = [];
-  // function GetUpdatedState(){
-  //   myArray = [];
-  //   patientWithAssessment = [];
-  // }
-
-  let myArray = useSelector(getCurrentPatients);
-  let patientWithAssessment = useSelector(currentPatientsWithAssessment);
-
-  function GetUpdatedState(){
-    myArray = store.getState().counserlor.myArray;
-    patientWithAssessment = store.getState().getAssessmentId.myArray;
-  }
   
+
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
     [currentUser.access_token]
@@ -124,11 +118,11 @@ export default function PendingPatients({accessToken}) {
   //Fetching data
   const mapData = (data) => {
     const mapped = data.map((item) => {
-      const flag = getAssessmentID(item.assessments);
-      if(flag==="Assigned") //Ignore entry if patient is already assigned
-      {
-        return null;
-      }
+      //const flag = getAssessmentID(item.assessments);
+      // if(flag==="Assigned") //Ignore entry if patient is already assigned
+      // {
+      //   return null;
+      // }
       return {
         key:item.patient_id,
         id: item.patient_id,
@@ -142,6 +136,28 @@ export default function PendingPatients({accessToken}) {
     }).filter(item => item !== null);; // filter out null values
     setData(mapped);
   };
+
+    //Fetching data
+    const filterCounselorData = (data) => {
+      const filtered = data.map((item) => {
+        const flag = filterPateintCounselorId(item.assessments);
+        if(flag===currentUser.user_id) //Ignore entry if patient is already assigned
+        {
+          return {
+            key:item.patient_id,
+            id: item.patient_id,
+            name: item.user.name,
+            email: item.user.email,
+            age: calculateAge(item.user.date_of_birth),
+            address: item.user.address,
+            number: item.user.phone_number,
+            assessments: getAssessmentID(item.assessments),
+          };
+        }
+        else{ return null;}
+      }).filter(item => item !== null);; // filter out null values
+      setCounselorPatients(filtered);
+    };
   
   useEffect(() => {
     axios
@@ -149,6 +165,8 @@ export default function PendingPatients({accessToken}) {
       .then((res) => {
         //console.log(res.data)
         mapData(res.data);
+        filterCounselorData(res.data);
+        console.log();
       })
       .catch((error) => console.log(error));
   }, [headers,data]);
@@ -183,27 +201,20 @@ export default function PendingPatients({accessToken}) {
     setVisible(false);
   };
 
-  useEffect(() => {
-    setCounselorData(myArray);
-  }, [counserlorData]);
+  useEffect(() => {}, [counserlorData]);
 
   const addCounselorData =  (record) => {
-
-    const checkIfRecordConsists = myArray.filter((item) => {
+    const checkIfRecordConsists = counserlorData.filter((item) => {
       return item.id === record.id;
     })
     if(checkIfRecordConsists.length == 0){
-      console.log(`was this called? `);
-      dispatch(addToArray(record));
-      GetUpdatedState();
-      setCounselorData(myArray);
+      setCounselorData([...counserlorData,record]);
     }
     
   }
 
   const handleApprove = async (record) => {
     try {
-
       await axios.put(`/counselor/assessments/approve/${selectedId}`, null,{ headers });
       showSuccess();
       setVisible(false);
@@ -214,10 +225,22 @@ export default function PendingPatients({accessToken}) {
           assessmentId: selectedId
       }
 
-      dispatch(addItem(obj));
-      GetUpdatedState();
+      let check = false;
+      patientWithAssessment.map((item) => {
+        console.log(`${item.patientId} ${obj.patientId}`);
+        if(item.patientId == obj.patientId){
+          item.assessmentId = obj.assessmentId;
+          check = true;
+        }
+      })
+      if(check === false){
+        patientWithAssessment.push(obj);
+      }
+      
+      setPatientWithAssessment(patientWithAssessment);
+      console.log(patientWithAssessment);
+      
     } catch (error) {
-      console.log(error);
       console.error(error.response);
       showError();
       setVisible(false);
@@ -245,6 +268,7 @@ export default function PendingPatients({accessToken}) {
       let doctorsList = [];
       listOfDoctors.map((item) => {
         if(item.active === true){
+         // console.log(item)
 
           const doctRec = {
 
@@ -264,8 +288,7 @@ export default function PendingPatients({accessToken}) {
       //doctorsData.push(doctRec);
       setDoctorsData(doctorsList);
       setDoctorsVisibility(true);
-      
-      //removeRecord(patientRecord)
+      removeRecord(patientRecord)
 
     }catch(error){
       console.log(error.response);
@@ -289,13 +312,12 @@ export default function PendingPatients({accessToken}) {
   const  AssignDoctor = async (doctorRecord) => {
 
     try{
-
+      //console.log(patientWithAssessment);
       const getRecord = patientWithAssessment.filter((item)=>{
 
         return item.patientId === patientSelected.id
       });
       console.log(getRecord);
-      console.log(patientWithAssessment);
 
       const reqBody = {
         assessment_id:getRecord[0].assessmentId,
@@ -315,17 +337,7 @@ export default function PendingPatients({accessToken}) {
 
       showNotification("success",NOTIFICATION_DETAILS.success);
       setDoctorsVisibility(false);
-      //removeRecord(patientSelected.id);
-    
-
-      dispatch(removeFromArray(patientSelected));
-      dispatch(removeItem(patientSelected));
-      GetUpdatedState();
-      console.log(patientWithAssessment);
-      console.log(myArray);
-
-    
-      setCounselorData(myArray);
+      removeRecord(patientSelected.id);
     }catch(error){
       console.log(error.response);
       showError();
@@ -336,17 +348,14 @@ export default function PendingPatients({accessToken}) {
   const deactivateAssessment = async (record) => {
 
     const getRecord = patientWithAssessment.filter((item)=>{
+
       return item.patientId === record.id
     });
 
-    console.log(patientWithAssessment);
 
     const response = await axios.put(`/counselor/assessments/deactivate/${getRecord[0].assessmentId}`, null,{ headers });
     console.log(response);
-    dispatch(removeFromArray(record));
-    dispatch(removeItem(record));
-    GetUpdatedState();
-    setCounselorData(myArray);
+    removeRecord(record.id);
 
     const NOTIFICATION_DETAILS = {
       success: {
@@ -358,6 +367,12 @@ export default function PendingPatients({accessToken}) {
     showNotification("success",NOTIFICATION_DETAILS.success);
     
   }
+
+  const removeRecord = (id) => {
+    const updatedRecords = counserlorData.filter((record) => record.id !== id);
+    setCounselorData(updatedRecords);
+  };
+
   const membersOfTable = [
     {
       title: 'Id',
@@ -402,7 +417,7 @@ export default function PendingPatients({accessToken}) {
       render: (record) => (        
         <>
           <Button
-            disabled={record.assessments!=null ? false : true}
+            disabled={(record.assessments===null || record.assessments==="Assigned") ? true : false}
             type="primary"
             onClick={() => {
               handleOpenModal(record.assessments,record);
@@ -486,30 +501,44 @@ export default function PendingPatients({accessToken}) {
       render: (record) => (        
         <>
           <Button 
-          icon={<PlusOutlined />} style={{ background: 'none', border: 'none' }}
-          onClick={() => {
-              setPatientSelected({
-                name:record.name,
-                id: record.id
-                });
-              handleAddDoctor(record);
-            }}
+                type="primary"
+                // Add code to show assesment here 
           >
+            Assesment
           </Button>
-
-          <Button
-                icon={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-                style={{ color: '#52c41a', background: 'none', border: 'none' }}
-                onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
-                onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
+          <>  
+            <span>  </span>
+            <span>  </span>
+          </>
+          <Button type="primary" 
+            onClick={() => {
+                setPatientSelected({
+                  name:record.name,
+                  id: record.id
+                  });
+                handleAddDoctor(record);
+              }}
+          >
+            Assign
+          </Button>
+          <>  
+            <span>  </span>
+            <span>  </span>
+          </>
+          <Button 
+                type="primary"
+                style={{ background: '#52c41a', borderColor: '#52c41a', color: '#fff'  }}
+                // onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
+                // onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
 
                 onClick={() => {
                   deactivateAssessment(record);
                   //removeRecord(record.id);
             }}
 
-          />
-
+          >
+            Done
+          </Button>
           <Modal
               title="Doctors"
               open={doctorsVisibility}
@@ -535,11 +564,11 @@ export default function PendingPatients({accessToken}) {
     <Title level={4} style={{ marginBottom: '10px' }}>
         Assigned Patients
     </Title>
-    <Table dataSource={counserlorData} columns={upperTable} pagination={{pageSize:5}}/>
+    <Table dataSource={counselorPatients} columns={upperTable} pagination={{pageSize:4}}/>
     <Title level={4} style={{ marginBottom: '10px' }}>
         All Patients
     </Title>
-    <Table dataSource={data} columns={columns} pagination={{pageSize:5}}/>
+    <Table dataSource={data} columns={columns} pagination={{pageSize:4}}/>
     </>
   )
 }
