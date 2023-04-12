@@ -285,6 +285,20 @@ async function deleteAppointment(appointmentId: number) {
   }
 }
 
+async function deleteAppointmentByPatientId(patientID: number) {
+  try {
+    const appointment = await db.appointments.deleteMany({
+      where: {
+        patient_id: patientID,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to delete appointment");
+  }
+}
+
 export {
   createAppointment,
   getAllPatients,
@@ -299,4 +313,5 @@ export {
   getAssessmentByCounselorAndAssessmentId,
   modifyAppointment,
   deleteAppointment,
+  deleteAppointmentByPatientId,
 };
