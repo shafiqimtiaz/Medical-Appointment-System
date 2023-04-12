@@ -472,6 +472,26 @@ export default function PendingPatients({ accessToken }) {
     setCounselorData(updatedRecords);
   };
 
+  const assessmentAfterApproving = async () => {
+
+    try{
+
+      console.log("clickedz!!");
+    
+      const getRecord = patientWithAssessment.filter((item) => {
+          return item.patientId === patientSelected.id;
+        });
+  
+      fetchAnswers(getRecord[0].assessmentId);
+      setVisible(true);
+        
+    }catch (error) {
+      console.log(error.response);
+      // showError();
+    }
+   
+  }
+
   const membersOfTable = [
     {
       title: "Id",
@@ -618,7 +638,15 @@ export default function PendingPatients({ accessToken }) {
         <>
           <Button
             type="primary"
-            // Add code to show assesment here
+            onClick={ ()=> {
+
+                setPatientSelected({
+                  name: record.name,
+                  id: record.id,
+                });
+                assessmentAfterApproving();
+              }
+            }
           >
             Assesment
           </Button>
@@ -650,16 +678,49 @@ export default function PendingPatients({ accessToken }) {
               borderColor: "#52c41a",
               color: "#fff",
             }}
-            // onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
-            // onMouseLeave={(e) => (e.target.style.color = '#52c41a')}
-
             onClick={() => {
               deactivateAssessment(record);
-              //removeRecord(record.id);
             }}
           >
             Done
           </Button>
+
+          <Modal
+            title="Assesment"
+            open={visible}
+            onOk={handleOk}
+            onCancel={handleOk}
+            mask={false}
+            width={1000}
+            footer={[
+              <Button key="back" onClick={handleOk}>
+                Cancel
+              </Button>,
+            ]}
+          >
+            <List
+              dataSource={assessment}
+              renderItem={(item) => (
+                <>
+                  <List.Item key={item.question}>
+                    <div>
+                      <QuestionCircleTwoTone />
+                      <span> </span>
+                      <span>{item.question}</span>
+                      <List
+                        dataSource={[item.answer]}
+                        renderItem={(answer) => (
+                          <List.Item key={item.id}>
+                            <span style={{ fontWeight: "bold" }}>{answer}</span>
+                          </List.Item>
+                        )}
+                      />
+                    </div>
+                  </List.Item>
+                </>
+              )}
+            />
+          </Modal>
           <Modal
             title="Doctors"
             open={doctorsVisibility}
