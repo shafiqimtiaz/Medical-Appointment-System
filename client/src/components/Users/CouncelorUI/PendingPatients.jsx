@@ -83,8 +83,7 @@ function filterPateintCounselorId(assessments) {
   let counselorID = null;
   if (assessments.length === 0) {
     return null;
-  } 
-  else {
+  } else {
     assessments.forEach((assessment) => {
       if (assessment.active === true && assessment.medical_staff_id !== null) {
         counselorID = assessment.medical_staff_id;
@@ -94,10 +93,7 @@ function filterPateintCounselorId(assessments) {
   return counselorID;
 }
 
-
-
-export default function PendingPatients({accessToken}) {
-
+export default function PendingPatients({ accessToken }) {
   const { currentUser } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
   const [data, setData] = useState(null);
@@ -165,7 +161,9 @@ export default function PendingPatients({accessToken}) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
-  const [patientWithAssessment, setPatientWithAssessment] = useState([]);
+  const [patientWithAssessment_not_used, setPatientWithAssessment] = useState(
+    []
+  );
   const { Title } = Typography;
 
   const dispatch = useDispatch();
@@ -190,7 +188,6 @@ export default function PendingPatients({accessToken}) {
     patientWithAssessment = store.getState().getAssessmentId.myArray;
   }
 
-
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${currentUser.access_token}` }),
     [currentUser.access_token]
@@ -198,34 +195,37 @@ export default function PendingPatients({accessToken}) {
 
   //Fetching data
   const mapData = (data) => {
-    const mapped = data.map((item) => {
-      //const flag = getAssessmentID(item.assessments);
-      // if(flag==="Assigned") //Ignore entry if patient is already assigned
-      // {
-      //   return null;
-      // }
-      return {
-        key:item.patient_id,
-        id: item.patient_id,
-        name: item.user.name,
-        email: item.user.email,
-        age: calculateAge(item.user.date_of_birth),
-        address: item.user.address,
-        number: item.user.phone_number,
-        assessments: getAssessmentID(item.assessments),
-      };
-    }).filter(item => item !== null);; // filter out null values
+    const mapped = data
+      .map((item) => {
+        //const flag = getAssessmentID(item.assessments);
+        // if(flag==="Assigned") //Ignore entry if patient is already assigned
+        // {
+        //   return null;
+        // }
+        return {
+          key: item.patient_id,
+          id: item.patient_id,
+          name: item.user.name,
+          email: item.user.email,
+          age: calculateAge(item.user.date_of_birth),
+          address: item.user.address,
+          number: item.user.phone_number,
+          assessments: getAssessmentID(item.assessments),
+        };
+      })
+      .filter((item) => item !== null); // filter out null values
     setData(mapped);
   };
 
-    //Fetching data
-    const filterCounselorData = (data) => {
-      const filtered = data.map((item) => {
+  //Fetching data
+  const filterCounselorData = (data) => {
+    const filtered = data
+      .map((item) => {
         const flag = filterPateintCounselorId(item.assessments);
-        if(flag===currentUser.user_id) //Ignore entry if patient is already assigned
-        {
+        if (flag === currentUser.user_id) {
+          //Ignore entry if patient is already assigned
           return {
-            key:item.patient_id,
+            key: item.patient_id,
             id: item.patient_id,
             name: item.user.name,
             email: item.user.email,
@@ -234,12 +234,14 @@ export default function PendingPatients({accessToken}) {
             number: item.user.phone_number,
             assessments: getAssessmentID(item.assessments),
           };
+        } else {
+          return null;
         }
-        else{ return null;}
-      }).filter(item => item !== null);; // filter out null values
-      setCounselorPatients(filtered);
-    };
-  
+      })
+      .filter((item) => item !== null); // filter out null values
+    setCounselorPatients(filtered);
+  };
+
   useEffect(() => {
     axios
       .get(`/counselor/patients`, { headers })
@@ -247,11 +249,9 @@ export default function PendingPatients({accessToken}) {
         //console.log(res.data)
         mapData(res.data);
         filterCounselorData(res.data);
-        console.log();
       })
       .catch((error) => console.log(error));
   }, [headers, data]);
-  ///////
 
   const fetchAnswers = async (selectedId) => {
     try {
@@ -283,7 +283,6 @@ export default function PendingPatients({accessToken}) {
 
   useEffect(() => {}, [counserlorData]);
 
-
   const addCounselorData = (record) => {
     const checkIfRecordConsists = myArray.filter((item) => {
       return item.id === record.id;
@@ -314,18 +313,17 @@ export default function PendingPatients({accessToken}) {
       let check = false;
       patientWithAssessment.map((item) => {
         console.log(`${item.patientId} ${obj.patientId}`);
-        if(item.patientId == obj.patientId){
+        if (item.patientId == obj.patientId) {
           item.assessmentId = obj.assessmentId;
           check = true;
         }
-      })
-      if(check === false){
+      });
+      if (check === false) {
         patientWithAssessment.push(obj);
       }
-      
+
       setPatientWithAssessment(patientWithAssessment);
       console.log(patientWithAssessment);
-      
     } catch (error) {
       console.error(error.response);
       showError();
@@ -354,7 +352,6 @@ export default function PendingPatients({accessToken}) {
       setDoctorsData([]);
       let doctorsList = [];
       listOfDoctors.map((item) => {
-
         if (item.active === true) {
           const doctRec = {
             key: item.medical_staff_id,
@@ -388,9 +385,7 @@ export default function PendingPatients({accessToken}) {
   };
   const handleVisibilityForDoctorModal = () => {
     setDoctorsVisibility(false);
-
   };
-
 
   const AssignDoctor = async (doctorRecord) => {
     try {
@@ -414,7 +409,7 @@ export default function PendingPatients({accessToken}) {
 
       const deleteAllAppointments = await axios.delete(
         `/counselor/delete/appointment/${patientSelected.id}`,
-        { headers, }
+        { headers }
       );
       console.log(deleteAllAppointments);
 
@@ -438,19 +433,15 @@ export default function PendingPatients({accessToken}) {
 
       setCounselorData(myArray);
     } catch (error) {
-
       console.log(error.response);
       showError();
     }
   };
 
   const deactivateAssessment = async (record) => {
-
     const getRecord = patientWithAssessment.filter((item) => {
       return item.patientId === record.id;
-
     });
-
 
     const response = await axios.put(
       `/counselor/assessments/deactivate/${getRecord[0].assessmentId}`,
@@ -469,12 +460,10 @@ export default function PendingPatients({accessToken}) {
     showNotification("success", NOTIFICATION_DETAILS.success);
   };
 
-
   const removeRecord = (id) => {
     const updatedRecords = counserlorData.filter((record) => record.id !== id);
     setCounselorData(updatedRecords);
   };
-
 
   const membersOfTable = [
     {
@@ -520,7 +509,11 @@ export default function PendingPatients({accessToken}) {
       render: (record) => (
         <>
           <Button
-            disabled={(record.assessments===null || record.assessments==="Assigned") ? true : false}
+            disabled={
+              record.assessments === null || record.assessments === "Assigned"
+                ? true
+                : false
+            }
             type="primary"
             onClick={() => {
               handleOpenModal(record.assessments, record);
@@ -616,42 +609,46 @@ export default function PendingPatients({accessToken}) {
       key: "action",
       render: (record) => (
         <>
-          <Button 
-                type="primary"
-                // Add code to show assesment here 
+          <Button
+            type="primary"
+            // Add code to show assesment here
           >
             Assesment
           </Button>
-          <>  
-            <span>  </span>
-            <span>  </span>
+          <>
+            <span> </span>
+            <span> </span>
           </>
-          <Button type="primary" 
+          <Button
+            type="primary"
             onClick={() => {
-                setPatientSelected({
-                  name:record.name,
-                  id: record.id
-                  });
-                handleAddDoctor(record);
-              }}
+              setPatientSelected({
+                name: record.name,
+                id: record.id,
+              });
+              handleAddDoctor(record);
+            }}
           >
             Assign
           </Button>
-          <>  
-            <span>  </span>
-            <span>  </span>
+          <>
+            <span> </span>
+            <span> </span>
           </>
-          <Button 
-                type="primary"
-                style={{ background: '#52c41a', borderColor: '#52c41a', color: '#fff'  }}
-                // onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
-                // onMouseLeave={(e) => (e.target.style.color = '#52c41a')} 
-
-                onClick={() => {
-                  deactivateAssessment(record);
-                  //removeRecord(record.id);
+          <Button
+            type="primary"
+            style={{
+              background: "#52c41a",
+              borderColor: "#52c41a",
+              color: "#fff",
             }}
+            // onMouseEnter={(e) => (e.target.style.color = '#8aff8a')}
+            // onMouseLeave={(e) => (e.target.style.color = '#52c41a')}
 
+            onClick={() => {
+              deactivateAssessment(record);
+              //removeRecord(record.id);
+            }}
           >
             Done
           </Button>
@@ -682,12 +679,16 @@ export default function PendingPatients({accessToken}) {
     <>
       <Title level={4} style={{ marginBottom: "10px" }}>
         Assigned Patients
-    </Title>
-    <Table dataSource={counselorPatients} columns={upperTable} pagination={{pageSize:4}}/>
-    <Title level={4} style={{ marginBottom: '10px' }}>
+      </Title>
+      <Table
+        dataSource={counselorPatients}
+        columns={upperTable}
+        pagination={{ pageSize: 4 }}
+      />
+      <Title level={4} style={{ marginBottom: "10px" }}>
         All Patients
-    </Title>
-    <Table dataSource={data} columns={columns} pagination={{pageSize:4}}/>
+      </Title>
+      <Table dataSource={data} columns={columns} pagination={{ pageSize: 4 }} />
     </>
   );
 }
