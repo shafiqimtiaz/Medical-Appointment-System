@@ -355,8 +355,7 @@ export default function PendingPatients({ accessToken }) {
 
       const deleteAllAppointments = await axios.delete(
         `/counselor/delete/appointment/${patientSelected.id}`,
-        reqBody,
-        { headers }
+        { headers, }
       );
       console.log(deleteAllAppointments);
 
