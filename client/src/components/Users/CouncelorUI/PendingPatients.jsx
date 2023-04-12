@@ -161,7 +161,9 @@ export default function PendingPatients({ accessToken }) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
-  const [patientWithAssessment_notUsed, setPatientWithAssessment] = useState([]);
+  const [patientWithAssessment_notUsed, setPatientWithAssessment] = useState(
+    []
+  );
   const { Title } = Typography;
 
   const dispatch = useDispatch();
@@ -447,6 +449,13 @@ export default function PendingPatients({ accessToken }) {
       { headers }
     );
     console.log(response);
+
+    const deleteAllAppointments = await axios.delete(
+      `/counselor/delete/appointment/${record.id}`,
+      { headers }
+    );
+    console.log(deleteAllAppointments);
+
     removeRecord(record.id);
 
     const NOTIFICATION_DETAILS = {
