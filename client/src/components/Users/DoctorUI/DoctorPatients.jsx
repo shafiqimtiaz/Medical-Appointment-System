@@ -259,13 +259,15 @@ export default function DoctorPatients({ data, setdata }) {
           <span> </span>
           <Button
             key="deny"
-            type="danger"
-            style={{
-              borderRadius: "5px",
-              backgroundColor: "#ff4500",
-              borderColor: "#52c41a",
-              color: "white",
-            }}
+            type="primary"
+            ghost
+            danger
+            // style={{
+            //   borderRadius: "5px",
+            //   backgroundColor: "#ff4500",
+            //   borderColor: "#52c41a",
+            //   color: "white",
+            // }}
             onClick={() => handleDeny(record.assessments, record.id)}
           >
             Reject

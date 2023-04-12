@@ -628,6 +628,7 @@ export default function PendingPatients({ accessToken }) {
           </>
           <Button
             type="primary"
+            ghost
             onClick={() => {
               setPatientSelected({
                 name: record.name,
