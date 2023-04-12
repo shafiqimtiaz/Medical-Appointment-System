@@ -69,6 +69,7 @@ export const ListUsers = (props) => {
           danger
           onClick={() => props.handleDelete(record.id)}
           style={{ borderRadius: "5px" }}
+          disabled={record.role !== "patient" ? true : false}
         >
           Delete
         </Button>
