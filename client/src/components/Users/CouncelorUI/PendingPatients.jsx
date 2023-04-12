@@ -165,7 +165,7 @@ export default function PendingPatients({accessToken}) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
-  const [patientWithAssessment, setPatientWithAssessment] = useState([]);
+  const [patientWithAssessment_notUsed, setPatientWithAssessment] = useState([]);
   const { Title } = Typography;
 
   const dispatch = useDispatch();
@@ -247,7 +247,6 @@ export default function PendingPatients({accessToken}) {
         //console.log(res.data)
         mapData(res.data);
         filterCounselorData(res.data);
-        console.log();
       })
       .catch((error) => console.log(error));
   }, [headers, data]);
@@ -440,7 +439,7 @@ export default function PendingPatients({accessToken}) {
     } catch (error) {
 
       console.log(error.response);
-      showError();
+      // showError();
     }
   };
 
