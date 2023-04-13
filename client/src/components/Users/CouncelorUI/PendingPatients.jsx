@@ -45,7 +45,7 @@ const showSuccess = () => {
 const showDeny = () => {
   notification.open({
     message: "The patient's assessment was denied",
-    icon: <CheckCircleTwoTone twoToneColor="#E32828" />,
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
   });
 };
 
