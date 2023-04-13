@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Typography, Radio, Space, Button, Layout, notification } from "antd";
-import { CloseCircleTwoTone } from '@ant-design/icons';
+import { CloseCircleTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import { useSelector } from "react-redux";
 const { Text } = Typography;
@@ -32,8 +32,7 @@ export default function AssessmentForum({ isDone, setIsDone }) {
   const errorNotification = () => {
     notification.open({
       message: "Please answer all the questions",
-      placement: "top",
-      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
+      icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };
 

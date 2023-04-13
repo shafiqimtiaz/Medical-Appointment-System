@@ -1,5 +1,5 @@
 import { Button, Form, Select, DatePicker, notification } from "antd";
-import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
@@ -35,23 +35,20 @@ export default function BookAppointment() {
   const appointmentNotification = () => {
     notification.open({
       message: "Your appointment has been successfully booked!",
-      placement: "top",
-      icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
   const errorNotification = () => {
     notification.open({
       message: "It seems there was an error when trying to book an appointment",
-      placement: "top",
-      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
+      icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };
 
   const duplicateNotification = () => {
     notification.open({
       message: "Sorry, you already have an appointment at this time",
-      placement: "top",
-      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
+      icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };
 
@@ -61,13 +58,12 @@ export default function BookAppointment() {
     setDate(newDate);
   };
 
-  const disabledDateCheck = (date)=>{
-    if(date && date < moment().endOf("day")){
+  const disabledDateCheck = (date) => {
+    if (date && date < moment().endOf("day")) {
       return true;
     }
-    return false
-  }
-
+    return false;
+  };
 
   const getAppointments = async () => {
     await axios
@@ -109,7 +105,7 @@ export default function BookAppointment() {
     });
     await getAppointments();
   };
-  
+
   const handleAppointment = async () => {
     await getAppointments();
     try {

@@ -11,7 +11,6 @@ export const ParentTable = ({ item, accessToken }) => {
   const showError = () => {
     notification.open({
       message: "Error !!",
-      placement: "top",
       icon: <CloseCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
@@ -19,7 +18,6 @@ export const ParentTable = ({ item, accessToken }) => {
   const showSuccess = () => {
     notification.open({
       message: "Success !!",
-      placement: "top",
       icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
@@ -27,7 +25,6 @@ export const ParentTable = ({ item, accessToken }) => {
   const showPatientInProgress = () => {
     notification.open({
       message: "Patient is in progress, cannot delete !!",
-      placement: "top",
       icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };

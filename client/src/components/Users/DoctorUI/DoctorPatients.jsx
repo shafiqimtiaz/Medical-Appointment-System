@@ -1,6 +1,10 @@
-import { React, useState, useEffect, useMemo } from 'react';
-import { Table, Button, Modal, List } from 'antd';
-import { QuestionCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons'
+import { React, useState, useEffect, useMemo } from "react";
+import { Table, Button, Modal, List } from "antd";
+import {
+  QuestionCircleTwoTone,
+  CheckCircleTwoTone,
+  CloseCircleTwoTone,
+} from "@ant-design/icons";
 import { notification } from "antd";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -8,16 +12,15 @@ import { Typography } from "antd";
 
 const showError = () => {
   notification.open({
-    message: "Error !!",
-    placement: "top",
+    message: "It seems there was an error !!",
+    icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
   });
 };
 
 const showSuccess = () => {
   notification.open({
     message: "The patient has been deassigned",
-    placement: "top",
-    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
   });
 };
 

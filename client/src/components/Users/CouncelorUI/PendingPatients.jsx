@@ -31,7 +31,6 @@ import { store } from "../../../redux/store";
 const showError = () => {
   notification.open({
     message: "It seems an error has occured",
-    placement: "top",
     icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
   });
 };
@@ -39,7 +38,6 @@ const showError = () => {
 const showSuccess = () => {
   notification.open({
     message: "The patient's assessment was approved!",
-    placement: "top",
     icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
   });
 };
@@ -47,7 +45,6 @@ const showSuccess = () => {
 const showDeny = () => {
   notification.open({
     message: "The patient's assessment was denied",
-    placement: "top",
     icon: <CheckCircleTwoTone twoToneColor="#E32828" />,
   });
 };
