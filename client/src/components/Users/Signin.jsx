@@ -56,6 +56,7 @@ export default function Signin() {
       }
       dispatch(loginSuccess(res.data));
     } catch (error) {
+      invalidNotification();
       dispatch(loginFailure);
     }
   };
