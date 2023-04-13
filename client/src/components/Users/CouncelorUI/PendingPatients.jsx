@@ -161,6 +161,7 @@ export default function PendingPatients({ accessToken }) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
+  const [patientSelectedAssessementModal, setpatientSelectedAssessementModal] = useState(false);
   const [patientWithAssessment_notUsed, setPatientWithAssessment] = useState(
     []
   );
@@ -472,6 +473,10 @@ export default function PendingPatients({ accessToken }) {
     setCounselorData(updatedRecords);
   };
 
+  const handleVisbilityForAssessmentModal = () => {
+    setpatientSelectedAssessementModal(false);
+  }
+
   const assessmentAfterApproving = async () => {
 
     try{
@@ -480,10 +485,10 @@ export default function PendingPatients({ accessToken }) {
     
       const getRecord = patientWithAssessment.filter((item) => {
           return item.patientId === patientSelected.id;
-        });
+      });
   
       fetchAnswers(getRecord[0].assessmentId);
-      setVisible(true);
+      setpatientSelectedAssessementModal(true);
         
     }catch (error) {
       console.log(error.response);
@@ -687,13 +692,13 @@ export default function PendingPatients({ accessToken }) {
 
           <Modal
             title="Assesment"
-            open={visible}
-            onOk={handleOk}
-            onCancel={handleOk}
+            open={patientSelectedAssessementModal}
+            onOk={handleVisbilityForAssessmentModal}
+            onCancel={handleVisbilityForAssessmentModal}
             mask={false}
             width={1000}
             footer={[
-              <Button key="back" onClick={handleOk}>
+              <Button key="back" onClick={handleVisbilityForAssessmentModal}>
                 Cancel
               </Button>,
             ]}
