@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "db-reset": "prisma migrate reset --force",
-    "db-init": "prisma db push && prisma generate && prisma db seed",
+    "db-reset": "prisma db push --force-reset && prisma generate && prisma db seed",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "license": "MIT",
