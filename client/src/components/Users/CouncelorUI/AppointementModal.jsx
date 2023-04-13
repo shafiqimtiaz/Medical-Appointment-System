@@ -55,6 +55,30 @@ export default function AppointementModal({ record }) {
   const showModal = () => {
     setIsModalOpen(true);
   };
+
+  const modifyAppointment = async (appointement) => {
+    const res = await axios.put(
+      `/counselor/appointment/modify/${record.appointment_id}`,
+      appointement,
+      { headers }
+    );
+    if (res.status === 200) {
+      return true;
+    }
+    return false;
+  };
+
+  const deleteAppointment = async () => {
+    const res = await axios.delete(
+      `/counselor/appointment/delete/${record.appointment_id}`,
+      { headers }
+    );
+    if (res.status === 200) {
+      return true;
+    }
+    return false;
+  };
+
   const handleOk = async () => {
     let editedDate = new Date(date);
     editedDate.setHours(editedDate.getHours() - 4);
@@ -62,25 +86,20 @@ export default function AppointementModal({ record }) {
       let appointement = {
         appointmentDate: editedDate,
       };
-      await axios.put(
-        `/counselor/appointment/modify/${record.appointment_id}`,
-        appointement,
-        { headers }
-      );
-      appointementNotification();
-      setIsModalOpen(false);
+      if (await modifyAppointment(appointement)) {
+        appointementNotification();
+        setIsModalOpen(false);
+      }
     } catch (error) {
       errorNotification();
     }
   };
   const handleCancel = async () => {
     try {
-      await axios.delete(
-        `/counselor/appointment/delete/${record.appointment_id}`,
-        { headers }
-      );
-      setIsModalOpen(false);
-      deleteNotification();
+      if (await deleteAppointment()) {
+        deleteNotification();
+        setIsModalOpen(false);
+      }
     } catch (error) {
       errorNotification();
     }
@@ -140,7 +159,7 @@ export default function AppointementModal({ record }) {
               hourStep={1}
               format="YYYY/MM/DD HH:mm"
               onChange={handleDateChange}
-              value={date}
+              value={moment(new Date(record.appointment_date)).format()}
               disabledDate={disabledDateCheck}
             />
           </Form.Item>

@@ -488,7 +488,6 @@ export default function PendingPatients({ accessToken }) {
   const assessmentAfterApproving = async () => {
     try {
       console.log("clickedz!!");
-
       const getRecord = patientWithAssessment.filter((item) => {
         return item.patientId === patientSelected.id;
       });
