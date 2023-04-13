@@ -260,7 +260,7 @@ export default function PendingPatients({ accessToken }) {
         filterCounselorData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [headers, data]);
+  }, [headers, data, counserlorData]);
 
   const fetchAnswers = async (selectedId) => {
     try {
@@ -290,7 +290,7 @@ export default function PendingPatients({ accessToken }) {
     setVisible(false);
   };
 
-  useEffect(() => {}, [counserlorData]);
+  // useEffect(() => {}, [counserlorData]);
 
   const addCounselorData = (record) => {
     const checkIfRecordConsists = myArray.filter((item) => {

@@ -89,10 +89,7 @@ export default function BookAppointment() {
     for (const element of appointments) {
       const convDate1 = new Date(element.appointment_date).toISOString();
       const convDate2 = appointment.appointmentDate.toISOString();
-      if (
-        // element.patient_id === appointment.patient_Id &&
-        convDate1 === convDate2
-      ) {
+      if (convDate1 === convDate2) {
         return true;
       }
     }
@@ -100,10 +97,15 @@ export default function BookAppointment() {
   };
 
   const createAppointment = async (appointment) => {
-    await axios.post("/counselor/appointment", appointment, {
+    const res = await axios.post("/counselor/appointment", appointment, {
       headers,
     });
     await getAppointments();
+
+    if (res.status === 200) {
+      return true;
+    }
+    return false;
   };
 
   const handleAppointment = async () => {
@@ -114,15 +116,14 @@ export default function BookAppointment() {
         medicalStaff_Id: currentUser.user_id,
         appointmentDate: date,
       };
-
       if (appointments.length === 0) {
-        createAppointment(appointment);
-        appointmentNotification();
+        if (await createAppointment(appointment)) {
+          appointmentNotification();
+        }
       } else {
         if (await hasDuplicateTime(appointment)) {
           duplicateNotification();
-        } else {
-          createAppointment(appointment);
+        } else if (await createAppointment(appointment)) {
           appointmentNotification();
         }
       }
@@ -153,6 +154,7 @@ export default function BookAppointment() {
         rules={[
           {
             required: true,
+            message: "Please input select a date and time",
           },
         ]}
       >
@@ -172,6 +174,7 @@ export default function BookAppointment() {
         rules={[
           {
             required: true,
+            message: "Please input select a patient",
           },
         ]}
       >
