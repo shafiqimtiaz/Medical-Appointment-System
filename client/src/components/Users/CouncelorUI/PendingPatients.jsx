@@ -2,8 +2,8 @@ import { React, useState, useEffect, useMemo } from "react";
 import { Table, Button, Modal, List } from "antd";
 import {
   QuestionCircleTwoTone,
-  CheckCircleOutlined,
-  PlusOutlined,
+  CloseCircleTwoTone,
+  CheckCircleTwoTone,
 } from "@ant-design/icons";
 import { notification } from "antd";
 //import {ParentTable} from "/Users/hadi/Desktop/Concordia/Soen6841/SPM_6841_Project/client/src/components/Admin/ParentTable.jsx"
@@ -32,14 +32,15 @@ const showError = () => {
   notification.open({
     message: "It seems an error has occured",
     placement: "top",
-    icon: <CloseCircleTwoTone twoToneColor="#E32828"/>  });
+    icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
+  });
 };
 
 const showSuccess = () => {
   notification.open({
     message: "The patient's assessment was approved!",
     placement: "top",
-    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
   });
 };
 
@@ -47,7 +48,7 @@ const showDeny = () => {
   notification.open({
     message: "The patient's assessment was denied",
     placement: "top",
-    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
+    icon: <CheckCircleTwoTone twoToneColor="#E32828" />,
   });
 };
 
@@ -170,7 +171,8 @@ export default function PendingPatients({ accessToken }) {
   const [doctorsVisibility, setDoctorsVisibility] = useState(false);
   const [doctorsData, setDoctorsData] = useState([]);
   const [patientSelected, setPatientSelected] = useState();
-  const [patientSelectedAssessementModal, setpatientSelectedAssessementModal] = useState(false);
+  const [patientSelectedAssessementModal, setpatientSelectedAssessementModal] =
+    useState(false);
   const [patientWithAssessment_notUsed, setPatientWithAssessment] = useState(
     []
   );
@@ -345,7 +347,7 @@ export default function PendingPatients({ accessToken }) {
       await axios.delete(`counselor/assessments/delete/${selectedId}`, {
         headers,
       });
-      showSuccess();
+      showDeny();
       setVisible(false);
     } catch (error) {
       console.error(error.response);
@@ -484,27 +486,23 @@ export default function PendingPatients({ accessToken }) {
 
   const handleVisbilityForAssessmentModal = () => {
     setpatientSelectedAssessementModal(false);
-  }
+  };
 
   const assessmentAfterApproving = async () => {
-
-    try{
-
+    try {
       console.log("clickedz!!");
-    
+
       const getRecord = patientWithAssessment.filter((item) => {
-          return item.patientId === patientSelected.id;
+        return item.patientId === patientSelected.id;
       });
-  
+
       fetchAnswers(getRecord[0].assessmentId);
       setpatientSelectedAssessementModal(true);
-        
-    }catch (error) {
+    } catch (error) {
       console.log(error.response);
       // showError();
     }
-   
-  }
+  };
 
   const membersOfTable = [
     {
@@ -652,15 +650,13 @@ export default function PendingPatients({ accessToken }) {
         <>
           <Button
             type="primary"
-            onClick={ ()=> {
-
-                setPatientSelected({
-                  name: record.name,
-                  id: record.id,
-                });
-                assessmentAfterApproving();
-              }
-            }
+            onClick={() => {
+              setPatientSelected({
+                name: record.name,
+                id: record.id,
+              });
+              assessmentAfterApproving();
+            }}
           >
             Assesment
           </Button>

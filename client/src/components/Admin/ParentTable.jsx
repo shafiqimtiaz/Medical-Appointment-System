@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { notification } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import { ListUsers } from "./ListUsers";
 import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
@@ -11,6 +12,7 @@ export const ParentTable = ({ item, accessToken }) => {
     notification.open({
       message: "Error !!",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
 
@@ -18,6 +20,7 @@ export const ParentTable = ({ item, accessToken }) => {
     notification.open({
       message: "Success !!",
       placement: "top",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
 
@@ -25,6 +28,7 @@ export const ParentTable = ({ item, accessToken }) => {
     notification.open({
       message: "Patient is in progress, cannot delete !!",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };
 
