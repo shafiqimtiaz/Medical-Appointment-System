@@ -159,7 +159,7 @@ export default function AppointementModal({ record }) {
               hourStep={1}
               format="YYYY/MM/DD HH:mm"
               onChange={handleDateChange}
-              value={moment(new Date(record.appointment_date)).format()}
+              value={date}
               disabledDate={disabledDateCheck}
             />
           </Form.Item>
