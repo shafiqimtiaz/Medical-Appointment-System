@@ -6,7 +6,7 @@ const NOTIFICATION_DETAILS = {
     },
     error: {
       message: "Something went wrong!",
-      description: "Please try again later or email us to support@company.dev!",
+      description: "Please try again later or email us to hadi@company.dev!",
     },
   };
   

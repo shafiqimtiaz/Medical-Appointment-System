@@ -1,4 +1,5 @@
 import { Button, Form, Select, DatePicker, notification } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import axios from "axios";
 import React, { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
@@ -35,12 +36,14 @@ export default function BookAppointment() {
     notification.open({
       message: "Your appointment has been successfully booked!",
       placement: "top",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
     });
   };
   const errorNotification = () => {
     notification.open({
       message: "It seems there was an error when trying to book an appointment",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
     });
   };
 
@@ -48,6 +51,7 @@ export default function BookAppointment() {
     notification.open({
       message: "Sorry, you already have an appointment at this time",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
     });
   };
 
