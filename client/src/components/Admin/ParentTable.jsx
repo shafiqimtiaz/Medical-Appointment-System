@@ -21,6 +21,13 @@ export const ParentTable = ({ item, accessToken }) => {
     });
   };
 
+  const showPatientInProgress = () => {
+    notification.open({
+      message: "Patient is in progress, cannot delete !!",
+      placement: "top",
+    });
+  };
+
   const headers = useMemo(
     () => ({ Authorization: `Bearer ${accessToken}` }),
     [accessToken]
@@ -32,7 +39,7 @@ export const ParentTable = ({ item, accessToken }) => {
       showSuccess();
     } catch (error) {
       console.error(error.response);
-      showError();
+      showPatientInProgress();
     }
   };
 

@@ -1,4 +1,5 @@
 import { Button, DatePicker, Form, Input, Select, notification } from "antd";
+import { CheckCircleTwoTone, MinusCircleTwoTone } from '@ant-design/icons';
 import { useState } from "react";
 import moment from "moment";
 import axios from "axios";
@@ -50,11 +51,13 @@ export default function SignUp({ user }) {
   const openNotification = () => {
     notification.open({
       message: "You can successfully log in!",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
     });
   };
   const approveNotification = () => {
     notification.open({
       message: "Please wait until the manager approves your registration",
+      icon: <MinusCircleTwoTone twoToneColor="#FDBA1A"/>
     });
   };
 

@@ -1,11 +1,10 @@
 import { React, useState, useEffect, useMemo } from 'react';
 import { Table, Button, Modal, List } from 'antd';
-import { QuestionCircleTwoTone } from '@ant-design/icons'
+import { QuestionCircleTwoTone, CheckCircleTwoTone } from '@ant-design/icons'
 import { notification } from "antd";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import { Typography } from 'antd';
-
+import { Typography } from "antd";
 
 const showError = () => {
   notification.open({
@@ -16,12 +15,11 @@ const showError = () => {
 
 const showSuccess = () => {
   notification.open({
-    message: "Success !!",
+    message: "The patient has been deassigned",
     placement: "top",
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
   });
 };
-
-
 
 function calculateAge(dateOfBirth) {
   //console.log(dateOfBirth);
@@ -56,26 +54,67 @@ function getAssessmentID(assessments) {
   return assessmentID;
 }
 
-
-
-
-export default function DoctorPatients({ data, setdata}) {
-
+export default function DoctorPatients({ data, setdata }) {
   const { currentUser } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
   const [Patients, setPatients] = useState(null);
   const [selectedId, setSelectedId] = useState(null);
   const { Title } = Typography;
   const [assessment, setAssessment] = useState([
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Little interest or pleasure in doing things?", answer: "" ,id_ :1},
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling down, depressed or hopless?" , answer: "",id :2 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble falling asleep, staying asleep, or sleeping too much?", answer: "",id:3 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling tired or having little energy?", answer: "",id:4 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Poor appetite or overeating?", answer: "",id:5 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling bad about yourself - or that you're a failure or have let yourself or your family down",answer: "",id:6 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble concentrating on things, such as reading the newspaper or watching television?",answer: "",id:7 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Moving or speaking so slowly that other people could have noticed. Or, the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",answer: "",id:8 },
-    { question: "Over the past 2 weeks, how often have you been bothered by any of the following problems: Thoughts that you would be better off dead or of hurting yourself in some way?",answer: "",id:9 },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Little interest or pleasure in doing things?",
+      answer: "",
+      id_: 1,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling down, depressed or hopless?",
+      answer: "",
+      id: 2,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble falling asleep, staying asleep, or sleeping too much?",
+      answer: "",
+      id: 3,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling tired or having little energy?",
+      answer: "",
+      id: 4,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Poor appetite or overeating?",
+      answer: "",
+      id: 5,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Feeling bad about yourself - or that you're a failure or have let yourself or your family down",
+      answer: "",
+      id: 6,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Trouble concentrating on things, such as reading the newspaper or watching television?",
+      answer: "",
+      id: 7,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Moving or speaking so slowly that other people could have noticed. Or, the opposite - being so fidgety or restless that you have been moving around a lot more than usual?",
+      answer: "",
+      id: 8,
+    },
+    {
+      question:
+        "Over the past 2 weeks, how often have you been bothered by any of the following problems: Thoughts that you would be better off dead or of hurting yourself in some way?",
+      answer: "",
+      id: 9,
+    },
   ]);
 
   const headers = useMemo(
@@ -85,50 +124,53 @@ export default function DoctorPatients({ data, setdata}) {
 
   const mapData = (dataParam) => {
     if (dataParam != null) {
-      const mapped = dataParam.map((item) => {
-        const flag = getAssessmentID(item.assessments);
-        if(flag==="No active assessment") //Ignore entry if patient has no active assessment
-        {
-          return null;
-        }
-        return {
-          key:item.patient_id,
-          id: item.patient_id,
-          name: item.users.name,
-          email: item.users.email,
-          age: calculateAge(item.users.date_of_birth),
-          address: item.users.address,
-          number: item.users.phone_number,
-          assessments: getAssessmentID(item.assessments),
-        };
-      }).filter(item => item !== null);; // filter out null values
+      const mapped = dataParam
+        .map((item) => {
+          const flag = getAssessmentID(item.assessments);
+          if (flag === "No active assessment") {
+            //Ignore entry if patient has no active assessment
+            return null;
+          }
+          return {
+            key: item.patient_id,
+            id: item.patient_id,
+            name: item.users.name,
+            email: item.users.email,
+            age: calculateAge(item.users.date_of_birth),
+            address: item.users.address,
+            number: item.users.phone_number,
+            assessments: getAssessmentID(item.assessments),
+          };
+        })
+        .filter((item) => item !== null); // filter out null values
       setPatients(mapped);
       // do something with the mapped data
     } else {
       console.log("dataParam is null or undefined");
     }
   };
-  
 
   useEffect(() => {
     //console.log(data);
     mapData(data);
-  },[data]);
+  }, [data]);
 
   const fetchAnswers = async (selectedId) => {
     try {
-        //console.log(selectedId + "  I fetching asnwers");
-        const response = await axios.get(`doctor/assessments/${selectedId}`,{ headers });
-        const { answers } = response.data;
-        const updatedAnswers = answers.map(a => a.answer);
-        const updatedAssessment = assessment.map((a, index) => {
-          return { ...a, answer: updatedAnswers[index] };
-        });
-        setAssessment(updatedAssessment);
+      //console.log(selectedId + "  I fetching asnwers");
+      const response = await axios.get(`doctor/assessments/${selectedId}`, {
+        headers,
+      });
+      const { answers } = response.data;
+      const updatedAnswers = answers.map((a) => a.answer);
+      const updatedAssessment = assessment.map((a, index) => {
+        return { ...a, answer: updatedAnswers[index] };
+      });
+      setAssessment(updatedAssessment);
     } catch (error) {
       //console.error(error);
       //console.log("error  " + selectedId);
-      throw new Error('Failed to fetch data from API');
+      throw new Error("Failed to fetch data from API");
     }
   };
 
@@ -143,11 +185,17 @@ export default function DoctorPatients({ data, setdata}) {
     setVisible(false);
   };
 
-  const handleDeny = async (selectedId) => {
+  const handleDeny = async (selectedId, patientID) => {
     try {
-      //console.log(typeof selectedId);
       setSelectedId(selectedId);
-      await axios.put(`/doctor/assessment/deactivate/${selectedId}`, null,{ headers });
+      await axios.put(`/doctor/assessment/deactivate/${selectedId}`, null, {
+        headers,
+      });
+      const deleteAllAppointments = await axios.delete(
+        `/doctor/delete/appointment/${patientID}`,
+        { headers }
+      );
+      console.log(deleteAllAppointments);
       showSuccess();
       //setVisible(false);
       setdata();
@@ -161,60 +209,69 @@ export default function DoctorPatients({ data, setdata}) {
 
   const columns = [
     {
-      title: 'Id',
-      dataIndex: 'id',
-      key: 'id',
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
     },
     {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
+      title: "Age",
+      dataIndex: "age",
+      key: "age",
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
+      title: "Address",
+      dataIndex: "address",
+      key: "address",
     },
     {
-      title: 'Phone Number',
-      dataIndex: 'number',
-      key: 'number',
+      title: "Phone Number",
+      dataIndex: "number",
+      key: "number",
     },
     {
-      key: 'assessments',
+      key: "assessments",
     },
     {
-      title: 'Action',
-      key: 'action',
-      render: (record) => (        
+      title: "Action",
+      key: "action",
+      render: (record) => (
         <>
           <Button
             //disabled={record.assessments!=null ? false : true}
             type="primary"
             onClick={() => {
-            //console.log(record.assessments);
-            handleOpenModal(record.assessments);
+              //console.log(record.assessments);
+              handleOpenModal(record.assessments);
             }}
-            style={{ borderRadius: '5px' }}
+            style={{ borderRadius: "5px" }}
           >
             Assesment
           </Button>
-          <span>    </span>
-          <Button key="deny" 
-            type="danger" 
-            style={{ borderRadius: '5px' ,backgroundColor: '#ff4500', borderColor: '#52c41a', color:'white'}} 
-            onClick={() => handleDeny(record.assessments)} >
-                Reject
+          <span> </span>
+          <Button
+            key="deny"
+            type="primary"
+            ghost
+            danger
+            // style={{
+            //   borderRadius: "5px",
+            //   backgroundColor: "#ff4500",
+            //   borderColor: "#52c41a",
+            //   color: "white",
+            // }}
+            onClick={() => handleDeny(record.assessments, record.id)}
+          >
+            Reject
           </Button>
           <Modal
             title="Assesment"
@@ -231,18 +288,18 @@ export default function DoctorPatients({ data, setdata}) {
           >
             <List
               dataSource={assessment}
-              renderItem={item => (
+              renderItem={(item) => (
                 <>
                   <List.Item key={item.question}>
-                  <div>
+                    <div>
                       <QuestionCircleTwoTone />
-                      <span>  </span>
+                      <span> </span>
                       <span>{item.question}</span>
                       <List
                         dataSource={[item.answer]}
-                        renderItem={answer => (
+                        renderItem={(answer) => (
                           <List.Item key={item.id}>
-                            <span style={{fontWeight: 'bold' }} >{answer}</span>
+                            <span style={{ fontWeight: "bold" }}>{answer}</span>
                           </List.Item>
                         )}
                       />
@@ -253,18 +310,20 @@ export default function DoctorPatients({ data, setdata}) {
             />
           </Modal>
         </>
-        ),
+      ),
     },
   ];
 
-
   return (
     <>
-        <Title level={4} style={{ marginBottom: '10px', marginLeft: '10px' }}>
-          List of Patients
-        </Title>
-        <Table dataSource={Patients} columns={columns} pagination={{pageSize:5}}/>
+      <Title level={4} style={{ marginBottom: "10px", marginLeft: "10px" }}>
+        List of Patients
+      </Title>
+      <Table
+        dataSource={Patients}
+        columns={columns}
+        pagination={{ pageSize: 5 }}
+      />
     </>
-  )
+  );
 }
-
