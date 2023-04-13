@@ -249,4 +249,21 @@ counselorRouter.put(
   }
 );
 
+counselorRouter.delete(
+  "/delete/appointment/:patientID",
+  authorizeRoles("medical_staff"),
+  authorizeTypes("c"),
+  async (req, res) => {
+    try {
+      const { patientID } = req.params;
+      const deletedAppointment =
+        await counselorService.deleteAppointmentByPatientId(+patientID);
+      res.status(200).json({ deleted: deletedAppointment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to delete appointment");
+    }
+  }
+);
+
 export default counselorRouter;

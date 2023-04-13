@@ -198,6 +198,20 @@ async function deactivateAssessment(assessmentId: number) {
   }
 }
 
+async function deleteAppointmentByPatientId(patientID: number) {
+  try {
+    const appointment = await db.appointments.deleteMany({
+      where: {
+        patient_id: patientID,
+      },
+    });
+    return appointment;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Unable to delete appointment");
+  }
+}
+
 export {
   createAppointment,
   modifyAppointment,
@@ -208,4 +222,5 @@ export {
   deactivateAppointment,
   getAppointmentById,
   deactivateAssessment,
+  deleteAppointmentByPatientId,
 };

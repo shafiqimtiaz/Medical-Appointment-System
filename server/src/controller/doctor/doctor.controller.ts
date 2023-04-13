@@ -183,4 +183,21 @@ doctorRouter.get(
   }
 );
 
+doctorRouter.delete(
+  "/delete/appointment/:patientID",
+  authorizeRoles("medical_staff"),
+  authorizeTypes("d"),
+  async (req, res) => {
+    try {
+      const { patientID } = req.params;
+      const deletedAppointment =
+        await doctorService.deleteAppointmentByPatientId(+patientID);
+      res.status(200).json({ deleted: deletedAppointment });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send("Unable to delete appointment");
+    }
+  }
+);
+
 export default doctorRouter;
