@@ -51,19 +51,114 @@ async function deletePatient(patient_id: any) {
   }
 }
 
-async function getAllUsers(){
+async function getAllUsers() {
   return await db.users.findMany({
     where: {
       NOT: {
-        role: "manager"
-      }
+        role: "manager",
+      },
     },
     include: {
       manager: true,
       medical_staff: true,
-      patients: true
-    }
-});
+      patients: true,
+    },
+  });
+}
+
+async function getPatientStats() {
+  let patients = await db.patients.findMany({
+    include: {
+      users: {
+        select: {
+          name: true,
+        },
+      },
+      assessments: true,
+      appointments: true,
+    },
+  });
+  return patients;
+}
+
+async function getDoctorStats() {
+  let doctors = await db.medical_staff.findMany({
+    where: {
+      active: true,
+      type: "d",
+    },
+    include: {
+      users: {
+        select: {
+          name: true,
+        },
+      },
+      assessments: true,
+      appointments: true,
+    },
+  });
+  return doctors;
+}
+
+async function getCounselorStats() {
+  let counselors = await db.medical_staff.findMany({
+    where: {
+      active: true,
+      type: "c",
+    },
+    include: {
+      users: {
+        select: {
+          name: true,
+        },
+      },
+      assessments: true,
+      appointments: true,
+    },
+  });
+  return counselors;
+}
+
+async function getAppointmentStats() {
+  let appointments = await db.appointments.findMany({
+    include: {
+      patients: {
+        include: {
+          users: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+      medical_staff: {
+        include: {
+          users: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
+    },
+  });
+  return appointments;
+}
+
+async function getAssessmentStats() {
+  let assessments = await db.assessments.findMany({
+    where: {
+      active: false,
+      medical_staff: { not: undefined },
+      patient_id: { not: undefined },
+    },
+    include: {
+      medical_staff: {
+        select: { type: true },
+      },
+    },
+  });
+  return assessments;
 }
 
 export {
@@ -71,5 +166,10 @@ export {
   approveRegistration,
   rejectRegistration,
   deletePatient,
-  getAllUsers
+  getAllUsers,
+  getPatientStats,
+  getDoctorStats,
+  getCounselorStats,
+  getAppointmentStats,
+  getAssessmentStats,
 };

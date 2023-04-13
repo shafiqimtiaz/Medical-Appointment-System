@@ -1,22 +1,31 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { notification } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
 import { ListUsers } from "./ListUsers";
 import { ViewRegisters } from "./ViewRegisters";
 import { AddUser } from "./AddUser";
 import axios from "axios";
+import Reports from "./Reports";
 
 export const ParentTable = ({ item, accessToken }) => {
   const showError = () => {
     notification.open({
       message: "Error !!",
-      placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
 
   const showSuccess = () => {
     notification.open({
       message: "Success !!",
-      placement: "top",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
+    });
+  };
+
+  const showPatientInProgress = () => {
+    notification.open({
+      message: "Patient is in progress, cannot delete !!",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };
 
@@ -31,7 +40,7 @@ export const ParentTable = ({ item, accessToken }) => {
       showSuccess();
     } catch (error) {
       console.error(error.response);
-      showError();
+      showPatientInProgress();
     }
   };
 
@@ -107,7 +116,7 @@ export const ParentTable = ({ item, accessToken }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const result = await axios.get("/manager/getallusers", { headers });
+        const result = await axios.get("/manager/users", { headers });
         const userArray = result.data;
         let newUserArray = [];
         userArray.map(function (user) {
@@ -147,6 +156,8 @@ export const ParentTable = ({ item, accessToken }) => {
         />
       ) : item === "3" ? (
         <AddUser key="3" handleSubmit={handleSubmit} />
+      ) : item === "4" ? (
+        <Reports key="4" />
       ) : (
         <p>None of the conditions are true</p>
       )}

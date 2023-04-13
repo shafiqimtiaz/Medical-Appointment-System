@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "db-reset": "prisma db push --force-reset && prisma generate && prisma db seed",
     "dev": "ts-node-dev --respawn --transpile-only src/app.ts"
   },
   "license": "MIT",
@@ -13,13 +14,16 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "@prisma/client": "^4.11.0",
+    "@prisma/client": "^4.12.0",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
-    "prisma": "^4.11.0",
+    "prisma": "^4.12.0",
     "prisma-erd-generator": "^1.2.5",
     "spm_6841_project": "file:.."
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }

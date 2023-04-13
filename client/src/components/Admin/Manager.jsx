@@ -50,19 +50,24 @@ export const Manager = () => {
     }
     const menuItems = [
       {
-        key: "2",
-        label: "View Users",
-        onClick: () => setSelectedMenuItem("2"),
-      },
-      {
         key: "1",
         label: "View Registration",
         onClick: () => setSelectedMenuItem("1"),
       },
       {
+        key: "2",
+        label: "View Users",
+        onClick: () => setSelectedMenuItem("2"),
+      },
+      {
         key: "3",
-        label: "Add new user",
+        label: "Add New User",
         onClick: () => setSelectedMenuItem("3"),
+      },
+      {
+        key: "4",
+        label: "Reports",
+        onClick: () => setSelectedMenuItem("4"),
       },
     ];
 
@@ -71,7 +76,7 @@ export const Manager = () => {
     }
 
     return isLogOut ? (
-      <Navigate to="/Admin" />
+      <Navigate to="/" />
     ) : (
       <Layout style={{ minHeight: "100vh" }}>
         <Header>

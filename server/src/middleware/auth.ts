@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { jwt } from "../util/jwt";
+import * as userService from "../service/user.service";
 
 export interface CustomRequest extends Request {
   token: string;
@@ -36,11 +37,23 @@ export function isAuthenticated(
 }
 
 export const authorizeRoles = (...authorizedRoles: string[]) => {
-
   return (req: Request, res: Response, next: NextFunction) => {
-    if ('token' in req) {
-      const {role} = req as CustomRequest;
+    if ("token" in req) {
+      const { role } = req as CustomRequest;
       if (authorizedRoles.includes(role)) {
+        return next();
+      }
+    }
+    return res.json("Unauthorized");
+  };
+};
+
+export const authorizeTypes = (...authorizedTypes: string[]) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    if ("token" in req) {
+      const { user_id } = req as CustomRequest;
+      const staff_type = userService.returnStaffType(+user_id);
+      if (authorizedTypes.includes(await staff_type)) {
         return next();
       }
     }
