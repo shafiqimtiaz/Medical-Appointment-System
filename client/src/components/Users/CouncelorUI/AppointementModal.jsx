@@ -1,4 +1,5 @@
 import { Button, Form, DatePicker, notification, Modal } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import axios from "axios";
 import React, { useMemo, useState } from "react";
 import { useSelector } from "react-redux";
@@ -27,6 +28,7 @@ export default function AppointementModal({ record }) {
     notification.open({
       message: "Your appointement has been successfully modified!",
       placement: "top",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
     });
   };
   const errorNotification = () => {
@@ -34,13 +36,15 @@ export default function AppointementModal({ record }) {
       message:
         "It seems there was an error when trying to modify an appointement",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
     });
   };
 
   const deleteNotification = () => {
     notification.open({
-      message: "Your appointement has been deleted!",
+      message: "Your appointement has been cancelled",
       placement: "top",
+      icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
     });
   };
 

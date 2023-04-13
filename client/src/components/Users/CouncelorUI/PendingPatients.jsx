@@ -1,6 +1,7 @@
 import { React, useState, useEffect, useMemo } from 'react';
 import { Table, Button, Modal, List } from 'antd';
 import { QuestionCircleTwoTone, CheckCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { notification } from "antd";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,15 +16,24 @@ import { store } from "../../../redux/store";
 
 const showError = () => {
   notification.open({
-    message: "Error !!",
+    message: "It seems an error has occured",
     placement: "top",
-  });
+    icon: <CloseCircleTwoTone twoToneColor="#E32828"/>  });
 };
 
 const showSuccess = () => {
   notification.open({
-    message: "Success !!",
+    message: "The patient's assessment was approved!",
     placement: "top",
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
+  });
+};
+
+const showDeny = () => {
+  notification.open({
+    message: "The patient's assessment was denied",
+    placement: "top",
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a"/>
   });
 };
 
@@ -226,7 +236,7 @@ export default function PendingPatients({accessToken}) {
   const handleDeny = async (id) => {
     try {
       await axios.delete(`counselor/assessments/delete/${selectedId}`, { headers });
-      showSuccess();
+      showDeny();
       setVisible(false);
     } catch (error) {
       console.error(error.response);

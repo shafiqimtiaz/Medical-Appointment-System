@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Input, Typography, notification } from "antd";
+import { CheckCircleTwoTone, CloseCircleTwoTone } from '@ant-design/icons';
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
@@ -18,6 +19,7 @@ export default function Signin() {
     notification.open({
       message: "Registration is not yet approved",
       placement: "top",
+      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
     });
   };
 
@@ -25,7 +27,8 @@ export default function Signin() {
     notification.open({
       message: "Invalid Email or Password",
       placement: "top",
-    });
+      icon: <CloseCircleTwoTone twoToneColor="#E32828"/>
+        });
   };
 
   const [email, setEmail] = useState("");
