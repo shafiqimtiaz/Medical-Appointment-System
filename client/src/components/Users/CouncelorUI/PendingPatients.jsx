@@ -45,7 +45,7 @@ const showSuccess = () => {
 const showDeny = () => {
   notification.open({
     message: "The patient's assessment was denied",
-    icon: <CheckCircleTwoTone twoToneColor="#E32828" />,
+    icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
   });
 };
 
@@ -260,7 +260,7 @@ export default function PendingPatients({ accessToken }) {
         filterCounselorData(res.data);
       })
       .catch((error) => console.log(error));
-  }, [headers, data]);
+  }, [headers, data, counserlorData]);
 
   const fetchAnswers = async (selectedId) => {
     try {
@@ -290,7 +290,7 @@ export default function PendingPatients({ accessToken }) {
     setVisible(false);
   };
 
-  useEffect(() => {}, [counserlorData]);
+  // useEffect(() => {}, [counserlorData]);
 
   const addCounselorData = (record) => {
     const checkIfRecordConsists = myArray.filter((item) => {
@@ -488,7 +488,6 @@ export default function PendingPatients({ accessToken }) {
   const assessmentAfterApproving = async () => {
     try {
       console.log("clickedz!!");
-
       const getRecord = patientWithAssessment.filter((item) => {
         return item.patientId === patientSelected.id;
       });

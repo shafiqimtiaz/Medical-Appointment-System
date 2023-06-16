@@ -10,21 +10,21 @@ import Reports from "./Reports";
 export const ParentTable = ({ item, accessToken }) => {
   const showError = () => {
     notification.open({
-      message: "Error !!",
+      message: "Error",
       icon: <CloseCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
 
   const showSuccess = () => {
     notification.open({
-      message: "Success !!",
+      message: "Success",
       icon: <CheckCircleTwoTone twoToneColor="#52c41a" />,
     });
   };
 
   const showPatientInProgress = () => {
     notification.open({
-      message: "Patient is in progress, cannot delete !!",
+      message: "Patient is in progress, cannot delete",
       icon: <CloseCircleTwoTone twoToneColor="#E32828" />,
     });
   };

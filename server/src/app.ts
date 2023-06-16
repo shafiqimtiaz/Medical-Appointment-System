@@ -7,10 +7,12 @@ import patientRouter from "./controller/patient/patient.controller";
 import counselorRouter from "./controller/counselor/counselor.controller";
 import managerRouter from "./controller/manager/manager.controller";
 import doctorRouter from "./controller/doctor/doctor.controller";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/v1/auth", authRouter);
 app.use(isAuthenticated);
