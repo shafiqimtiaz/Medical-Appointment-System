@@ -46,6 +46,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://spm-6841-backend-production.up.railway.app/api/v1"
+  }
 }
