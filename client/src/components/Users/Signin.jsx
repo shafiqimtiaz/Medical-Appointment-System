@@ -11,7 +11,7 @@ const linkStyle = {
   color: "black",
   display: "flex",
   alignItems: "center",
-  marginLeft: "-50px",
+  marginLeft: "-30px",
 };
 
 export default function Signin() {
@@ -118,7 +118,7 @@ export default function Signin() {
         </Form.Item>
         <Form.Item>
           <Link to="/register">
-            <mTap style={linkStyle}>New User? Register Here</mTap>
+            <mTap style={linkStyle}>New User?&nbsp;<b>Register</b></mTap>
           </Link>
         </Form.Item>
       </Form.Item>

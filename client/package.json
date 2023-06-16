@@ -22,7 +22,9 @@
     "react-scripts": "5.0.1",
     "redux-persist": "^6.0.0",
     "sass": "^1.58.3",
-    "spm_6841_project": "file:.."
+    "spm_6841_project": "file:..",
+    "sweetalert2": "^11.7.12",
+    "sweetalert2-react-content": "^5.0.7"
   },
   "scripts": {
     "start": "react-scripts start",

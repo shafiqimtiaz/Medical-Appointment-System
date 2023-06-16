@@ -1,6 +1,7 @@
 import { Button, DatePicker, Form, Input, Select, notification } from "antd";
 import { CheckCircleTwoTone, MinusCircleTwoTone } from '@ant-design/icons';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import moment from "moment";
 import axios from "axios";
 
@@ -300,6 +301,9 @@ export default function SignUp({ user }) {
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" onClick={handleSubmit}>
           Register
+        </Button>
+        <Button type="secondary">
+          <Link to="/">Cancel</Link>
         </Button>
       </Form.Item>
     </Form>
