@@ -2,14 +2,20 @@
 ## Medical Appoinmnet System
 
 ```
-main
-|-- integration
-    |-- develop/front-end
-    │   |-- feature/feature-name
-    │       |-- fix/specifics
-    |-- develop/back-end
-        |-- feature/feature-name
-            |-- fix/specifics
+LOGIN INFO
+=========================
+|-- Manager (1)
+    |-- email: m@spm.com
+    |-- password: 123456
+|-- Patient (4)
+    |-- email: p1@spm.com / p2@spm.com / p3@spm.com / p4@spm.com
+    |-- password: 123456
+|-- Counselor (3)
+    |-- email: c1@spm.com / c2@spm.com / c3@spm.com
+    |-- password: 123456
+|-- Doctor (3)
+    |-- email: d1@spm.com / d2@spm.com / d3@spm.com
+    |-- password: 123456
 ```
 
 ### Project Title: Collecting data for patients with depression
