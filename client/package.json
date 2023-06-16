@@ -47,5 +47,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://spm-6841-backend-production.up.railway.app/api/v1"
+  "proxy": "https://spm-6841-backend-production.up.railway.app/api/v1"
 }
